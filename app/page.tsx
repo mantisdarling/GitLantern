@@ -19,6 +19,7 @@ import { StageKey } from "@/lib/types";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { downloadCheatsheet } from "@/lib/exportCheatsheet";
 import { ScrollProgressBar } from "@/components/scrollProgressBar";
+import { AnimatedBackground } from "@/components/animatedBackground";
 import { sounds } from "@/lib/soundEffects";
 
 export default function HomePage() {
@@ -97,9 +98,12 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-githubDark-bg text-githubDark-text selection:bg-gitOrange/20 selection:text-gitOrange">
+    <div className="min-h-screen flex flex-col bg-githubDark-bg text-githubDark-text selection:bg-gitOrange/20 selection:text-gitOrange relative">
       {/* 1000whales-inspired Scroll Progress Tracker */}
       <ScrollProgressBar />
+
+      {/* Kinetic Animated Background Canvas */}
+      <AnimatedBackground />
 
       {/* Top Navigation */}
       <Header
