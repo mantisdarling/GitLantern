@@ -189,36 +189,36 @@ export default function HomePage() {
         onComplete={() => setConfettiTrigger(false)}
       />
 
-      {/* The Nifty Portal Infinite Kinetic Marquee Ticker */}
-      <div className="w-full bg-[#020305] border-b border-[#182030] py-1.5 overflow-hidden select-none z-30 relative font-mono text-[10px] text-cyan-400/85 uppercase tracking-widest">
-        <div className="marqueeTrack gap-8 items-center">
-          <div className="flex items-center gap-8 whitespace-nowrap">
-            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" /> THE NIFTY PORTAL // SPEC 2200.09</span>
-            <span className="text-neutral-600">✦</span>
-            <span>CYBER PROTOCOL: ONLINE</span>
-            <span className="text-neutral-600">✦</span>
-            <span>CLEARANCE: ALPHA-01 PASS VERIFIED</span>
-            <span className="text-neutral-600">✦</span>
-            <span>DAG MACHINE: 4 STATE DOMAINS SYNCHRONIZED</span>
-            <span className="text-neutral-600">✦</span>
-            <span>ZERO LOST COMMITS</span>
-            <span className="text-neutral-600">✦</span>
-            <span>LAT 64.1355° N, 21.8954° W • FREQ 142.8 MHZ</span>
-            <span className="text-neutral-600">✦</span>
+      {/* Clean Ambient Ticker */}
+      <div className="w-full bg-[#040508] border-b border-[#182030] py-2 overflow-hidden select-none z-30 relative font-mono text-[11px] text-neutral-400">
+        <div className="marqueeTrack gap-10 items-center">
+          <div className="flex items-center gap-10 whitespace-nowrap">
+            <span className="flex items-center gap-2 text-cyan-400 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              Git Lantern
+            </span>
+            <span className="text-neutral-600">•</span>
+            <span>Visual Git Workflow & Command Synthesis</span>
+            <span className="text-neutral-600">•</span>
+            <span>4-Stage Lifecycle State Machine</span>
+            <span className="text-neutral-600">•</span>
+            <span>Press <kbd className="px-1.5 py-0.5 rounded bg-[#0a0d14] border border-[#182030] text-cyan-400">?</kbd> for Shortcuts HUD</span>
+            <span className="text-neutral-600">•</span>
+            <span>100% Client-Side & Private</span>
           </div>
-          <div className="flex items-center gap-8 whitespace-nowrap" aria-hidden="true">
-            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" /> THE NIFTY PORTAL // SPEC 2200.09</span>
-            <span className="text-neutral-600">✦</span>
-            <span>CYBER PROTOCOL: ONLINE</span>
-            <span className="text-neutral-600">✦</span>
-            <span>CLEARANCE: ALPHA-01 PASS VERIFIED</span>
-            <span className="text-neutral-600">✦</span>
-            <span>DAG MACHINE: 4 STATE DOMAINS SYNCHRONIZED</span>
-            <span className="text-neutral-600">✦</span>
-            <span>ZERO LOST COMMITS</span>
-            <span className="text-neutral-600">✦</span>
-            <span>LAT 64.1355° N, 21.8954° W • FREQ 142.8 MHZ</span>
-            <span className="text-neutral-600">✦</span>
+          <div className="flex items-center gap-10 whitespace-nowrap" aria-hidden="true">
+            <span className="flex items-center gap-2 text-cyan-400 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              Git Lantern
+            </span>
+            <span className="text-neutral-600">•</span>
+            <span>Visual Git Workflow & Command Synthesis</span>
+            <span className="text-neutral-600">•</span>
+            <span>4-Stage Lifecycle State Machine</span>
+            <span className="text-neutral-600">•</span>
+            <span>Press <kbd className="px-1.5 py-0.5 rounded bg-[#0a0d14] border border-[#182030] text-cyan-400">?</kbd> for Shortcuts HUD</span>
+            <span className="text-neutral-600">•</span>
+            <span>100% Client-Side & Private</span>
           </div>
         </div>
       </div>
@@ -242,13 +242,8 @@ export default function HomePage() {
       <main className="flex-1">
         <HeroSection />
 
-        {/* Cyber Divider 01 */}
-        <div className="relative border-t border-[#182030] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2.5 text-[10px] font-mono text-cyan-400/60 uppercase tracking-widest">
-            <span className="flex items-center gap-2"><span className="text-cyan-400">[+]</span> SECTION 01 // 04</span>
-            <span className="flex items-center gap-2">SYNTHESIS MATRIX <span className="text-cyan-400">[+]</span></span>
-          </div>
-        </div>
+        {/* Clean Minimal Divider 01 */}
+        <div className="border-t border-[#182030]/60 max-w-7xl mx-auto my-4" />
 
         <SynthesisEngine
           onStageChange={handleStageChange}
@@ -258,13 +253,8 @@ export default function HomePage() {
           onActiveCommandChange={handleActiveCommandChange}
         />
 
-        {/* Cyber Divider 02 */}
-        <div className="relative border-t border-[#182030] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2.5 text-[10px] font-mono text-cyan-400/60 uppercase tracking-widest">
-            <span className="flex items-center gap-2"><span className="text-cyan-400">[+]</span> SECTION 02 // 04</span>
-            <span className="flex items-center gap-2">DAG STATE MACHINE <span className="text-cyan-400">[+]</span></span>
-          </div>
-        </div>
+        {/* Clean Minimal Divider 02 */}
+        <div className="border-t border-[#182030]/60 max-w-7xl mx-auto my-4" />
 
         <StatePipeline
           currentStage={currentStage}
@@ -273,13 +263,8 @@ export default function HomePage() {
           onUnlockBadge={unlockBadge}
         />
 
-        {/* Cyber Divider 03 */}
-        <div className="relative border-t border-[#182030] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2.5 text-[10px] font-mono text-cyan-400/60 uppercase tracking-widest">
-            <span className="flex items-center gap-2"><span className="text-cyan-400">[+]</span> SECTION 03 // 04</span>
-            <span className="flex items-center gap-2">INCIDENT DISPATCH <span className="text-cyan-400">[+]</span></span>
-          </div>
-        </div>
+        {/* Clean Minimal Divider 03 */}
+        <div className="border-t border-[#182030]/60 max-w-7xl mx-auto my-4" />
 
         <DiagnosticFramework
           externalSelectedId={selectedDiagnosticId}
@@ -287,13 +272,8 @@ export default function HomePage() {
           onUnlockBadge={unlockBadge}
         />
 
-        {/* Cyber Divider 04 */}
-        <div className="relative border-t border-[#182030] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2.5 text-[10px] font-mono text-cyan-400/60 uppercase tracking-widest">
-            <span className="flex items-center gap-2"><span className="text-cyan-400">[+]</span> SECTION 04 // 04</span>
-            <span className="flex items-center gap-2">EXECUTION CONSOLE <span className="text-cyan-400">[+]</span></span>
-          </div>
-        </div>
+        {/* Clean Minimal Divider 04 */}
+        <div className="border-t border-[#182030]/60 max-w-7xl mx-auto my-4" />
 
         <TerminalSimulator
           onMatchedDiagnostic={handleMatchedDiagnostic}

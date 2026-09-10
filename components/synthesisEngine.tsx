@@ -163,25 +163,20 @@ export function SynthesisEngine({
     <section id="synthesis" className="py-16 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-3 uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-2 uppercase tracking-widest">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
-              <span>[01 // COMMAND SYNTHESIS ENGINE]</span>
+              <span>01 • COMMAND GENERATOR</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-cyber text-white tracking-tight uppercase leading-none cyberCyanGlow">
-              Command Synthesis Engine
+            <h2 className="text-2xl sm:text-4xl font-cyber text-white tracking-tight uppercase">
+              Command Synthesis
             </h2>
-            <p className="text-sm text-neutral-400 mt-3 max-w-2xl leading-relaxed">
-              Select a developer scenario, calibrate parameters, and receive
-              sanitized, copy-ready Git commands with step-by-step mental models.
+            <p className="text-sm text-neutral-400 mt-2 max-w-2xl leading-relaxed">
+              Select a Git workflow, calibrate your parameters, and receive verified, copy-ready commands with clear mental models.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#07090e] border border-[#182030] text-xs font-mono text-neutral-400 uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block animate-pulse" />
-              <span>Sanitizer: Active</span>
-            </div>
             <button
               type="button"
               onClick={handleResetDefaults}
@@ -202,16 +197,16 @@ export function SynthesisEngine({
                 key={scenario.id}
                 type="button"
                 onClick={() => { sounds.playClick(); setSelectedScenarioId(scenario.id); }}
-                className={`px-3.5 py-2 rounded-md text-xs font-mono uppercase whitespace-nowrap transition-all duration-150 flex items-center gap-2 border focus:outline-none focus:ring-1 focus:ring-cyan-400 ${
+                className={`px-3 py-2 rounded-lg text-xs font-mono whitespace-nowrap transition-all duration-150 flex items-center gap-2 border focus:outline-none focus:ring-1 focus:ring-cyan-400 ${
                   isSelected
-                    ? "bg-cyan-400 text-black border-cyan-400 font-bold cyberBoxGlowMedium"
+                    ? "bg-cyan-400 text-black border-cyan-400 font-bold cyberBoxGlowSmall"
                     : "bg-[#07090e] text-neutral-400 hover:text-white hover:bg-[#0c1018] border-[#182030]"
                 }`}
               >
                 <span>{scenario.title}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                    isSelected ? "bg-black/20 text-black font-bold" : "bg-[#0f131f] text-neutral-500"
+                    isSelected ? "bg-black/20 text-black font-semibold" : "bg-[#0f131f] text-neutral-500"
                   }`}
                 >
                   {scenario.tag}
@@ -292,8 +287,8 @@ export function SynthesisEngine({
 
             {/* Steps Progress Overview */}
             <div className="mt-6 pt-5 border-t border-[#182030]">
-              <h4 className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest mb-2.5">
-                // Sequence Matrix — {activeScenario.steps.length} steps
+              <h4 className="text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2.5">
+                Workflow Steps ({activeScenario.steps.length})
               </h4>
               <div className="space-y-1.5">
                 {activeScenario.steps.map((step, idx) => (

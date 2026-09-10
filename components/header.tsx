@@ -73,43 +73,36 @@ export function Header({
                 <span className="text-sm font-cyber font-bold tracking-wider text-white group-hover:text-cyan-400 transition-colors uppercase">
                   Git Lantern
                 </span>
-                <span className="hidden sm:inline-block px-1.5 py-0.2 text-[9px] font-mono font-semibold rounded bg-cyan-500/10 text-cyan-400 border border-cyan-400/30">
-                  PORTAL // 2200
-                </span>
               </div>
             </div>
           </Link>
         </div>
 
-        {/* Section Navigation (The Nifty Portal HUD Nav) */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-mono text-neutral-400 uppercase tracking-wider">
+        {/* Clean Section Navigation */}
+        <nav className="hidden md:flex items-center gap-7 text-xs font-mono text-neutral-400">
           <a
             href="#synthesis"
-            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400 flex items-center gap-1.5"
+            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400"
           >
-            <span className="text-cyan-400 opacity-70">[01]</span>
-            <span>Synthesis</span>
+            Synthesis
           </a>
           <a
             href="#pipeline"
-            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400 flex items-center gap-1.5"
+            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400"
           >
-            <span className="text-cyan-400 opacity-70">[02]</span>
-            <span>Pipeline</span>
+            State Pipeline
           </a>
           <a
             href="#diagnostics"
-            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400 flex items-center gap-1.5"
+            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400"
           >
-            <span className="text-cyan-400 opacity-70">[03]</span>
-            <span>Recovery</span>
+            Recovery
           </a>
           <a
             href="#terminal"
-            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400 flex items-center gap-1.5"
+            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400"
           >
-            <span className="text-cyan-400 opacity-70">[04]</span>
-            <span>Sandbox</span>
+            Terminal
           </a>
         </nav>
 

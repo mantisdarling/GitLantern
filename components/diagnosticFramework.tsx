@@ -91,16 +91,15 @@ export function DiagnosticFramework({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-3 uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-2 uppercase tracking-widest">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
-              <span>[03 // INCIDENT DIAGNOSTIC & RECOVERY DISPATCH]</span>
+              <span>03 • TROUBLESHOOTING & RECOVERY</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-cyber text-white tracking-tight uppercase leading-none cyberCyanGlow">
-              Incident Diagnostic Matrix
+            <h2 className="text-2xl sm:text-4xl font-cyber text-white tracking-tight uppercase">
+              Common Issues & Recovery
             </h2>
-            <p className="text-sm text-neutral-400 mt-3 max-w-2xl leading-relaxed">
-              Inspect fatal error states, analyze root cause panic signatures under the hood,
-              and dispatch verified step-by-step recovery commands.
+            <p className="text-sm text-neutral-400 mt-2 max-w-2xl leading-relaxed">
+              Encountered an error or accidental change? Inspect root causes and run step-by-step commands to get your repository back to safety.
             </p>
           </div>
 
