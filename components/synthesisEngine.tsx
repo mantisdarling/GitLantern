@@ -12,7 +12,17 @@ import {
   sanitizeCommitMessage,
   sanitizeGenericInput,
 } from "@/lib/sanitizer";
-import { Terminal, Sparkles, CheckCircle2, ChevronRight, SlidersHorizontal } from "lucide-react";
+import {
+  Terminal,
+  Sparkles,
+  CheckCircle2,
+  ChevronRight,
+  SlidersHorizontal,
+  Play,
+  RotateCcw,
+  Check,
+  Zap,
+} from "lucide-react";
 
 interface SynthesisEngineProps {
   onStageChange?: (stage: StageKey) => void;
@@ -28,6 +38,7 @@ export function SynthesisEngine({
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>("featureBranch");
   const [formValues, setFormValues] = useState<Record<string, string>>({});
   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
+  const [simulatedExecutionIdx, setSimulatedExecutionIdx] = useState<number | null>(null);
 
   const activeScenario: GitScenario = useMemo(() => {
     return gitScenarios.find((s) => s.id === selectedScenarioId) || gitScenarios[0];
@@ -41,6 +52,7 @@ export function SynthesisEngine({
     });
     setFormValues(defaults);
     setActiveStepIndex(0);
+    setSimulatedExecutionIdx(null);
 
     if (onStageChange && activeScenario.steps[0]) {
       onStageChange(activeScenario.steps[0].fromStage);
@@ -70,6 +82,7 @@ export function SynthesisEngine({
   const currentStep: ScenarioStep | undefined = activeScenario.steps[activeStepIndex];
 
   const handleStepSelect = (index: number) => {
+    sounds.playClick();
     setActiveStepIndex(index);
     const targetStep = activeScenario.steps[index];
     if (targetStep) {
@@ -82,6 +95,21 @@ export function SynthesisEngine({
     }
   };
 
+  const handleSimulateRun = (e: React.MouseEvent, index: number, cmd: string, explanation: string, badgeId?: string) => {
+    e.stopPropagation();
+    sounds.playSuccess();
+    setSimulatedExecutionIdx(index);
+    if (onRecordCommand) {
+      onRecordCommand(cmd, explanation);
+    }
+    if (badgeId && onUnlockBadge) {
+      onUnlockBadge(badgeId);
+    }
+    setTimeout(() => {
+      setSimulatedExecutionIdx(null);
+    }, 2000);
+  };
+
   const handleCommandCopied = (command: string, explanation: string, badgeId?: string) => {
     if (onRecordCommand) {
       onRecordCommand(command, explanation);
@@ -91,26 +119,46 @@ export function SynthesisEngine({
     }
   };
 
+  const handleResetDefaults = () => {
+    sounds.playClick();
+    const defaults: Record<string, string> = {};
+    activeScenario.inputs.forEach((input) => {
+      defaults[input.id] = input.defaultValue;
+    });
+    setFormValues(defaults);
+  };
+
   return (
     <section id="synthesis" className="py-16 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2 uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-3 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-gitOrange animate-pulse inline-block" />
               <span>[01 // COMMAND SYNTHESIS ENGINE]</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f6fc] tracking-tight uppercase">
+            <h2 className="text-3xl sm:text-5xl font-display text-[#f0f6fc] tracking-tight uppercase leading-none">
               Command Synthesis Engine
             </h2>
-            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl font-normal">
-              Select your real-world development scenario, customize parameters, and
-              receive bulletproof Git commands verified for immediate execution.
+            <p className="text-sm text-githubDark-muted mt-3 max-w-2xl leading-relaxed">
+              Select a real-world developer scenario, fill in parameters, and receive
+              sanitized, copy-ready Git commands with step-by-step mental models.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs font-mono text-githubDark-muted uppercase">
-            <span className="w-2 h-2 rounded-full bg-gitOrange inline-block animate-pulse" />
-            <span>Sanitizer: Active</span>
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#0f131a] border border-[#1e2330] text-xs font-mono text-githubDark-muted uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-gitOrange inline-block animate-pulse" />
+              <span>Sanitizer: Active</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleResetDefaults}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#141923] border border-[#1e2330] hover:border-gitOrange/50 text-xs font-mono text-neutral-300 hover:text-white transition-colors uppercase"
+            >
+              <RotateCcw className="w-3.5 h-3.5 text-gitOrange" />
+              Reset
+            </button>
           </div>
         </div>
 
@@ -122,7 +170,7 @@ export function SynthesisEngine({
               <button
                 key={scenario.id}
                 type="button"
-                onClick={() => setSelectedScenarioId(scenario.id)}
+                onClick={() => { sounds.playClick(); setSelectedScenarioId(scenario.id); }}
                 className={`px-3.5 py-2 rounded-md text-xs font-mono uppercase whitespace-nowrap transition-all duration-150 flex items-center gap-2 border focus:outline-none focus:ring-1 focus:ring-gitOrange ${
                   isSelected
                     ? "bg-gitOrange text-white border-gitOrange font-bold shadow-md shadow-gitOrange/20"
@@ -145,8 +193,8 @@ export function SynthesisEngine({
         {/* Main Grid: Inputs Form & Command Generation View */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Dynamic Inputs Form */}
-          <div className="lg:col-span-5 glassCard rounded-2xl p-6 shadow-xl relative">
-            <div className="flex items-center justify-between border-b border-githubDark-borderSubtle pb-4 mb-4">
+          <div className="lg:col-span-5 cerebriumCard rounded-lg p-6 relative border border-[#1e2330] bg-[#090b10]">
+            <div className="flex items-center justify-between border-b border-[#1e2330] pb-4 mb-4">
               <div className="flex items-center gap-2.5">
                 <div className="w-7 h-7 rounded-lg bg-gitOrange/15 border border-gitOrange/30 flex items-center justify-center text-gitOrange">
                   <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -196,9 +244,9 @@ export function SynthesisEngine({
             </form>
 
             {/* Steps Progress Overview */}
-            <div className="mt-6 pt-5 border-t border-githubDark-borderSubtle">
-              <h4 className="text-xs font-medium text-githubDark-muted uppercase tracking-wider mb-2.5">
-                Scenario Sequence ({activeScenario.steps.length} Steps)
+            <div className="mt-6 pt-5 border-t border-[#1e2330]">
+              <h4 className="text-[10px] font-mono text-gitOrange uppercase tracking-widest mb-2.5">
+                // Scenario Sequence — {activeScenario.steps.length} steps
               </h4>
               <div className="space-y-1.5">
                 {activeScenario.steps.map((step, idx) => (
@@ -224,38 +272,58 @@ export function SynthesisEngine({
           </div>
 
           {/* Right Column: Live Synthesized Output */}
-          <div className="lg:col-span-7 space-y-4">
+          <div className="lg:col-span-7 space-y-3">
             {activeScenario.steps.map((step, idx) => {
               const commandString = renderCommand(step.commandTemplate);
               const isSelectedStep = idx === activeStepIndex;
+              const isSimulating = simulatedExecutionIdx === idx;
 
               return (
                 <div
                   key={step.id}
                   onClick={() => handleStepSelect(idx)}
-                  className={`cursor-pointer rounded-xl border p-5 transition-all duration-200 ${
+                  className={`cursor-pointer rounded-lg border p-4 transition-all duration-200 ${
                     isSelectedStep
-                      ? "bg-githubDark-card border-gitOrange/60 shadow-lg shadow-gitOrange/5 ring-1 ring-gitOrange/20"
-                      : "bg-githubDark-card/70 hover:bg-githubDark-card border-githubDark-border opacity-85 hover:opacity-100"
+                      ? "bg-[#0d1017] border-gitOrange/60 ring-1 ring-gitOrange/20"
+                      : "bg-[#0b0e14] hover:bg-[#0d1017] border-[#1e2330] opacity-80 hover:opacity-100"
                   }`}
                 >
                   {/* Step Header */}
                   <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5">
                       <span
-                        className={`w-6 h-6 rounded-full text-xs font-mono font-bold flex items-center justify-center ${
+                        className={`w-5 h-5 rounded text-[10px] font-mono font-bold flex items-center justify-center ${
                           isSelectedStep
                             ? "bg-gitOrange text-white"
-                            : "bg-githubDark-surface text-githubDark-muted border border-githubDark-border"
+                            : "bg-[#141923] text-githubDark-muted border border-[#1e2330]"
                         }`}
                       >
                         {idx + 1}
                       </span>
-                      <span className="text-xs font-mono text-githubDark-muted uppercase tracking-wider">
-                        Stage: {step.fromStage} → {step.toStage}
+                      <span className="text-[10px] font-mono text-githubDark-muted uppercase tracking-wider">
+                        <span className={isSelectedStep ? "text-githubDark-muted" : "text-githubDark-faint"}>{step.fromStage}</span>
+                        <span className="text-githubDark-faint mx-1">→</span>
+                        <span className={isSelectedStep ? "text-gitOrange" : "text-githubDark-muted"}>{step.toStage}</span>
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
+                      {isSelectedStep && (
+                        <button
+                          type="button"
+                          onClick={(e) => handleSimulateRun(e, idx, commandString, step.explanation, step.badgeToUnlock)}
+                          className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-mono uppercase border transition-all duration-150 ${
+                            isSimulating
+                              ? "bg-green-500/20 border-green-500/50 text-green-400"
+                              : "bg-[#141923] border-[#2a3448] text-githubDark-muted hover:text-white hover:border-gitOrange/40"
+                          }`}
+                        >
+                          {isSimulating ? (
+                            <><Check className="w-3 h-3" /> Executed</>
+                          ) : (
+                            <><Play className="w-3 h-3" /> Run</>
+                          )}
+                        </button>
+                      )}
                       <CopyButton
                         textToCopy={commandString}
                         onCopied={() =>
@@ -266,7 +334,7 @@ export function SynthesisEngine({
                   </div>
 
                   {/* Terminal Command Box */}
-                  <div className="bg-githubDark-deep rounded-lg p-3.5 border border-githubDark-border flex items-center justify-between gap-3 font-mono text-sm overflow-x-auto">
+                  <div className="bg-[#06080d] rounded-md p-3 border border-[#1a2030] flex items-center justify-between gap-3 font-mono text-sm overflow-x-auto">
                     <div className="flex items-center gap-2.5">
                       <span className="text-gitOrange select-none font-bold">$</span>
                       <span className="text-githubDark-text font-medium select-all">
@@ -274,18 +342,18 @@ export function SynthesisEngine({
                       </span>
                     </div>
                     {step.badgeToUnlock && (
-                      <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-gitOrange bg-gitOrange/10 border border-gitOrange/25 px-2 py-0.5 rounded">
+                      <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-gitOrange bg-gitOrange/10 border border-gitOrange/25 px-2 py-0.5 rounded shrink-0">
                         <Sparkles className="w-3 h-3" />
                         Unlocks badge
                       </span>
                     )}
                   </div>
 
-                  {/* Plain English Mental Model Explanation */}
-                  <div className="mt-3.5 flex items-start gap-2.5 text-xs text-githubDark-muted leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-gitOrange shrink-0 mt-0.5" />
+                  {/* Mental Model Explanation */}
+                  <div className="mt-3 flex items-start gap-2 text-xs text-githubDark-muted leading-relaxed">
+                    <Zap className="w-3.5 h-3.5 text-gitOrange shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-githubDark-text">Mental Model: </strong>
+                      <strong className="text-githubDark-text font-mono text-[10px] uppercase tracking-wider mr-1.5">Mental Model:</strong>
                       <span>{step.explanation}</span>
                     </div>
                   </div>
