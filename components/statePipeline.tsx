@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { pipelineStages } from "@/lib/diagnosticsData";
 import { StageKey, StageInfo } from "@/lib/types";
 import { CopyButton } from "@/components/ui/copyButton";
@@ -124,11 +125,19 @@ export function StatePipeline({
                       {getStageIcon(stage.iconName)}
                     </div>
 
-                    {/* Glowing Animated Dot indicating active file */}
+                    {/* Glowing Animated Dot indicating active file — powered by Framer Motion */}
                     {isCurrent && (
                       <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gitOrange opacity-75" />
-                        <span className="relative inline-flex rounded-full h-4 w-4 bg-gitOrange border-2 border-githubDark-card" />
+                        <motion.span
+                          animate={{ scale: [1, 1.8, 1], opacity: [0.8, 0, 0.8] }}
+                          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                          className="absolute inline-flex h-full w-full rounded-full bg-gitOrange"
+                        />
+                        <motion.span
+                          animate={{ boxShadow: ["0 0 0 0 rgba(240,80,50,0.5)", "0 0 12px 4px rgba(240,80,50,0)", "0 0 0 0 rgba(240,80,50,0.5)"] }}
+                          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                          className="relative inline-flex rounded-full h-4 w-4 bg-gitOrange border-2 border-githubDark-card"
+                        />
                       </span>
                     )}
                   </div>

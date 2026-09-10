@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
 import { gitScenarios } from "@/lib/scenariosData";
 import { GitScenario, ScenarioStep, StageKey } from "@/lib/types";
 import { CopyButton } from "@/components/ui/copyButton";

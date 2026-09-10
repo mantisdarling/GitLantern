@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { diagnosticCases } from "@/lib/diagnosticsData";
 import { DiagnosticCase } from "@/lib/types";
 import { CopyButton } from "@/components/ui/copyButton";

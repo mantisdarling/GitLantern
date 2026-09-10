@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, Terminal, Layers, ShieldCheck, Check } from "lucide-react";
 
 interface HeroPreviewState {
@@ -88,28 +89,48 @@ export function HeroSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
         {/* Hackathon Pill */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gitOrange/30 bg-gitOrange/10 text-gitOrange text-xs font-mono mb-6 shadow-sm">
+        <motion.div
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gitOrange/30 bg-gitOrange/10 text-gitOrange text-xs font-mono mb-6 shadow-sm"
+        >
           <Sparkles className="w-3.5 h-3.5" />
           <span>Built for FirstCommit Hackathon</span>
-        </div>
+        </motion.div>
 
         {/* Hero Title */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-githubDark-text tracking-tight max-w-4xl leading-[1.15]">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+          className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-githubDark-text tracking-tight max-w-4xl leading-[1.15]"
+        >
           Git made intuitive.{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-gitOrange via-orange-400 to-gitOrange">
             From plain scenario to live command.
           </span>
-        </h1>
+        </motion.h1>
 
         {/* Subtitle */}
-        <p className="mt-5 text-base sm:text-lg text-githubDark-muted max-w-2xl leading-relaxed">
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          className="mt-5 text-base sm:text-lg text-githubDark-muted max-w-2xl leading-relaxed"
+        >
           Junior developers shouldn&apos;t fear Git. Pick your scenario, fill the simple fields,
           and watch exact copy-paste terminal commands synthesize live alongside real-time
           state pipelines and diagnostic recovery wizards.
-        </p>
+        </motion.p>
 
         {/* Action Buttons */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+          className="mt-8 flex flex-wrap items-center justify-center gap-4"
+        >
           <a
             href="#synthesis"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gitOrange hover:bg-gitOrange-600 text-white font-medium text-sm transition-all duration-150 shadow-lg shadow-gitOrange/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gitOrange"
@@ -131,10 +152,15 @@ export function HeroSection() {
             <Terminal className="w-4 h-4 text-gitOrange" />
             <span>Interactive Terminal</span>
           </a>
-        </div>
+        </motion.div>
 
         {/* Autoplay Live Preview Card */}
-        <div className="mt-14 w-full max-w-3xl rounded-xl border border-githubDark-border bg-githubDark-card/90 shadow-2xl backdrop-blur-sm overflow-hidden text-left">
+        <motion.div
+          initial={{ opacity: 0, y: 32, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
+          className="mt-14 w-full max-w-3xl rounded-xl border border-githubDark-border bg-githubDark-card/90 shadow-2xl backdrop-blur-sm overflow-hidden text-left"
+        >
           {/* Terminal Window Chrome */}
           <div className="px-4 py-3 border-b border-githubDark-border bg-githubDark-deep flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -146,9 +172,18 @@ export function HeroSection() {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-mono text-gitOrange px-2 py-0.5 rounded bg-gitOrange/10 border border-gitOrange/30">
-                Stage: {activeStep.currentStage}
-              </span>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={activeStep.currentStage}
+                  initial={{ opacity: 0, x: 8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -8 }}
+                  transition={{ duration: 0.25 }}
+                  className="text-[11px] font-mono text-gitOrange px-2 py-0.5 rounded bg-gitOrange/10 border border-gitOrange/30"
+                >
+                  Stage: {activeStep.currentStage}
+                </motion.span>
+              </AnimatePresence>
             </div>
           </div>
 
@@ -166,12 +201,18 @@ export function HeroSection() {
                   {displayedText}
                 </span>
                 {isTyping && (
-                  <span className="inline-block w-2 h-4 bg-gitOrange animate-pulse" />
+                  <motion.span
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 0.9, repeat: Infinity }}
+                    className="inline-block w-2 h-4 bg-gitOrange"
+                  />
                 )}
               </div>
               <div className="flex items-center gap-1.5 px-2 py-1 rounded text-xs bg-githubDark-surface border border-githubDark-border text-githubDark-muted shrink-0">
                 {activeStep.copied ? (
-                  <Check className="w-3.5 h-3.5 text-gitOrange animate-in zoom-in" />
+                  <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 400 }}>
+                    <Check className="w-3.5 h-3.5 text-gitOrange" />
+                  </motion.span>
                 ) : (
                   <ShieldCheck className="w-3.5 h-3.5 text-gitOrange" />
                 )}
@@ -179,13 +220,23 @@ export function HeroSection() {
               </div>
             </div>
 
-            <div className="text-xs font-sans text-githubDark-muted flex items-start gap-2 bg-githubDark-surface/40 p-3 rounded-lg border border-githubDark-borderSubtle">
-              <span className="text-gitOrange font-mono font-bold text-xs shrink-0">Why:</span>
-              <span className="leading-relaxed">{activeStep.explanation}</span>
-            </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeStep.explanation}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.3 }}
+                className="text-xs font-sans text-githubDark-muted flex items-start gap-2 bg-githubDark-surface/40 p-3 rounded-lg border border-githubDark-borderSubtle"
+              >
+                <span className="text-gitOrange font-mono font-bold text-xs shrink-0">Why:</span>
+                <span className="leading-relaxed">{activeStep.explanation}</span>
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+
