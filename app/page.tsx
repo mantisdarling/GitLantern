@@ -98,12 +98,46 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-githubDark-bg text-githubDark-text selection:bg-gitOrange/20 selection:text-gitOrange relative">
-      {/* 1000whales-inspired Scroll Progress Tracker */}
+    <div className="min-h-screen flex flex-col bg-[#040508] text-[#f0f6fc] selection:bg-cyan-500/20 selection:text-cyan-400 relative">
+      {/* Scroll Progress Tracker */}
       <ScrollProgressBar />
 
       {/* Kinetic Animated Background Canvas */}
       <AnimatedBackground />
+
+      {/* The Nifty Portal Infinite Kinetic Marquee Ticker */}
+      <div className="w-full bg-[#020305] border-b border-[#182030] py-1.5 overflow-hidden select-none z-30 relative font-mono text-[10px] text-cyan-400/85 uppercase tracking-widest">
+        <div className="marqueeTrack gap-8 items-center">
+          <div className="flex items-center gap-8 whitespace-nowrap">
+            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" /> THE NIFTY PORTAL // SPEC 2200.09</span>
+            <span className="text-neutral-600">✦</span>
+            <span>CYBER PROTOCOL: ONLINE</span>
+            <span className="text-neutral-600">✦</span>
+            <span>CLEARANCE: ALPHA-01 PASS VERIFIED</span>
+            <span className="text-neutral-600">✦</span>
+            <span>DAG MACHINE: 4 STATE DOMAINS SYNCHRONIZED</span>
+            <span className="text-neutral-600">✦</span>
+            <span>ZERO LOST COMMITS</span>
+            <span className="text-neutral-600">✦</span>
+            <span>LAT 64.1355° N, 21.8954° W • FREQ 142.8 MHZ</span>
+            <span className="text-neutral-600">✦</span>
+          </div>
+          <div className="flex items-center gap-8 whitespace-nowrap" aria-hidden="true">
+            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" /> THE NIFTY PORTAL // SPEC 2200.09</span>
+            <span className="text-neutral-600">✦</span>
+            <span>CYBER PROTOCOL: ONLINE</span>
+            <span className="text-neutral-600">✦</span>
+            <span>CLEARANCE: ALPHA-01 PASS VERIFIED</span>
+            <span className="text-neutral-600">✦</span>
+            <span>DAG MACHINE: 4 STATE DOMAINS SYNCHRONIZED</span>
+            <span className="text-neutral-600">✦</span>
+            <span>ZERO LOST COMMITS</span>
+            <span className="text-neutral-600">✦</span>
+            <span>LAT 64.1355° N, 21.8954° W • FREQ 142.8 MHZ</span>
+            <span className="text-neutral-600">✦</span>
+          </div>
+        </div>
+      </div>
 
       {/* Top Navigation */}
       <Header
@@ -120,11 +154,11 @@ export default function HomePage() {
       <main className="flex-1">
         <HeroSection />
 
-        {/* Blueprint Divider 01 */}
-        <div className="relative border-t border-[#1e2330] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2 text-[10px] font-mono text-githubDark-faint uppercase tracking-widest">
-            <span>+ [ SECTION 01 / 04 ]</span>
-            <span>SYNTHESIS MATRIX +</span>
+        {/* Cyber Divider 01 */}
+        <div className="relative border-t border-[#182030] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-2.5 text-[10px] font-mono text-cyan-400/60 uppercase tracking-widest">
+            <span className="flex items-center gap-2"><span className="text-cyan-400">[+]</span> SECTION 01 // 04</span>
+            <span className="flex items-center gap-2">SYNTHESIS MATRIX <span className="text-cyan-400">[+]</span></span>
           </div>
         </div>
 
@@ -134,11 +168,11 @@ export default function HomePage() {
           onUnlockBadge={unlockBadge}
         />
 
-        {/* Blueprint Divider 02 */}
-        <div className="relative border-t border-[#1e2330] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2 text-[10px] font-mono text-githubDark-faint uppercase tracking-widest">
-            <span>+ [ SECTION 02 / 04 ]</span>
-            <span>DAG STATE MACHINE +</span>
+        {/* Cyber Divider 02 */}
+        <div className="relative border-t border-[#182030] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-2.5 text-[10px] font-mono text-cyan-400/60 uppercase tracking-widest">
+            <span className="flex items-center gap-2"><span className="text-cyan-400">[+]</span> SECTION 02 // 04</span>
+            <span className="flex items-center gap-2">DAG STATE MACHINE <span className="text-cyan-400">[+]</span></span>
           </div>
         </div>
 
@@ -149,11 +183,11 @@ export default function HomePage() {
           onUnlockBadge={unlockBadge}
         />
 
-        {/* Blueprint Divider 03 */}
-        <div className="relative border-t border-[#1e2330] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2 text-[10px] font-mono text-githubDark-faint uppercase tracking-widest">
-            <span>+ [ SECTION 03 / 04 ]</span>
-            <span>INCIDENT DISPATCH +</span>
+        {/* Cyber Divider 03 */}
+        <div className="relative border-t border-[#182030] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-2.5 text-[10px] font-mono text-cyan-400/60 uppercase tracking-widest">
+            <span className="flex items-center gap-2"><span className="text-cyan-400">[+]</span> SECTION 03 // 04</span>
+            <span className="flex items-center gap-2">INCIDENT DISPATCH <span className="text-cyan-400">[+]</span></span>
           </div>
         </div>
 
@@ -163,11 +197,11 @@ export default function HomePage() {
           onUnlockBadge={unlockBadge}
         />
 
-        {/* Blueprint Divider 04 */}
-        <div className="relative border-t border-[#1e2330] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-2 text-[10px] font-mono text-githubDark-faint uppercase tracking-widest">
-            <span>+ [ SECTION 04 / 04 ]</span>
-            <span>EXECUTION CONSOLE +</span>
+        {/* Cyber Divider 04 */}
+        <div className="relative border-t border-[#182030] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-2.5 text-[10px] font-mono text-cyan-400/60 uppercase tracking-widest">
+            <span className="flex items-center gap-2"><span className="text-cyan-400">[+]</span> SECTION 04 // 04</span>
+            <span className="flex items-center gap-2">EXECUTION CONSOLE <span className="text-cyan-400">[+]</span></span>
           </div>
         </div>
 

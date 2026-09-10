@@ -134,29 +134,29 @@ export function SynthesisEngine({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-3 uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-gitOrange animate-pulse inline-block" />
+            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-3 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
               <span>[01 // COMMAND SYNTHESIS ENGINE]</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-display text-[#f0f6fc] tracking-tight uppercase leading-none">
+            <h2 className="text-3xl sm:text-5xl font-cyber text-white tracking-tight uppercase leading-none cyberCyanGlow">
               Command Synthesis Engine
             </h2>
-            <p className="text-sm text-githubDark-muted mt-3 max-w-2xl leading-relaxed">
-              Select a real-world developer scenario, fill in parameters, and receive
+            <p className="text-sm text-neutral-400 mt-3 max-w-2xl leading-relaxed">
+              Select a developer scenario, calibrate parameters, and receive
               sanitized, copy-ready Git commands with step-by-step mental models.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#0f131a] border border-[#1e2330] text-xs font-mono text-githubDark-muted uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-gitOrange inline-block animate-pulse" />
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#07090e] border border-[#182030] text-xs font-mono text-neutral-400 uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block animate-pulse" />
               <span>Sanitizer: Active</span>
             </div>
             <button
               type="button"
               onClick={handleResetDefaults}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#141923] border border-[#1e2330] hover:border-gitOrange/50 text-xs font-mono text-neutral-300 hover:text-white transition-colors uppercase"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#0b0e16] border border-[#182030] hover:border-cyan-400/50 text-xs font-mono text-neutral-300 hover:text-white transition-colors uppercase"
             >
-              <RotateCcw className="w-3.5 h-3.5 text-gitOrange" />
+              <RotateCcw className="w-3.5 h-3.5 text-cyan-400" />
               Reset
             </button>
           </div>
@@ -171,16 +171,16 @@ export function SynthesisEngine({
                 key={scenario.id}
                 type="button"
                 onClick={() => { sounds.playClick(); setSelectedScenarioId(scenario.id); }}
-                className={`px-3.5 py-2 rounded-md text-xs font-mono uppercase whitespace-nowrap transition-all duration-150 flex items-center gap-2 border focus:outline-none focus:ring-1 focus:ring-gitOrange ${
+                className={`px-3.5 py-2 rounded-md text-xs font-mono uppercase whitespace-nowrap transition-all duration-150 flex items-center gap-2 border focus:outline-none focus:ring-1 focus:ring-cyan-400 ${
                   isSelected
-                    ? "bg-gitOrange text-white border-gitOrange font-bold shadow-md shadow-gitOrange/20"
-                    : "bg-[#0f131a] text-githubDark-muted hover:text-[#f0f6fc] hover:bg-[#141923] border-[#1e2330]"
+                    ? "bg-cyan-400 text-black border-cyan-400 font-bold cyberBoxGlowMedium"
+                    : "bg-[#07090e] text-neutral-400 hover:text-white hover:bg-[#0c1018] border-[#182030]"
                 }`}
               >
                 <span>{scenario.title}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                    isSelected ? "bg-black/30 text-white" : "bg-[#141923] text-githubDark-faint"
+                    isSelected ? "bg-black/20 text-black font-bold" : "bg-[#0f131f] text-neutral-500"
                   }`}
                 >
                   {scenario.tag}
@@ -193,22 +193,22 @@ export function SynthesisEngine({
         {/* Main Grid: Inputs Form & Command Generation View */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Dynamic Inputs Form */}
-          <div className="lg:col-span-5 cerebriumCard rounded-lg p-6 relative border border-[#1e2330] bg-[#090b10]">
-            <div className="flex items-center justify-between border-b border-[#1e2330] pb-4 mb-4">
+          <div className="lg:col-span-5 cyberPanel cornerReticle rounded-lg p-6 relative border border-[#182030] bg-[#07090e]">
+            <div className="flex items-center justify-between border-b border-[#182030] pb-4 mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-gitOrange/15 border border-gitOrange/30 flex items-center justify-center text-gitOrange">
+                <div className="w-7 h-7 rounded-lg bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-cyan-400">
                   <SlidersHorizontal className="w-3.5 h-3.5" />
                 </div>
-                <h3 className="text-sm font-semibold text-githubDark-text">
+                <h3 className="text-sm font-semibold text-white font-cyber tracking-wider">
                   Scenario Parameters
                 </h3>
               </div>
-              <span className="text-[11px] font-mono text-githubDark-muted">
+              <span className="text-[11px] font-mono text-cyan-400">
                 {activeScenario.inputs.length} field{activeScenario.inputs.length > 1 ? "s" : ""}
               </span>
             </div>
 
-            <p className="text-xs text-githubDark-muted mb-4 leading-relaxed">
+            <p className="text-xs text-neutral-400 mb-4 leading-relaxed">
               {activeScenario.subtitle}
             </p>
 
@@ -218,11 +218,11 @@ export function SynthesisEngine({
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor={input.id}
-                      className="text-xs font-medium text-githubDark-text"
+                      className="text-xs font-medium text-neutral-300"
                     >
                       {input.label}
                     </label>
-                    <span className="text-[10px] font-mono text-githubDark-faint uppercase">
+                    <span className="text-[10px] font-mono text-neutral-500 uppercase">
                       {input.inputType}
                     </span>
                   </div>
@@ -234,9 +234,9 @@ export function SynthesisEngine({
                       handleInputChange(input.id, e.target.value, input.inputType)
                     }
                     placeholder={input.placeholder}
-                    className="w-full px-3 py-2 text-xs font-mono rounded-lg bg-githubDark-deep border border-githubDark-border text-githubDark-text placeholder:text-githubDark-faint focus:outline-none focus:border-gitOrange focus:ring-1 focus:ring-gitOrange transition-all"
+                    className="w-full px-3 py-2 text-xs font-mono rounded-lg bg-[#020306] border border-[#182030] text-white placeholder:text-neutral-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all"
                   />
-                  <p className="text-[11px] text-githubDark-muted">
+                  <p className="text-[11px] text-neutral-400">
                     {input.helpText}
                   </p>
                 </div>
@@ -244,9 +244,9 @@ export function SynthesisEngine({
             </form>
 
             {/* Steps Progress Overview */}
-            <div className="mt-6 pt-5 border-t border-[#1e2330]">
-              <h4 className="text-[10px] font-mono text-gitOrange uppercase tracking-widest mb-2.5">
-                // Scenario Sequence — {activeScenario.steps.length} steps
+            <div className="mt-6 pt-5 border-t border-[#182030]">
+              <h4 className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest mb-2.5">
+                // Sequence Matrix — {activeScenario.steps.length} steps
               </h4>
               <div className="space-y-1.5">
                 {activeScenario.steps.map((step, idx) => (
@@ -256,12 +256,12 @@ export function SynthesisEngine({
                     onClick={() => handleStepSelect(idx)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono flex items-center justify-between transition-colors border ${
                       idx === activeStepIndex
-                        ? "bg-gitOrange/10 border-gitOrange/40 text-gitOrange font-semibold"
-                        : "bg-githubDark-surface/40 hover:bg-githubDark-surface border-transparent text-githubDark-muted"
+                        ? "bg-cyan-500/10 border-cyan-400/40 text-cyan-400 font-semibold cyberBoxGlowSmall"
+                        : "bg-[#0b0e16]/60 hover:bg-[#0b0e16] border-transparent text-neutral-400"
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <span className="text-gitOrange font-bold">{idx + 1}.</span>
+                      <span className="text-cyan-400 font-bold">{idx + 1}.</span>
                       <span className="truncate">{renderCommand(step.commandTemplate)}</span>
                     </div>
                     <ChevronRight className="w-3.5 h-3.5 shrink-0 opacity-70" />
@@ -284,8 +284,8 @@ export function SynthesisEngine({
                   onClick={() => handleStepSelect(idx)}
                   className={`cursor-pointer rounded-lg border p-4 transition-all duration-200 ${
                     isSelectedStep
-                      ? "bg-[#0d1017] border-gitOrange/60 ring-1 ring-gitOrange/20"
-                      : "bg-[#0b0e14] hover:bg-[#0d1017] border-[#1e2330] opacity-80 hover:opacity-100"
+                      ? "bg-[#0a0d14] border-cyan-400/60 ring-1 ring-cyan-400/25 cyberBoxGlowMedium"
+                      : "bg-[#07090e] hover:bg-[#0a0d14] border-[#182030] opacity-85 hover:opacity-100"
                   }`}
                 >
                   {/* Step Header */}
@@ -294,16 +294,16 @@ export function SynthesisEngine({
                       <span
                         className={`w-5 h-5 rounded text-[10px] font-mono font-bold flex items-center justify-center ${
                           isSelectedStep
-                            ? "bg-gitOrange text-white"
-                            : "bg-[#141923] text-githubDark-muted border border-[#1e2330]"
+                            ? "bg-cyan-400 text-black cyberBoxGlowSmall"
+                            : "bg-[#0f131f] text-neutral-400 border border-[#182030]"
                         }`}
                       >
                         {idx + 1}
                       </span>
-                      <span className="text-[10px] font-mono text-githubDark-muted uppercase tracking-wider">
-                        <span className={isSelectedStep ? "text-githubDark-muted" : "text-githubDark-faint"}>{step.fromStage}</span>
-                        <span className="text-githubDark-faint mx-1">→</span>
-                        <span className={isSelectedStep ? "text-gitOrange" : "text-githubDark-muted"}>{step.toStage}</span>
+                      <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
+                        <span className={isSelectedStep ? "text-neutral-300" : "text-neutral-500"}>{step.fromStage}</span>
+                        <span className="text-neutral-600 mx-1">→</span>
+                        <span className={isSelectedStep ? "text-cyan-400 font-bold" : "text-neutral-400"}>{step.toStage}</span>
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -313,14 +313,14 @@ export function SynthesisEngine({
                           onClick={(e) => handleSimulateRun(e, idx, commandString, step.explanation, step.badgeToUnlock)}
                           className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-mono uppercase border transition-all duration-150 ${
                             isSimulating
-                              ? "bg-green-500/20 border-green-500/50 text-green-400"
-                              : "bg-[#141923] border-[#2a3448] text-githubDark-muted hover:text-white hover:border-gitOrange/40"
+                              ? "bg-green-500/20 border-green-500/50 text-green-400 cyberGreenBoxGlow"
+                              : "bg-[#0c1018] border-[#182030] text-neutral-300 hover:text-white hover:border-cyan-400/50"
                           }`}
                         >
                           {isSimulating ? (
                             <><Check className="w-3 h-3" /> Executed</>
                           ) : (
-                            <><Play className="w-3 h-3" /> Run</>
+                            <><Play className="w-3 h-3 text-cyan-400" /> Run</>
                           )}
                         </button>
                       )}
@@ -334,26 +334,26 @@ export function SynthesisEngine({
                   </div>
 
                   {/* Terminal Command Box */}
-                  <div className="bg-[#06080d] rounded-md p-3 border border-[#1a2030] flex items-center justify-between gap-3 font-mono text-sm overflow-x-auto">
+                  <div className="bg-[#020306] rounded-md p-3 border border-[#182030] flex items-center justify-between gap-3 font-mono text-sm overflow-x-auto">
                     <div className="flex items-center gap-2.5">
-                      <span className="text-gitOrange select-none font-bold">$</span>
-                      <span className="text-githubDark-text font-medium select-all">
+                      <span className="text-cyan-400 select-none font-bold">$</span>
+                      <span className="text-white font-medium select-all">
                         {commandString}
                       </span>
                     </div>
                     {step.badgeToUnlock && (
-                      <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-gitOrange bg-gitOrange/10 border border-gitOrange/25 px-2 py-0.5 rounded shrink-0">
-                        <Sparkles className="w-3 h-3" />
+                      <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-400/30 px-2 py-0.5 rounded shrink-0">
+                        <Sparkles className="w-3 h-3 text-cyan-400" />
                         Unlocks badge
                       </span>
                     )}
                   </div>
 
                   {/* Mental Model Explanation */}
-                  <div className="mt-3 flex items-start gap-2 text-xs text-githubDark-muted leading-relaxed">
-                    <Zap className="w-3.5 h-3.5 text-gitOrange shrink-0 mt-0.5" />
+                  <div className="mt-3 flex items-start gap-2 text-xs text-neutral-400 leading-relaxed">
+                    <Zap className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-githubDark-text font-mono text-[10px] uppercase tracking-wider mr-1.5">Mental Model:</strong>
+                      <strong className="text-white font-mono text-[10px] uppercase tracking-wider mr-1.5">Mental Model:</strong>
                       <span>{step.explanation}</span>
                     </div>
                   </div>

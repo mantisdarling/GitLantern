@@ -183,37 +183,37 @@ export function TerminalSimulator({
   ];
 
   return (
-    <section id="terminal" className="py-16 scroll-mt-20 border-t border-[#1e2330]">
+    <section id="terminal" className="py-16 scroll-mt-20 border-t border-[#182030]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-3 uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-gitOrange animate-pulse inline-block" />
+            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-3 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
               <span>[04 // ISOLATED EXECUTION SANDBOX & ERROR PARSER]</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-display text-[#f0f6fc] tracking-tight uppercase leading-none">
+            <h2 className="text-3xl sm:text-5xl font-cyber text-white tracking-tight uppercase leading-none cyberCyanGlow">
               Execution Sandbox Console
             </h2>
-            <p className="text-sm text-githubDark-muted mt-3 max-w-2xl leading-relaxed">
+            <p className="text-sm text-neutral-400 mt-3 max-w-2xl leading-relaxed">
               Practice real Git commands in an isolated state machine with history stack and autocompletion,
               or paste raw terminal errors to auto-match root-cause solutions.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 text-xs font-mono text-githubDark-muted">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#0f131a] border border-[#1e2330]">
-              <span className="w-2 h-2 rounded-full bg-gitOrange inline-block animate-pulse" />
-              <span>HEAD: ({gitState.currentBranch})</span>
+          <div className="flex items-center gap-3 text-xs font-mono text-neutral-400">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#07090e] border border-[#182030]">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block animate-pulse" />
+              <span className="text-cyan-400">HEAD: ({gitState.currentBranch})</span>
             </span>
           </div>
         </div>
 
         {/* Real Error Parser Input Box */}
-        <div className="mb-6 p-4 rounded-md border border-[#1e2330] bg-[#0b0e14] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-xl">
-          <div className="flex items-center gap-2.5 text-xs text-[#f0f6fc] shrink-0 font-mono">
-            <ClipboardPaste className="w-4 h-4 text-gitOrange" />
-            <span className="font-bold uppercase tracking-wider">Paste Real Git Error:</span>
+        <div className="mb-6 p-4 rounded-lg border border-[#182030] bg-[#07090e] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-xl cornerReticle">
+          <div className="flex items-center gap-2.5 text-xs text-white shrink-0 font-mono">
+            <ClipboardPaste className="w-4 h-4 text-cyan-400" />
+            <span className="font-bold uppercase tracking-wider font-cyber">Paste Real Git Error:</span>
           </div>
           <div className="flex-1 flex gap-2">
             <input
@@ -226,18 +226,18 @@ export function TerminalSimulator({
                 }
               }}
               placeholder="e.g. fatal: refusing to merge unrelated histories or error: failed to push some refs"
-              className="flex-1 px-3 py-1.5 text-xs font-mono rounded-lg bg-githubDark-deep border border-githubDark-border text-githubDark-text placeholder:text-githubDark-faint focus:outline-none focus:border-gitOrange"
+              className="flex-1 px-3 py-1.5 text-xs font-mono rounded-lg bg-[#020306] border border-[#182030] text-white placeholder:text-neutral-600 focus:outline-none focus:border-cyan-400"
             />
             <button
               type="button"
               onClick={handlePastedErrorParse}
-              className="px-3.5 py-1.5 rounded-lg bg-gitOrange hover:bg-gitOrange-600 text-white text-xs font-medium transition-colors focus:outline-none shrink-0"
+              className="px-4 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-black font-cyber text-xs font-bold transition-colors focus:outline-none shrink-0 cyberBoxGlowMedium"
             >
               Analyze
             </button>
           </div>
           {pasteMatchMessage && (
-            <div className="text-xs font-mono text-gitOrange animate-in fade-in">
+            <div className="text-xs font-mono text-cyan-400 animate-in fade-in">
               {pasteMatchMessage}
             </div>
           )}
@@ -245,17 +245,17 @@ export function TerminalSimulator({
 
         {/* Terminal Chrome Window with Atmospheric Halo */}
         <div className="relative">
-          <div className="absolute -inset-1 bg-gradient-to-r from-gitOrange/20 via-orange-500/10 to-gitOrange/20 rounded-3xl blur-xl -z-10 opacity-70 pointer-events-none" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/10 via-purple-500/5 to-cyan-500/10 rounded-2xl blur-xl -z-10 opacity-70 pointer-events-none" />
 
-          <div className="rounded-2xl border border-githubDark-border bg-githubDark-deep shadow-2xl overflow-hidden font-mono ring-1 ring-white/5">
+          <div className="rounded-lg border border-[#182030] bg-[#040508] shadow-2xl overflow-hidden font-mono ring-1 ring-cyan-500/10 cornerReticle">
             {/* Titlebar */}
-            <div className="px-4 py-3 border-b border-githubDark-border bg-githubDark-card/95 flex items-center justify-between">
+            <div className="px-4 py-3 border-b border-[#182030] bg-[#07090e] flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#ff5f56] inline-block shadow-sm" />
-                <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block shadow-sm" />
-                <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block shadow-sm" />
-                <span className="ml-2 text-xs text-githubDark-muted">
-                  bash — ~/gitlantern ({gitState.currentBranch})
+                <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] inline-block shadow-sm" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] inline-block shadow-sm" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] inline-block shadow-sm" />
+                <span className="ml-2 text-xs text-neutral-400">
+                  cyber-sh — ~/gitlantern ({gitState.currentBranch})
                 </span>
               </div>
 
@@ -275,25 +275,25 @@ export function TerminalSimulator({
             </div>
           </div>
 
-          {/* Terminal Body */}
-          <div className="p-5 min-h-[320px] max-h-[460px] overflow-y-auto space-y-4 text-xs">
+          {/* Terminal Body with Subtle CRT Scanline Effect */}
+          <div className="p-5 min-h-[320px] max-h-[460px] overflow-y-auto space-y-4 text-xs bg-[#020306] crtScanlines">
             {entries.map((item) => (
               <div key={item.id} className="space-y-1">
                 {item.command !== "welcome" && (
-                  <div className="flex items-center gap-2 text-githubDark-muted">
-                    <span className="text-gitOrange font-bold">gitlantern:</span>
-                    <span className="text-gitOrange/80">({gitState.currentBranch})</span>
-                    <span className="text-githubDark-text font-semibold">$ {item.command}</span>
+                  <div className="flex items-center gap-2 text-neutral-400 font-mono">
+                    <span className="text-cyan-400 font-bold">gitlantern:</span>
+                    <span className="text-cyan-400/80">({gitState.currentBranch})</span>
+                    <span className="text-white font-semibold">$ {item.command}</span>
                   </div>
                 )}
                 {item.output && (
                   <div
-                    className={`whitespace-pre-wrap leading-relaxed pl-2 border-l-2 ${
+                    className={`whitespace-pre-wrap leading-relaxed pl-2 border-l-2 font-mono ${
                       item.type === "error"
                         ? "text-red-400 border-red-500/40"
                         : item.type === "system"
-                        ? "text-gitOrange border-gitOrange/40"
-                        : "text-githubDark-text border-githubDark-border"
+                        ? "text-cyan-400 border-cyan-400/40"
+                        : "text-neutral-300 border-[#182030]"
                     }`}
                   >
                     {item.output}
@@ -305,8 +305,8 @@ export function TerminalSimulator({
           </div>
 
           {/* Interactive Command Input Line */}
-          <div className="p-3 bg-githubDark-card/60 border-t border-githubDark-border flex items-center gap-2">
-            <span className="text-gitOrange font-bold select-none pl-2">$</span>
+          <div className="p-3 bg-[#07090e] border-t border-[#182030] flex items-center gap-2">
+            <span className="text-cyan-400 font-bold select-none pl-2">$</span>
             <input
               ref={inputRef}
               type="text"
@@ -314,12 +314,12 @@ export function TerminalSimulator({
               onChange={(e) => setInputCommand(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type Git command (TAB autocomplete, UP/DOWN history, e.g. git status)..."
-              className="flex-1 bg-transparent text-xs text-githubDark-text placeholder:text-githubDark-faint focus:outline-none"
+              className="flex-1 bg-transparent text-xs text-white placeholder:text-neutral-600 focus:outline-none font-mono"
             />
             <button
               type="button"
               onClick={() => handleCommandSubmit(inputCommand)}
-              className="p-1.5 rounded-md bg-gitOrange text-white hover:bg-gitOrange-600 transition-colors"
+              className="p-1.5 rounded-md bg-cyan-400 text-black hover:bg-cyan-300 transition-colors cyberBoxGlowSmall"
               aria-label="Send command"
             >
               <Send className="w-3.5 h-3.5" />
@@ -327,25 +327,25 @@ export function TerminalSimulator({
           </div>
 
           {/* Quick Presets Bar */}
-          <div className="px-4 py-2.5 bg-githubDark-deep border-t border-githubDark-borderSubtle flex items-center justify-between gap-2 overflow-x-auto text-[11px] text-githubDark-muted">
+          <div className="px-4 py-2.5 bg-[#040508] border-t border-[#182030] flex items-center justify-between gap-2 overflow-x-auto text-[11px] text-neutral-400">
             <div className="flex items-center gap-2">
-              <span className="shrink-0 text-githubDark-faint">Try:</span>
+              <span className="shrink-0 text-neutral-500 font-mono">Try:</span>
               {quickPresets.map((preset) => (
                 <button
                   key={preset}
                   type="button"
                   onClick={() => handleCommandSubmit(preset)}
-                  className="px-2 py-0.5 rounded bg-githubDark-surface hover:bg-githubDark-elevated text-githubDark-text border border-githubDark-border shrink-0 transition-colors flex items-center gap-1"
+                  className="px-2 py-0.5 rounded bg-[#07090e] hover:bg-[#0c1018] text-neutral-300 hover:text-cyan-400 border border-[#182030] hover:border-cyan-400/40 shrink-0 transition-colors flex items-center gap-1 font-mono"
                 >
                   <span>{preset}</span>
-                  <ArrowUpRight className="w-3 h-3 text-gitOrange" />
+                  <ArrowUpRight className="w-3 h-3 text-cyan-400" />
                 </button>
               ))}
             </div>
-            <div className="hidden md:flex items-center gap-2 text-[10px] text-githubDark-faint shrink-0">
-              <kbd className="px-1.5 py-0.2 rounded bg-githubDark-surface border border-githubDark-border">TAB</kbd>
+            <div className="hidden md:flex items-center gap-2 text-[10px] text-neutral-500 shrink-0 font-mono">
+              <kbd className="px-1.5 py-0.2 rounded bg-[#07090e] border border-[#182030]">TAB</kbd>
               <span>autocomplete</span>
-              <kbd className="px-1.5 py-0.2 rounded bg-githubDark-surface border border-githubDark-border">↑↓</kbd>
+              <kbd className="px-1.5 py-0.2 rounded bg-[#07090e] border border-[#182030]">↑↓</kbd>
               <span>history</span>
             </div>
           </div>

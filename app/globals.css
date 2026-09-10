@@ -1,15 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@400;600;700;800;900&family=Silkscreen:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --color-bg-deep: #08090d;
-  --color-bg-base: #08090d;
-  --color-card: #0f131a;
-  --color-border: #1e2330;
+  --color-bg-deep: #040508;
+  --color-bg-base: #040508;
+  --color-card: #07090e;
+  --color-border: #182030;
   --color-git-orange: #f05032;
+  --color-cyber-cyan: #00f0ff;
+  --color-cyber-magenta: #b026ff;
+  --color-cyber-green: #00ff66;
 }
 
 * {
@@ -19,20 +22,20 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
-  background-color: #08090d;
+  background-color: #040508;
 }
 
 body {
-  background-color: #08090d;
+  background-color: #040508;
   color: #f0f6fc;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Chakra Petch", "Archivo", "Inter", sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
   position: relative;
   letter-spacing: -0.015em;
 }
 
-/* Cerebrium / Mesh3D Architectural Grid Lines */
+/* The Nifty Portal Retro Dot-Matrix Pattern */
 body::before {
   content: "";
   position: fixed;
@@ -41,56 +44,152 @@ body::before {
   width: 100%;
   height: 100%;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 65%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 65%, transparent 100%);
+    radial-gradient(rgba(0, 240, 255, 0.08) 1px, transparent 0),
+    linear-gradient(to right, rgba(24, 32, 48, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(24, 32, 48, 0.3) 1px, transparent 1px);
+  background-size: 32px 32px, 64px 64px, 64px 64px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 65%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 65%, transparent 100%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Ambient Laser Glow */
+/* Ambient Cyber Portal Nebula Glow */
 body::after {
   content: "";
   position: fixed;
-  top: -200px;
+  top: -150px;
   left: 50%;
   transform: translateX(-50%);
-  width: 900px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(240, 80, 50, 0.1) 0%, rgba(240, 80, 50, 0.02) 45%, transparent 70%);
-  filter: blur(80px);
+  width: 1000px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.07) 0%, rgba(176, 38, 255, 0.05) 35%, rgba(240, 80, 50, 0.04) 60%, transparent 80%);
+  filter: blur(90px);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Cerebrium Precision Technical Cards */
-.cerebriumCard {
-  background: rgba(15, 19, 26, 0.85);
+.cerebriumCard,
+.cyberPanel {
+  background: rgba(7, 9, 14, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(24, 32, 48, 0.9);
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.9), inset 0 1px 0 0 rgba(0, 240, 255, 0.1);
+  position: relative;
 }
 
-.cerebriumCardInteractive {
-  background: rgba(15, 19, 26, 0.85);
+.cerebriumCardInteractive,
+.cyberPanelInteractive {
+  background: rgba(7, 9, 14, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(24, 32, 48, 0.9);
+  box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.9), inset 0 1px 0 0 rgba(0, 240, 255, 0.08);
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
-.cerebriumCardInteractive:hover {
-  background: rgba(20, 26, 36, 0.95);
-  border-color: rgba(240, 80, 50, 0.45);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.9), 0 0 25px -4px rgba(240, 80, 50, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+.cyberPanelInteractive:hover {
+  background: rgba(10, 13, 20, 0.98);
+  border-color: rgba(0, 240, 255, 0.45);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.95), 0 0 24px -4px rgba(0, 240, 255, 0.2), inset 0 1px 0 0 rgba(0, 240, 255, 0.2);
   transform: translateY(-2px);
 }
 
-/* Equalizer Bars for Audio Ticker (Mesh3d style) */
+/* Reticle Corner Brackets */
+.cornerReticle {
+  position: relative;
+}
+.cornerReticle::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #00f0ff;
+  border-left: 2px solid #00f0ff;
+  pointer-events: none;
+}
+.cornerReticle::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid #00f0ff;
+  border-right: 2px solid #00f0ff;
+  pointer-events: none;
+}
+
+/* Cyber Neon Text Glows */
+.cyberCyanGlow {
+  text-shadow: 0 0 14px rgba(0, 240, 255, 0.7), 0 0 30px rgba(0, 240, 255, 0.3);
+}
+
+.cyberMagentaGlow {
+  text-shadow: 0 0 14px rgba(176, 38, 255, 0.7), 0 0 30px rgba(176, 38, 255, 0.3);
+}
+
+.cyberOrangeGlow {
+  text-shadow: 0 0 14px rgba(240, 80, 50, 0.7), 0 0 30px rgba(240, 80, 50, 0.3);
+}
+
+/* Cyber Box Shadow Glows (Strictly Zero Underscores) */
+.cyberBoxGlowSmall {
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+}
+
+.cyberBoxGlowMedium {
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
+}
+
+.cyberBoxGlowLarge {
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.45);
+}
+
+.cyberBoxConsole {
+  box-shadow: 0 16px 40px -16px rgba(0, 240, 255, 0.15);
+}
+
+.cyberGreenBoxGlow {
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+/* CRT Scanline Overlay */
+.crtScanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Infinite Marquee Ticker */
+@keyframes marqueeScrollAnim {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: marqueeScrollAnim 28s linear infinite;
+}
+
+.marqueeTrack:hover {
+  animation-play-state: paused;
+}
+
+/* Equalizer Bars for Audio Ticker */
 @keyframes eqBarOne {
   0%, 100% { height: 4px; }
   50% { height: 14px; }
@@ -124,7 +223,7 @@ body::after {
 }
 
 .glowBorder {
-  box-shadow: 0 0 16px 1px rgba(240, 80, 50, 0.3);
+  box-shadow: 0 0 16px 1px rgba(0, 240, 255, 0.35);
 }
 
 /* Shimmer Sweep Animation */
@@ -145,7 +244,7 @@ body::after {
   left: 0;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.08), transparent);
   animation: shimmerSweepAnim 3s infinite;
 }
 
@@ -156,16 +255,16 @@ body::after {
 }
 
 ::-webkit-scrollbar-track {
-  background: #08090d;
+  background: #040508;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e2330;
+  background: #182030;
   border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #30363d;
+  background: #00f0ff;
 }
 
 .no-scrollbar::-webkit-scrollbar {

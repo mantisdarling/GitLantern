@@ -56,11 +56,11 @@ export function AnimatedBackground() {
     const nodes: NodePoint[] = [];
 
     const colors = [
+      "rgba(0, 240, 255, 0.8)",
+      "rgba(0, 240, 255, 0.45)",
+      "rgba(176, 38, 255, 0.7)",
       "rgba(240, 80, 50, 0.7)",
-      "rgba(240, 80, 50, 0.4)",
-      "rgba(56, 189, 248, 0.5)",
-      "rgba(168, 85, 247, 0.4)",
-      "rgba(251, 146, 60, 0.6)",
+      "rgba(0, 255, 102, 0.5)",
     ];
 
     for (let i = 0; i < nodeCount; i++) {
@@ -89,7 +89,7 @@ export function AnimatedBackground() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Draw glowing interactive cursor orb
+      // 1. Draw glowing interactive cursor orb in cyber cyan & orange
       const cursorGlow = ctx.createRadialGradient(
         mouseX,
         mouseY,
@@ -98,16 +98,17 @@ export function AnimatedBackground() {
         mouseY,
         340
       );
-      cursorGlow.addColorStop(0, "rgba(240, 80, 50, 0.09)");
-      cursorGlow.addColorStop(0.5, "rgba(240, 80, 50, 0.03)");
+      cursorGlow.addColorStop(0, "rgba(0, 240, 255, 0.08)");
+      cursorGlow.addColorStop(0.4, "rgba(176, 38, 255, 0.04)");
+      cursorGlow.addColorStop(0.7, "rgba(240, 80, 50, 0.02)");
       cursorGlow.addColorStop(1, "transparent");
       ctx.fillStyle = cursorGlow;
       ctx.fillRect(0, 0, width, height);
 
-      // 2. Blueprint Architectural Crosshairs (+)
+      // 2. Cyber HUD Crosshairs (+)
       const crossSize = 4;
       const step = 96;
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+      ctx.strokeStyle = "rgba(0, 240, 255, 0.05)";
       ctx.lineWidth = 1;
       for (let x = step; x < width; x += step) {
         for (let y = step; y < height; y += step) {
@@ -165,21 +166,21 @@ export function AnimatedBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < 150) {
-            const alpha = (1 - dist / 150) * 0.28;
+            const alpha = (1 - dist / 150) * 0.22;
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = `rgba(240, 80, 50, ${alpha})`;
-            ctx.lineWidth = 0.9;
+            ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
+            ctx.lineWidth = 0.85;
             ctx.stroke();
 
             // Connect mouse if close
             if (mdist < 140) {
-              const mouseAlpha = (1 - mdist / 140) * 0.12;
+              const mouseAlpha = (1 - mdist / 140) * 0.15;
               ctx.beginPath();
               ctx.moveTo(node.x, node.y);
               ctx.lineTo(mouseX, mouseY);
-              ctx.strokeStyle = `rgba(255, 255, 255, ${mouseAlpha})`;
+              ctx.strokeStyle = `rgba(0, 240, 255, ${mouseAlpha})`;
               ctx.lineWidth = 0.6;
               ctx.stroke();
             }
@@ -189,7 +190,7 @@ export function AnimatedBackground() {
 
       // 4. Data Packets traveling along edges (packet traffic)
       packetTimer += 1;
-      if (packetTimer % 45 === 0 && nodes.length > 5) {
+      if (packetTimer % 40 === 0 && nodes.length > 5) {
         const start = Math.floor(Math.random() * nodes.length);
         let nearest = -1;
         let minDist = 150;
@@ -227,9 +228,9 @@ export function AnimatedBackground() {
 
         ctx.beginPath();
         ctx.arc(px, py, 2.2, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
-        ctx.shadowColor = "#f05032";
-        ctx.shadowBlur = 8;
+        ctx.fillStyle = "#00f0ff";
+        ctx.shadowColor = "#00f0ff";
+        ctx.shadowBlur = 10;
         ctx.fill();
         ctx.shadowBlur = 0;
       }

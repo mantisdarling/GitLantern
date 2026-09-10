@@ -35,8 +35,21 @@ const config: Config = {
           muted: "#8b94a7",
           faint: "#485368",
         },
+        cyber: {
+          cyan: "#00f0ff",
+          magenta: "#b026ff",
+          green: "#00ff66",
+          orange: "#f05032",
+          dark: "#040508",
+          panel: "#07090e",
+          border: "#182030",
+          borderGlow: "#00f0ff33",
+        },
       },
       fontFamily: {
+        cyber: ["Orbitron", "sans-serif"],
+        tech: ["Chakra Petch", "sans-serif"],
+        pixel: ["Silkscreen", "monospace"],
         display: ["Anton", "sans-serif"],
         sans: [
           "Archivo",
