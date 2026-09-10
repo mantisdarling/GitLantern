@@ -55,9 +55,14 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-githubDark-borderSubtle flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-githubDark-faint">
+        <div className="mt-8 pt-6 border-t border-githubDark-borderSubtle flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-githubDark-faint font-mono">
           <p>© {new Date().getFullYear()} Git Lantern. Open source under MIT License.</p>
-          <p className="flex items-center gap-1">
+          <div className="flex items-center gap-4 text-[10px] uppercase tracking-widest text-neutral-500">
+            <span>SYS REG: 64.1355° N, 21.8954° W</span>
+            <span>•</span>
+            <span>BUILD: 2026.09.10</span>
+          </div>
+          <p className="flex items-center gap-1 font-sans">
             Crafted with <Heart className="w-3 h-3 text-gitOrange inline" /> for junior developers everywhere
           </p>
         </div>

@@ -123,7 +123,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-[#f0f6fc] leading-[1.02] uppercase font-sans"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black tracking-tight text-[#f0f6fc] leading-[1.0] uppercase font-display"
           >
             The State of Your Git Repository.
           </motion.h1>

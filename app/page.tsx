@@ -18,6 +18,7 @@ import { useBadges } from "@/hooks/useBadges";
 import { StageKey } from "@/lib/types";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { downloadCheatsheet } from "@/lib/exportCheatsheet";
+import { ScrollProgressBar } from "@/components/scrollProgressBar";
 import { sounds } from "@/lib/soundEffects";
 
 export default function HomePage() {
@@ -97,6 +98,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-githubDark-bg text-githubDark-text selection:bg-gitOrange/20 selection:text-gitOrange">
+      {/* 1000whales-inspired Scroll Progress Tracker */}
+      <ScrollProgressBar />
+
       {/* Top Navigation */}
       <Header
         badges={badges}

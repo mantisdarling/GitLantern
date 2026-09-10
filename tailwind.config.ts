@@ -37,7 +37,9 @@ const config: Config = {
         },
       },
       fontFamily: {
+        display: ["Anton", "sans-serif"],
         sans: [
+          "Archivo",
           "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
