@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Check, Copy } from "lucide-react";
 
+import { sounds } from "@/lib/soundEffects";
+
 interface CopyButtonProps {
   textToCopy: string;
   label?: string;
@@ -22,6 +24,7 @@ export function CopyButton({ textToCopy, label, className = "", onCopied }: Copy
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
+      sounds.playSuccess();
       if (onCopied) {
         onCopied();
       }

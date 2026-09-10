@@ -8,13 +8,32 @@ import {
   SimulatedGitState,
 } from "@/lib/terminalCommands";
 import { TerminalEntry } from "@/lib/types";
-import { Terminal, Send, Trash2, ArrowUpRight, ClipboardPaste, Sparkles } from "lucide-react";
+import { sounds } from "@/lib/soundEffects";
+import { Terminal, Send, Trash2, ArrowUpRight, ClipboardPaste } from "lucide-react";
 
 interface TerminalSimulatorProps {
   onMatchedDiagnostic: (diagnosticId: string) => void;
   onRecordCommand?: (command: string, explanation: string) => void;
   onUnlockBadge?: (badgeId: string) => void;
 }
+
+const autocompletions = [
+  "git status",
+  "git add .",
+  "git add -A",
+  "git commit -m",
+  "git branch",
+  "git checkout -b",
+  "git checkout",
+  "git log --oneline",
+  "git log",
+  "git diff",
+  "git push",
+  "git stash",
+  "git stash pop",
+  "clear",
+  "help",
+];
 
 export function TerminalSimulator({
   onMatchedDiagnostic,
@@ -24,12 +43,15 @@ export function TerminalSimulator({
   const [gitState, setGitState] = useState<SimulatedGitState>(initialSimulatedState);
   const [inputCommand, setInputCommand] = useState<string>("");
   const [commandCount, setCommandCount] = useState<number>(0);
+  const [commandHistoryStack, setCommandHistoryStack] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
+
   const [entries, setEntries] = useState<TerminalEntry[]>([
     {
       id: "entry-init",
       command: "welcome",
       output:
-        "Git Lantern Terminal Simulator v1.0 [FirstCommit Hackathon Edition]\nType Git commands (e.g. 'git status', 'git add .', 'git log') or paste a real error message.\nType 'help' for manual.",
+        "Git Lantern Terminal Simulator v1.0 [FirstCommit Hackathon Edition]\nType Git commands (e.g. 'git status', 'git add .', 'git log') or paste a real error message.\nPro-tip: Press TAB for autocompletion and UP/DOWN arrows for command history.",
       type: "system",
       timestamp: "09:00",
     },
@@ -51,9 +73,13 @@ export function TerminalSimulator({
       return;
     }
 
+    sounds.playClick();
+
     if (trimmed === "clear") {
       setEntries([]);
       setInputCommand("");
+      setCommandHistoryStack((prev) => [trimmed, ...prev]);
+      setHistoryIndex(-1);
       return;
     }
 
@@ -69,7 +95,13 @@ export function TerminalSimulator({
     };
 
     setEntries((prev) => [...prev, newEntry]);
+    setCommandHistoryStack((prev) => [trimmed, ...prev.filter((c) => c !== trimmed)]);
+    setHistoryIndex(-1);
     setInputCommand("");
+
+    if (!result.matchedDiagnosticId) {
+      sounds.playSuccess();
+    }
 
     const newCount = commandCount + 1;
     setCommandCount(newCount);
@@ -86,10 +118,46 @@ export function TerminalSimulator({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleCommandSubmit(inputCommand);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (commandHistoryStack.length === 0) {
+        return;
+      }
+      const nextIdx = Math.min(historyIndex + 1, commandHistoryStack.length - 1);
+      setHistoryIndex(nextIdx);
+      setInputCommand(commandHistoryStack[nextIdx]);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (historyIndex <= 0) {
+        setHistoryIndex(-1);
+        setInputCommand("");
+      } else {
+        const prevIdx = historyIndex - 1;
+        setHistoryIndex(prevIdx);
+        setInputCommand(commandHistoryStack[prevIdx]);
+      }
+    } else if (e.key === "Tab") {
+      e.preventDefault();
+      const current = inputCommand.trim().toLowerCase();
+      if (!current) {
+        return;
+      }
+      const match = autocompletions.find((cmd) => cmd.startsWith(current));
+      if (match) {
+        setInputCommand(match);
+        sounds.playClick();
+      }
+    }
+  };
+
   const handlePastedErrorParse = () => {
     if (!pastedErrorInput.trim()) {
       return;
     }
+    sounds.playClick();
     const match = detectErrorSignature(pastedErrorInput);
     if (match) {
       setPasteMatchMessage(`Matched: ${match.title}! Scrolling to diagnostic card...`);
@@ -128,18 +196,20 @@ export function TerminalSimulator({
               Interactive Terminal Simulator
             </h2>
             <p className="text-sm text-githubDark-muted mt-1 max-w-2xl">
-              Practice real Git commands in an isolated sandbox, or paste real terminal errors to auto-match diagnostic solutions.
+              Practice real Git commands in an isolated sandbox with history and autocompletion, or paste real terminal errors to auto-match diagnostic solutions.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono text-githubDark-muted">
-            <span className="w-2 h-2 rounded-full bg-gitOrange inline-block" />
-            <span>Branch: ({gitState.currentBranch})</span>
+          <div className="flex items-center gap-3 text-xs font-mono text-githubDark-muted">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-gitOrange inline-block animate-pulse" />
+              <span>Branch: ({gitState.currentBranch})</span>
+            </span>
           </div>
         </div>
 
         {/* Real Error Parser Input Box */}
-        <div className="mb-6 p-4 rounded-xl bg-githubDark-card border border-githubDark-border flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <div className="mb-6 p-4 rounded-xl bg-githubDark-card border border-githubDark-border flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-md">
           <div className="flex items-center gap-2.5 text-xs text-githubDark-text shrink-0">
             <ClipboardPaste className="w-4 h-4 text-gitOrange" />
             <span className="font-semibold">Paste Real Git Error:</span>
@@ -188,7 +258,10 @@ export function TerminalSimulator({
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                onClick={() => setEntries([])}
+                onClick={() => {
+                  sounds.playClick();
+                  setEntries([]);
+                }}
                 className="text-githubDark-muted hover:text-githubDark-text text-xs flex items-center gap-1 transition-colors"
                 title="Clear screen"
               >
@@ -235,12 +308,8 @@ export function TerminalSimulator({
               type="text"
               value={inputCommand}
               onChange={(e) => setInputCommand(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleCommandSubmit(inputCommand);
-                }
-              }}
-              placeholder="Type Git command here (e.g. git status, git log, help)..."
+              onKeyDown={handleKeyDown}
+              placeholder="Type Git command (TAB autocomplete, UP/DOWN history, e.g. git status)..."
               className="flex-1 bg-transparent text-xs text-githubDark-text placeholder:text-githubDark-faint focus:outline-none"
             />
             <button
@@ -254,19 +323,27 @@ export function TerminalSimulator({
           </div>
 
           {/* Quick Presets Bar */}
-          <div className="px-4 py-2.5 bg-githubDark-deep border-t border-githubDark-borderSubtle flex items-center gap-2 overflow-x-auto text-[11px] text-githubDark-muted">
-            <span className="shrink-0 text-githubDark-faint">Try:</span>
-            {quickPresets.map((preset) => (
-              <button
-                key={preset}
-                type="button"
-                onClick={() => handleCommandSubmit(preset)}
-                className="px-2 py-0.5 rounded bg-githubDark-surface hover:bg-githubDark-elevated text-githubDark-text border border-githubDark-border shrink-0 transition-colors flex items-center gap-1"
-              >
-                <span>{preset}</span>
-                <ArrowUpRight className="w-3 h-3 text-gitOrange" />
-              </button>
-            ))}
+          <div className="px-4 py-2.5 bg-githubDark-deep border-t border-githubDark-borderSubtle flex items-center justify-between gap-2 overflow-x-auto text-[11px] text-githubDark-muted">
+            <div className="flex items-center gap-2">
+              <span className="shrink-0 text-githubDark-faint">Try:</span>
+              {quickPresets.map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => handleCommandSubmit(preset)}
+                  className="px-2 py-0.5 rounded bg-githubDark-surface hover:bg-githubDark-elevated text-githubDark-text border border-githubDark-border shrink-0 transition-colors flex items-center gap-1"
+                >
+                  <span>{preset}</span>
+                  <ArrowUpRight className="w-3 h-3 text-gitOrange" />
+                </button>
+              ))}
+            </div>
+            <div className="hidden md:flex items-center gap-2 text-[10px] text-githubDark-faint shrink-0">
+              <kbd className="px-1.5 py-0.2 rounded bg-githubDark-surface border border-githubDark-border">TAB</kbd>
+              <span>autocomplete</span>
+              <kbd className="px-1.5 py-0.2 rounded bg-githubDark-surface border border-githubDark-border">↑↓</kbd>
+              <span>history</span>
+            </div>
           </div>
         </div>
       </div>

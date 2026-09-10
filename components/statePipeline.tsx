@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { pipelineStages } from "@/lib/diagnosticsData";
 import { StageKey, StageInfo } from "@/lib/types";
 import { CopyButton } from "@/components/ui/copyButton";
+import { CommitGraph } from "@/components/commitGraph";
 import {
   FolderGit2,
   Layers,
@@ -255,6 +256,9 @@ export function StatePipeline({
               </div>
             </div>
           </div>
+
+          {/* Interactive Commit Graph & Branch Tree */}
+          <CommitGraph />
         </div>
       </div>
     </section>

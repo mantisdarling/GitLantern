@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { gitScenarios } from "@/lib/scenariosData";
 import { GitScenario, ScenarioStep, StageKey } from "@/lib/types";
 import { CopyButton } from "@/components/ui/copyButton";
+import { DiffViewer } from "@/components/diffViewer";
+import { sounds } from "@/lib/soundEffects";
 import {
   sanitizeBranchName,
   sanitizeCommitMessage,
@@ -289,6 +291,13 @@ export function SynthesisEngine({
                 </div>
               );
             })}
+
+            {/* Live Code Diff Preview */}
+            <div className="pt-2">
+              <DiffViewer
+                fileName={formValues.filePath || "src/components/lantern.tsx"}
+              />
+            </div>
           </div>
         </div>
       </div>

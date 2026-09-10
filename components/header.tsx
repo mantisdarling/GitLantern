@@ -1,9 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { Flame, History, Award, TerminalSquare, User, ShieldCheck } from "lucide-react";
+import {
+  Flame,
+  History,
+  Award,
+  TerminalSquare,
+  User,
+  ShieldCheck,
+  Search,
+  Volume2,
+  VolumeX,
+  Command,
+} from "lucide-react";
 import { BadgeItem, CommandHistoryItem } from "@/lib/types";
+import { sounds } from "@/lib/soundEffects";
 
 interface HeaderProps {
   badges: BadgeItem[];
@@ -11,6 +23,7 @@ interface HeaderProps {
   onOpenHistory: () => void;
   onOpenBadges: () => void;
   onOpenAuth: () => void;
+  onOpenPalette: () => void;
   userEmail?: string | null;
 }
 
@@ -20,9 +33,19 @@ export function Header({
   onOpenHistory,
   onOpenBadges,
   onOpenAuth,
+  onOpenPalette,
   userEmail,
 }: HeaderProps) {
+  const [soundActive, setSoundActive] = useState<boolean>(sounds.isEnabled());
   const unlockedCount = badges.filter((b) => b.isUnlocked).length;
+
+  const handleToggleSound = () => {
+    const newState = sounds.toggleSound();
+    setSoundActive(newState);
+    if (newState) {
+      sounds.playClick();
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-githubDark-border/70 bg-githubDark-deep/80 backdrop-blur-md transition-colors">
@@ -79,7 +102,36 @@ export function Header({
         </nav>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Command Palette Trigger */}
+          <button
+            type="button"
+            onClick={onOpenPalette}
+            className="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-githubDark-border bg-githubDark-card hover:bg-githubDark-surface text-githubDark-muted hover:text-githubDark-text text-xs transition-all focus:outline-none focus:ring-2 focus:ring-gitOrange/50"
+            title="Open Command Palette (Ctrl+K or Cmd+K)"
+          >
+            <Search className="w-3.5 h-3.5 text-gitOrange" />
+            <span className="text-[11px] font-mono">Quick Search</span>
+            <kbd className="inline-flex items-center text-[10px] font-mono px-1.5 py-0.2 rounded bg-githubDark-surface border border-githubDark-border text-githubDark-faint">
+              <Command className="w-2.5 h-2.5 mr-0.5" />K
+            </kbd>
+          </button>
+
+          {/* Sound Toggle */}
+          <button
+            type="button"
+            onClick={handleToggleSound}
+            className="p-1.5 rounded-lg border border-githubDark-border bg-githubDark-card hover:bg-githubDark-surface text-githubDark-muted hover:text-githubDark-text transition-all focus:outline-none focus:ring-2 focus:ring-gitOrange/50"
+            title={soundActive ? "Mute interface audio" : "Enable interface audio"}
+            aria-label="Toggle UI sound effects"
+          >
+            {soundActive ? (
+              <Volume2 className="w-3.5 h-3.5 text-gitOrange" />
+            ) : (
+              <VolumeX className="w-3.5 h-3.5 text-githubDark-faint" />
+            )}
+          </button>
+
           {/* Badges Button */}
           <button
             type="button"
