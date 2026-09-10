@@ -68,20 +68,21 @@ export function StatePipeline({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-10 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-gitOrange mb-2 uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-gitOrange mb-3 uppercase tracking-widest">
+            <span className="w-1.5 h-1.5 rounded-full bg-gitOrange animate-pulse inline-block" />
             <span>[02 // DIRECTED ACYCLIC GRAPH & STATE MACHINE]</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f6fc] tracking-tight uppercase">
+          <h2 className="text-3xl sm:text-5xl font-display text-[#f0f6fc] tracking-tight uppercase leading-none">
             State Machine Architecture
           </h2>
-          <p className="text-sm text-githubDark-muted mt-2 leading-relaxed font-normal">
+          <p className="text-sm text-githubDark-muted mt-3 leading-relaxed font-normal">
             Track your codebase across Git&apos;s 4 core state domains. Click any node to
             inspect forward transitions and backward rollback vectors.
           </p>
         </div>
 
         {/* Interactive Horizontal Pipeline Diagram */}
-        <div className="relative glassCard rounded-3xl p-6 sm:p-9 shadow-2xl overflow-hidden">
+        <div className="relative cerebriumCard rounded-lg p-6 sm:p-9 border border-[#1e2330] bg-[#090b10] overflow-hidden">
           {/* Subtle Ambient Background Halo */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-32 bg-gitOrange/5 rounded-full blur-3xl pointer-events-none" />
 

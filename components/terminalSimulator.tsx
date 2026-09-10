@@ -188,13 +188,14 @@ export function TerminalSimulator({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2 uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-3 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-gitOrange animate-pulse inline-block" />
               <span>[04 // ISOLATED EXECUTION SANDBOX & ERROR PARSER]</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f6fc] tracking-tight uppercase">
+            <h2 className="text-3xl sm:text-5xl font-display text-[#f0f6fc] tracking-tight uppercase leading-none">
               Execution Sandbox Console
             </h2>
-            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl font-normal">
+            <p className="text-sm text-githubDark-muted mt-3 max-w-2xl leading-relaxed">
               Practice real Git commands in an isolated state machine with history stack and autocompletion,
               or paste raw terminal errors to auto-match root-cause solutions.
             </p>

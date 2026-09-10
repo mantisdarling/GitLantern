@@ -91,13 +91,14 @@ export function DiagnosticFramework({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2 uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-3 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-gitOrange animate-pulse inline-block" />
               <span>[03 // INCIDENT DIAGNOSTIC & RECOVERY DISPATCH]</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f6fc] tracking-tight uppercase">
+            <h2 className="text-3xl sm:text-5xl font-display text-[#f0f6fc] tracking-tight uppercase leading-none">
               Incident Diagnostic Matrix
             </h2>
-            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl font-normal">
+            <p className="text-sm text-githubDark-muted mt-3 max-w-2xl leading-relaxed">
               Inspect fatal error states, analyze root cause panic signatures under the hood,
               and dispatch verified step-by-step recovery commands.
             </p>
@@ -135,10 +136,10 @@ export function DiagnosticFramework({
                 ref={(el) => {
                   cardRefs.current[diag.id] = el;
                 }}
-                className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                className={`rounded-lg border transition-all duration-200 overflow-hidden ${
                   isExpanded
-                    ? "glassCard border-gitOrange/60 shadow-2xl glowBorder ring-1 ring-gitOrange/30"
-                    : "glassCardInteractive border-githubDark-border/60 hover:border-gitOrange/40"
+                    ? "bg-[#0d1017] border-gitOrange/60 ring-1 ring-gitOrange/30 shadow-xl"
+                    : "bg-[#0b0e14] hover:bg-[#0e121a] border-[#1e2330] hover:border-gitOrange/40"
                 }`}
               >
                 {/* Card Header (Clickable) */}
