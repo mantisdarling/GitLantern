@@ -91,16 +91,15 @@ export function DiagnosticFramework({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2">
-              <LifeBuoy className="w-4 h-4" />
-              <span>EXPERIENCE 3 : VISUAL DIAGNOSTIC FRAMEWORK</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2 uppercase tracking-widest">
+              <span>[03 // INCIDENT DIAGNOSTIC & RECOVERY DISPATCH]</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-githubDark-text tracking-tight">
-              Visual Diagnostic Framework
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f6fc] tracking-tight uppercase">
+              Incident Diagnostic Matrix
             </h2>
-            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl">
-              Inspect failure states, understand what actually happened under the hood,
-              and execute step-by-step recovery commands.
+            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl font-normal">
+              Inspect fatal error states, analyze root cause panic signatures under the hood,
+              and dispatch verified step-by-step recovery commands.
             </p>
           </div>
 
@@ -108,10 +107,10 @@ export function DiagnosticFramework({
           <button
             type="button"
             onClick={() => setShowWizard((prev) => !prev)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gitOrange/40 bg-gitOrange/10 hover:bg-gitOrange/20 text-gitOrange text-xs font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-gitOrange/50 shrink-0"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-[#1e2330] bg-[#0f131a] hover:bg-[#141923] text-gitOrange text-xs font-mono uppercase tracking-wider transition-all duration-150 focus:outline-none focus:ring-1 focus:ring-gitOrange shrink-0"
           >
-            <Wand2 className="w-4 h-4" />
-            <span>{showWizard ? "Hide Guided Wizard" : "Guided Undo Wizard"}</span>
+            <Wand2 className="w-3.5 h-3.5" />
+            <span>{showWizard ? "Close Recovery Wizard" : "Launch Guided Wizard"}</span>
           </button>
         </div>
 

@@ -81,20 +81,18 @@ export function CommitGraph() {
   };
 
   return (
-    <div className="bg-githubDark-card border border-githubDark-border rounded-2xl p-6 shadow-xl mt-8">
+    <div className="bg-[#0b0e14] border border-[#1e2330] rounded-md p-6 shadow-xl mt-8 font-mono">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-githubDark-borderSubtle">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#1e2330]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gitOrange/15 border border-gitOrange/30 flex items-center justify-center text-gitOrange">
+          <div className="w-8 h-8 rounded-md bg-[#f05032]/10 border border-[#f05032]/30 flex items-center justify-center text-[#f05032]">
             <GitBranch className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-githubDark-text">
-              Interactive Git Tree & Commit Graph
+            <div className="text-[10px] text-githubDark-faint uppercase tracking-wider">[02.1 // DAG TOPOLOGY]</div>
+            <h3 className="text-sm font-bold text-[#f0f6fc] uppercase tracking-wide">
+              Interactive Commit Graph & Branch Tree
             </h3>
-            <p className="text-xs text-githubDark-muted">
-              Visualize branch forks, HEAD pointers, and commit ancestry in real time
-            </p>
           </div>
         </div>
 

@@ -68,16 +68,15 @@ export function StatePipeline({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-10 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-gitOrange mb-2">
-            <Layers className="w-4 h-4" />
-            <span>EXPERIENCE 2 : STATE MAPPING PIPELINE</span>
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-gitOrange mb-2 uppercase tracking-widest">
+            <span>[02 // DIRECTED ACYCLIC GRAPH & STATE MACHINE]</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-githubDark-text tracking-tight">
-            Git Architecture & State Pipeline
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f6fc] tracking-tight uppercase">
+            State Machine Architecture
           </h2>
-          <p className="text-sm text-githubDark-muted mt-2 leading-relaxed">
-            Watch the glowing file dot illuminate your code&apos;s current position in Git&apos;s 4-stage lifecycle.
-            Click any node to inspect transitions forward and backward.
+          <p className="text-sm text-githubDark-muted mt-2 leading-relaxed font-normal">
+            Track your codebase across Git&apos;s 4 core state domains. Click any node to
+            inspect forward transitions and backward rollback vectors.
           </p>
         </div>
 
@@ -109,21 +108,21 @@ export function StatePipeline({
                   key={stage.id}
                   type="button"
                   onClick={() => handleStageClick(stage.id)}
-                  className={`flex flex-col items-center text-center p-4 rounded-xl border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gitOrange/60 ${
+                  className={`flex flex-col items-center text-center p-4 rounded-md border transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-gitOrange ${
                     isInspected
-                      ? "bg-githubDark-surface border-gitOrange shadow-md shadow-gitOrange/10 ring-1 ring-gitOrange/30"
-                      : "bg-githubDark-deep hover:bg-githubDark-surface/60 border-githubDark-border"
+                      ? "bg-[#141923] border-gitOrange shadow-md shadow-gitOrange/10 ring-1 ring-gitOrange/40"
+                      : "bg-[#0b0e14] hover:bg-[#121722] border-[#1e2330]"
                   }`}
                 >
                   {/* Stage Icon Node with File Dot */}
                   <div className="relative mb-3">
                     <div
-                      className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-200 ${
+                      className={`w-12 h-12 rounded-md flex items-center justify-center transition-all duration-200 ${
                         isCurrent
-                          ? "bg-gitOrange text-white shadow-lg shadow-gitOrange/30 scale-105"
+                          ? "bg-gitOrange text-white shadow-lg shadow-gitOrange/30"
                           : isPassed
                           ? "bg-gitOrange/15 text-gitOrange border border-gitOrange/40"
-                          : "bg-githubDark-surface text-githubDark-muted border border-githubDark-border"
+                          : "bg-[#141923] text-githubDark-muted border border-[#1e2330]"
                       }`}
                     >
                       {getStageIcon(stage.iconName)}

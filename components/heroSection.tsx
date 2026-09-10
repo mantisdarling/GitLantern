@@ -4,14 +4,12 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
-  Sparkles,
   Terminal,
   Layers,
   ShieldCheck,
   Check,
-  Zap,
-  HelpCircle,
-  Command,
+  Cpu,
+  CornerDownRight,
 } from "lucide-react";
 
 interface HeroPreviewState {
@@ -25,35 +23,35 @@ interface HeroPreviewState {
 
 const previewCycleSteps: HeroPreviewState[] = [
   {
-    scenarioTitle: "Starting a New Feature",
+    scenarioTitle: "FEATURE WORKFLOW",
     branchInput: "feature/payment-gate",
     commandText: "git checkout -b feature/payment-gate",
-    explanation: "Creates and switches to an isolated branch for the payment gate.",
-    currentStage: "Working Directory",
+    explanation: "Creates isolated feature branch and re-points HEAD instantly.",
+    currentStage: "STAGE 01 // WORKING TREE",
     copied: false,
   },
   {
-    scenarioTitle: "Staging Modified Files",
+    scenarioTitle: "INDEX PREPARATION",
     branchInput: "feature/payment-gate",
     commandText: "git add src/payments/checkout.tsx",
-    explanation: "Moves the modified checkout code into Git's preparation index.",
-    currentStage: "Staging Area",
+    explanation: "Curates modified blobs into Git's preparation index.",
+    currentStage: "STAGE 02 // STAGING INDEX",
     copied: true,
   },
   {
-    scenarioTitle: "Committing Snapshot",
+    scenarioTitle: "COMMIT SNAPSHOT",
     branchInput: "feature/payment-gate",
     commandText: 'git commit -m "feat: connect stripe checkout webhook"',
-    explanation: "Permanently records your verified staged changes into the local commit history.",
-    currentStage: "Local Repository",
+    explanation: "Permanently records verified snapshot into local DAG graph.",
+    currentStage: "STAGE 03 // LOCAL REPO",
     copied: false,
   },
   {
-    scenarioTitle: "Publishing to GitHub",
+    scenarioTitle: "REMOTE SYNCHRONIZATION",
     branchInput: "feature/payment-gate",
     commandText: "git push -u origin feature/payment-gate",
-    explanation: "Uploads commits to the remote cloud server and establishes upstream tracking.",
-    currentStage: "Remote Server",
+    explanation: "Broadcasts branch commits to cloud upstream with tracking.",
+    currentStage: "STAGE 04 // REMOTE ORIGIN",
     copied: true,
   },
 ];
@@ -65,7 +63,6 @@ export function HeroSection() {
 
   const activeStep = previewCycleSteps[cycleIndex];
 
-  // Auto-playing live typewriter preview
   useEffect(() => {
     let currentPos = 0;
     const fullText = activeStep.commandText;
@@ -80,11 +77,11 @@ export function HeroSection() {
         setIsTyping(false);
         clearInterval(typewriterInterval);
       }
-    }, 45);
+    }, 40);
 
     const advanceTimer = setTimeout(() => {
       setCycleIndex((prev) => (prev + 1) % previewCycleSteps.length);
-    }, 4200);
+    }, 4000);
 
     return () => {
       clearInterval(typewriterInterval);
@@ -93,198 +90,208 @@ export function HeroSection() {
   }, [cycleIndex, activeStep.commandText]);
 
   return (
-    <section className="relative overflow-hidden pt-12 pb-20 md:pt-24 md:pb-28">
-      {/* Background Ambient Conic Halo */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[680px] h-[360px] bg-gradient-to-b from-gitOrange/15 via-gitOrange/5 to-transparent blur-3xl pointer-events-none -z-10" />
+    <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 border-b border-[#1e2330]">
+      {/* Mesh3D / Cerebrium Technical Matrix Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Technical Metadata Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#1e2330] text-[11px] font-mono text-githubDark-muted uppercase tracking-widest">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#f05032] animate-pulse inline-block" />
+            <span className="text-[#f0f6fc]">GIT LANTERN // DEV TOOLS</span>
+          </div>
+          <div className="hidden md:flex items-center gap-6">
+            <span>[ SYSTEM: OPERATIONAL ]</span>
+            <span>[ LATENCY: 0MS ]</span>
+            <span>[ REGION: GLOBAL EDGE ]</span>
+            <span className="text-[#f05032] font-semibold">[ FIRSTCOMMIT 2026 ]</span>
+          </div>
+        </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center relative z-10">
-        {/* Hackathon Pill */}
-        <motion.div
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="shimmerSweep inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gitOrange/35 bg-githubDark-card/80 backdrop-blur-md text-gitOrange text-xs font-mono mb-6 shadow-lg shadow-gitOrange/5"
-        >
-          <span className="w-2 h-2 rounded-full bg-gitOrange animate-ping inline-block" />
-          <span className="font-semibold tracking-wide">FirstCommit Hackathon Winner Entry</span>
-          <span className="text-githubDark-border select-none">•</span>
-          <span className="text-githubDark-muted">Git Synthesis Engine</span>
-        </motion.div>
-
-        {/* Hero Title with Sculpted Gradient Mask */}
-        <motion.h1
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.1, ease: "easeOut" }}
-          className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-[-0.035em] max-w-4xl leading-[1.08]"
-        >
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-neutral-100 to-neutral-400">
-            Master Git without
-          </span>{" "}
-          <br className="hidden sm:inline" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-gitOrange to-orange-400 font-black">
-            the fear of breaking things.
-          </span>
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          className="mt-6 text-base sm:text-lg md:text-xl text-githubDark-muted max-w-2xl leading-relaxed font-normal"
-        >
-          Turns plain everyday developer scenarios into exact, copy-paste ready terminal commands
-          with live state mapping, visual branch trees, and interactive recovery wizards.
-        </motion.p>
-
-        {/* Action Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-          className="mt-9 flex flex-wrap items-center justify-center gap-3.5"
-        >
-          <a
-            href="#synthesis"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gitOrange hover:bg-gitOrange-600 text-white font-semibold text-sm transition-all duration-150 shadow-xl shadow-gitOrange/25 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gitOrange glowAccent"
+        {/* Hero Headline Section */}
+        <div className="pt-12 pb-14 max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-xs font-mono uppercase tracking-widest text-[#f05032] mb-4 flex items-center gap-2"
           >
-            <span>Launch Command Engine</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
-          <a
-            href="#pipeline"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glassCardInteractive text-githubDark-text font-medium text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-gitOrange/50"
+            <span className="text-githubDark-faint">[01]</span>
+            <span>INTERACTIVE GIT SYNTHESIS & RECOVERY INFRASTRUCTURE</span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-[#f0f6fc] leading-[1.02] uppercase font-sans"
           >
-            <Layers className="w-4 h-4 text-gitOrange" />
-            <span>State Pipeline & Tree</span>
-          </a>
-          <a
-            href="#terminal"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glassCardInteractive text-githubDark-muted hover:text-githubDark-text font-medium text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-gitOrange/50"
+            The State of Your Git Repository.
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 text-lg sm:text-xl text-githubDark-muted max-w-3xl leading-relaxed font-normal"
           >
-            <Terminal className="w-4 h-4 text-gitOrange" />
-            <span>Sandbox Terminal</span>
-          </a>
-        </motion.div>
+            Zero guesswork. Transform plain scenarios into verified copy-ready terminal commands
+            with live state mapping, DAG commit visualization, and guided recovery decision trees.
+          </motion.p>
 
-        {/* Micro-Features Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-5 text-xs text-githubDark-muted font-mono"
-        >
-          <div className="flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-gitOrange" />
-            <span>Typewriter Live Generation</span>
-          </div>
-          <span className="text-githubDark-border select-none hidden sm:inline">•</span>
-          <div className="flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-gitOrange" />
-            <span>4-Stage State Pipeline</span>
-          </div>
-          <span className="text-githubDark-border select-none hidden sm:inline">•</span>
-          <div className="flex items-center gap-1.5">
-            <HelpCircle className="w-3.5 h-3.5 text-gitOrange" />
-            <span>Guided Undo Wizard</span>
-          </div>
-          <span className="text-githubDark-border select-none hidden sm:inline">•</span>
-          <div className="flex items-center gap-1.5">
-            <Command className="w-3.5 h-3.5 text-gitOrange" />
-            <span>Cmd+K Palette</span>
-          </div>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-10 flex flex-wrap items-center gap-4 font-mono text-xs"
+          >
+            <a
+              href="#synthesis"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-md bg-[#f05032] hover:bg-[#ea580c] text-white font-bold transition-all duration-150 shadow-lg shadow-[#f05032]/20 active:scale-95 focus:outline-none focus:ring-1 focus:ring-white uppercase tracking-wider"
+            >
+              <span>Initialize Engine</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <a
+              href="#pipeline"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-md border border-[#1e2330] bg-[#0f131a] hover:bg-[#141923] text-[#f0f6fc] font-medium transition-all duration-150 uppercase tracking-wider"
+            >
+              <Layers className="w-4 h-4 text-[#f05032]" />
+              <span>Inspect DAG Pipeline</span>
+            </a>
+            <a
+              href="#terminal"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-md border border-[#1e2330] bg-[#0f131a] hover:bg-[#141923] text-githubDark-muted hover:text-[#f0f6fc] font-medium transition-all duration-150 uppercase tracking-wider"
+            >
+              <Terminal className="w-4 h-4 text-[#f05032]" />
+              <span>Sandbox Console</span>
+            </a>
+          </motion.div>
+        </div>
 
-        {/* Autoplay Live Preview Card with Illuminated Halo */}
-        <motion.div
-          initial={{ opacity: 0, y: 36, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
-          className="mt-12 w-full max-w-3xl relative"
-        >
-          {/* Subtle Orange Atmospheric Glow Behind Terminal */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-gitOrange/20 via-orange-500/10 to-gitOrange/20 rounded-2xl blur-xl -z-10 opacity-70 pointer-events-none" />
-
-          <div className="w-full rounded-2xl border border-githubDark-border bg-githubDark-card/90 shadow-2xl backdrop-blur-xl overflow-hidden text-left ring-1 ring-white/5">
-            {/* Terminal Window Chrome */}
-            <div className="px-4 py-3 border-b border-githubDark-border bg-githubDark-deep/90 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#ff5f56] inline-block shadow-sm" />
-                <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block shadow-sm" />
-                <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block shadow-sm" />
-                <span className="ml-3 text-xs font-mono text-githubDark-muted">
-                  live preview : {activeStep.scenarioTitle}
+        {/* Cerebrium-style Two-Column Live Console Matrix */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 border border-[#1e2330] rounded-lg overflow-hidden bg-[#08090d] shadow-2xl">
+          {/* Left Column: Live Telemetry & Scenario Parameters */}
+          <div className="lg:col-span-4 p-6 border-b lg:border-b-0 lg:border-r border-[#1e2330] bg-[#0b0e14] flex flex-col justify-between">
+            <div className="space-y-4 font-mono text-xs">
+              <div className="flex items-center justify-between pb-3 border-b border-[#1e2330]">
+                <span className="text-githubDark-faint">[TELEMETRY]</span>
+                <span className="text-[#f05032] flex items-center gap-1.5 font-bold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#f05032] animate-ping" />
+                  SYNTHESIZING
                 </span>
               </div>
-              <div className="flex items-center gap-2">
+
+              <div>
+                <span className="text-[10px] text-githubDark-faint uppercase block">Active Scenario</span>
+                <div className="text-sm font-bold text-[#f0f6fc] mt-1">
+                  {activeStep.scenarioTitle}
+                </div>
+              </div>
+
+              <div>
+                <span className="text-[10px] text-githubDark-faint uppercase block">Target Identifier</span>
+                <div className="text-xs text-[#f05032] mt-1 bg-[#141923] p-2 rounded border border-[#1e2330]">
+                  {activeStep.branchInput}
+                </div>
+              </div>
+
+              <div>
+                <span className="text-[10px] text-githubDark-faint uppercase block">Lifecycle Stage</span>
                 <AnimatePresence mode="wait">
-                  <motion.span
+                  <motion.div
                     key={activeStep.currentStage}
-                    initial={{ opacity: 0, x: 8 }}
+                    initial={{ opacity: 0, x: 4 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -8 }}
-                    transition={{ duration: 0.25 }}
-                    className="text-[11px] font-mono text-gitOrange px-2.5 py-0.5 rounded-md bg-gitOrange/10 border border-gitOrange/30 font-medium"
+                    exit={{ opacity: 0, x: -4 }}
+                    className="text-xs text-githubDark-muted mt-1"
                   >
-                    Stage: {activeStep.currentStage}
-                  </motion.span>
+                    {activeStep.currentStage}
+                  </motion.div>
                 </AnimatePresence>
               </div>
             </div>
 
-            {/* Terminal Live Content */}
-            <div className="p-5 font-mono space-y-4">
-              <div className="flex items-center justify-between text-xs text-githubDark-muted border-b border-githubDark-borderSubtle pb-2.5">
-                <span>Scenario: <strong className="text-githubDark-text font-semibold">{activeStep.scenarioTitle}</strong></span>
-                <span className="text-gitOrange font-medium flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gitOrange animate-pulse" />
-                  auto-synthesizing
-                </span>
+            <div className="pt-6 border-t border-[#1e2330] font-mono text-[11px] text-githubDark-faint">
+              <div className="flex items-center justify-between">
+                <span>EXEC: BASH</span>
+                <span>STATUS: 200 OK</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: High-Tech Terminal Window */}
+          <div className="lg:col-span-8 p-6 bg-[#08090d] font-mono flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-xs text-githubDark-muted pb-3 border-b border-[#1e2330]">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-sm bg-[#1e2330] border border-white/20 inline-block" />
+                  <span className="text-[11px] uppercase tracking-wider">TERMINAL // LIVE EXECUTION</span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px]">
+                  <Cpu className="w-3.5 h-3.5 text-[#f05032]" />
+                  <span>OUTPUT: READY</span>
+                </div>
               </div>
 
-              <div className="bg-githubDark-deep/90 p-4 rounded-xl border border-githubDark-border flex items-center justify-between gap-4 shadow-inner">
-                <div className="flex items-center gap-2 overflow-x-auto">
-                  <span className="text-gitOrange select-none font-bold">$</span>
-                  <span className="text-githubDark-text text-sm font-semibold tracking-wide">
+              {/* Main Code Block with Line Numbers */}
+              <div className="p-4 rounded-md bg-[#0f131a] border border-[#1e2330] flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3 overflow-x-auto text-sm font-semibold">
+                  <span className="text-githubDark-faint select-none text-xs">01</span>
+                  <span className="text-[#f05032] select-none">$</span>
+                  <span className="text-[#f0f6fc] tracking-wide">
                     {displayedText}
                   </span>
                   {isTyping && (
                     <motion.span
                       animate={{ opacity: [1, 0, 1] }}
-                      transition={{ duration: 0.85, repeat: Infinity }}
-                      className="inline-block w-2 h-4 bg-gitOrange shadow-sm shadow-gitOrange"
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                      className="inline-block w-2 h-4 bg-[#f05032]"
                     />
                   )}
                 </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs bg-githubDark-surface border border-githubDark-border text-githubDark-muted shrink-0 font-sans">
+
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#141923] border border-[#1e2330] text-githubDark-muted shrink-0 text-xs font-mono">
                   {activeStep.copied ? (
-                    <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 400 }}>
-                      <Check className="w-3.5 h-3.5 text-gitOrange" />
-                    </motion.span>
+                    <span className="flex items-center gap-1 text-[#f05032]">
+                      <Check className="w-3.5 h-3.5" />
+                      <span>COPIED</span>
+                    </span>
                   ) : (
-                    <ShieldCheck className="w-3.5 h-3.5 text-gitOrange" />
+                    <span className="flex items-center gap-1">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#f05032]" />
+                      <span>VALID</span>
+                    </span>
                   )}
-                  <span className="text-[11px] font-medium">Ready</span>
                 </div>
               </div>
 
+              {/* Mental Model Context Box */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStep.explanation}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-xs font-sans text-githubDark-muted flex items-start gap-2.5 bg-githubDark-surface/50 p-3.5 rounded-xl border border-githubDark-borderSubtle"
+                  transition={{ duration: 0.25 }}
+                  className="p-4 rounded-md bg-[#0b0e14] border border-[#1e2330] text-xs leading-relaxed text-githubDark-muted flex items-start gap-2.5"
                 >
-                  <span className="text-gitOrange font-mono font-bold text-xs shrink-0 mt-0.5">Why:</span>
-                  <span className="leading-relaxed text-githubDark-text/90">{activeStep.explanation}</span>
+                  <CornerDownRight className="w-4 h-4 text-[#f05032] shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[#f0f6fc] font-bold uppercase tracking-wider mr-2 font-mono">
+                      Mental Model:
+                    </span>
+                    <span>{activeStep.explanation}</span>
+                  </div>
                 </motion.div>
               </AnimatePresence>
             </div>
+
+            <div className="pt-6 border-t border-[#1e2330] flex items-center justify-between text-[11px] font-mono text-githubDark-faint">
+              <span>SANDBOX: ISOLATED</span>
+              <span>100% GUEST ACCESSIBLE</span>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

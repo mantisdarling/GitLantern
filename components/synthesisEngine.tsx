@@ -97,21 +97,20 @@ export function SynthesisEngine({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2">
-              <Terminal className="w-4 h-4" />
-              <span>EXPERIENCE 1 : SYNTHESIS ENGINE</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2 uppercase tracking-widest">
+              <span>[01 // COMMAND SYNTHESIS ENGINE]</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-githubDark-text tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f6fc] tracking-tight uppercase">
               Command Synthesis Engine
             </h2>
-            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl">
-              Select your real-world development scenario, customize the parameters, and
-              receive bulletproof Git commands explained in human language.
+            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl font-normal">
+              Select your real-world development scenario, customize parameters, and
+              receive bulletproof Git commands verified for immediate execution.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs text-githubDark-muted">
+          <div className="flex items-center gap-2 text-xs font-mono text-githubDark-muted uppercase">
             <span className="w-2 h-2 rounded-full bg-gitOrange inline-block animate-pulse" />
-            <span>Real-time sanitization active</span>
+            <span>Sanitizer: Active</span>
           </div>
         </div>
 
@@ -124,16 +123,16 @@ export function SynthesisEngine({
                 key={scenario.id}
                 type="button"
                 onClick={() => setSelectedScenarioId(scenario.id)}
-                className={`px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-150 flex items-center gap-2 border focus:outline-none focus:ring-2 focus:ring-gitOrange/50 ${
+                className={`px-3.5 py-2 rounded-md text-xs font-mono uppercase whitespace-nowrap transition-all duration-150 flex items-center gap-2 border focus:outline-none focus:ring-1 focus:ring-gitOrange ${
                   isSelected
-                    ? "bg-gitOrange text-white border-gitOrange shadow-md shadow-gitOrange/20 font-semibold"
-                    : "bg-githubDark-card text-githubDark-muted hover:text-githubDark-text hover:bg-githubDark-surface border-githubDark-border"
+                    ? "bg-gitOrange text-white border-gitOrange font-bold shadow-md shadow-gitOrange/20"
+                    : "bg-[#0f131a] text-githubDark-muted hover:text-[#f0f6fc] hover:bg-[#141923] border-[#1e2330]"
                 }`}
               >
                 <span>{scenario.title}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                    isSelected ? "bg-black/20 text-white" : "bg-githubDark-surface text-githubDark-faint"
+                    isSelected ? "bg-black/30 text-white" : "bg-[#141923] text-githubDark-faint"
                   }`}
                 >
                   {scenario.tag}

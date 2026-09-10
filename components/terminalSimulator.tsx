@@ -183,36 +183,36 @@ export function TerminalSimulator({
   ];
 
   return (
-    <section id="terminal" className="py-16 scroll-mt-20 border-t border-githubDark-border/60">
+    <section id="terminal" className="py-16 scroll-mt-20 border-t border-[#1e2330]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2">
-              <Terminal className="w-4 h-4" />
-              <span>POWER TOOL : INTERACTIVE TERMINAL & ERROR PARSER</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-gitOrange mb-2 uppercase tracking-widest">
+              <span>[04 // ISOLATED EXECUTION SANDBOX & ERROR PARSER]</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-githubDark-text tracking-tight">
-              Interactive Terminal Simulator
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f6fc] tracking-tight uppercase">
+              Execution Sandbox Console
             </h2>
-            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl">
-              Practice real Git commands in an isolated sandbox with history and autocompletion, or paste real terminal errors to auto-match diagnostic solutions.
+            <p className="text-sm text-githubDark-muted mt-1 max-w-2xl font-normal">
+              Practice real Git commands in an isolated state machine with history stack and autocompletion,
+              or paste raw terminal errors to auto-match root-cause solutions.
             </p>
           </div>
 
           <div className="flex items-center gap-3 text-xs font-mono text-githubDark-muted">
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#0f131a] border border-[#1e2330]">
               <span className="w-2 h-2 rounded-full bg-gitOrange inline-block animate-pulse" />
-              <span>Branch: ({gitState.currentBranch})</span>
+              <span>HEAD: ({gitState.currentBranch})</span>
             </span>
           </div>
         </div>
 
         {/* Real Error Parser Input Box */}
-        <div className="mb-6 p-4 rounded-2xl glassCard flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-xl">
-          <div className="flex items-center gap-2.5 text-xs text-githubDark-text shrink-0">
+        <div className="mb-6 p-4 rounded-md border border-[#1e2330] bg-[#0b0e14] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-xl">
+          <div className="flex items-center gap-2.5 text-xs text-[#f0f6fc] shrink-0 font-mono">
             <ClipboardPaste className="w-4 h-4 text-gitOrange" />
-            <span className="font-semibold">Paste Real Git Error:</span>
+            <span className="font-bold uppercase tracking-wider">Paste Real Git Error:</span>
           </div>
           <div className="flex-1 flex gap-2">
             <input

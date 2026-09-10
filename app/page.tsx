@@ -112,11 +112,27 @@ export default function HomePage() {
       <main className="flex-1">
         <HeroSection />
 
+        {/* Blueprint Divider 01 */}
+        <div className="relative border-t border-[#1e2330] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-2 text-[10px] font-mono text-githubDark-faint uppercase tracking-widest">
+            <span>+ [ SECTION 01 / 04 ]</span>
+            <span>SYNTHESIS MATRIX +</span>
+          </div>
+        </div>
+
         <SynthesisEngine
           onStageChange={handleStageChange}
           onRecordCommand={handleRecordCommand}
           onUnlockBadge={unlockBadge}
         />
+
+        {/* Blueprint Divider 02 */}
+        <div className="relative border-t border-[#1e2330] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-2 text-[10px] font-mono text-githubDark-faint uppercase tracking-widest">
+            <span>+ [ SECTION 02 / 04 ]</span>
+            <span>DAG STATE MACHINE +</span>
+          </div>
+        </div>
 
         <StatePipeline
           currentStage={currentStage}
@@ -125,11 +141,27 @@ export default function HomePage() {
           onUnlockBadge={unlockBadge}
         />
 
+        {/* Blueprint Divider 03 */}
+        <div className="relative border-t border-[#1e2330] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-2 text-[10px] font-mono text-githubDark-faint uppercase tracking-widest">
+            <span>+ [ SECTION 03 / 04 ]</span>
+            <span>INCIDENT DISPATCH +</span>
+          </div>
+        </div>
+
         <DiagnosticFramework
           externalSelectedId={selectedDiagnosticId}
           onRecordCommand={handleRecordCommand}
           onUnlockBadge={unlockBadge}
         />
+
+        {/* Blueprint Divider 04 */}
+        <div className="relative border-t border-[#1e2330] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-2 text-[10px] font-mono text-githubDark-faint uppercase tracking-widest">
+            <span>+ [ SECTION 04 / 04 ]</span>
+            <span>EXECUTION CONSOLE +</span>
+          </div>
+        </div>
 
         <TerminalSimulator
           onMatchedDiagnostic={handleMatchedDiagnostic}
