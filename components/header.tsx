@@ -10,6 +10,10 @@ import {
   ShieldCheck,
   Search,
   Command,
+  Sun,
+  Moon,
+  HelpCircle,
+  Compass,
 } from "lucide-react";
 import { BadgeItem, CommandHistoryItem } from "@/lib/types";
 import { sounds } from "@/lib/soundEffects";
@@ -21,6 +25,10 @@ interface HeaderProps {
   onOpenBadges: () => void;
   onOpenAuth: () => void;
   onOpenPalette: () => void;
+  onOpenTour?: () => void;
+  onOpenShortcuts?: () => void;
+  onToggleTheme?: () => void;
+  isDark?: boolean;
   userEmail?: string | null;
 }
 
@@ -31,6 +39,10 @@ export function Header({
   onOpenBadges,
   onOpenAuth,
   onOpenPalette,
+  onOpenTour,
+  onOpenShortcuts,
+  onToggleTheme,
+  isDark = true,
   userEmail,
 }: HeaderProps) {
   const [soundActive, setSoundActive] = useState<boolean>(sounds.isEnabled());
@@ -142,6 +154,51 @@ export function Header({
               <Command className="w-2.5 h-2.5 mr-0.5" />K
             </kbd>
           </button>
+
+          {/* Tour Replay Trigger */}
+          {onOpenTour && (
+            <button
+              type="button"
+              onClick={onOpenTour}
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-white text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
+              title="Replay Interactive Spotlight Tour"
+              aria-label="Replay tour"
+            >
+              <Compass className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="hidden lg:inline">Tour</span>
+            </button>
+          )}
+
+          {/* Shortcuts HUD Trigger */}
+          {onOpenShortcuts && (
+            <button
+              type="button"
+              onClick={onOpenShortcuts}
+              className="flex items-center gap-1 px-2 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-white text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
+              title="Keyboard Shortcuts (?)"
+              aria-label="View keyboard shortcuts"
+            >
+              <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="text-[10px] text-neutral-400 font-mono">?</span>
+            </button>
+          )}
+
+          {/* Theme Toggle Trigger */}
+          {onToggleTheme && (
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              className="flex items-center justify-center w-8 h-8 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-cyan-400 text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
+              title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              aria-label="Toggle theme"
+            >
+              {isDark ? (
+                <Sun className="w-3.5 h-3.5 text-cyan-400" />
+              ) : (
+                <Moon className="w-3.5 h-3.5 text-amber-400" />
+              )}
+            </button>
+          )}
 
           {/* Badges Button */}
           <button

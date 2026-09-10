@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { gitScenarios } from "@/lib/scenariosData";
 import { GitScenario, ScenarioStep, StageKey } from "@/lib/types";
 import { CopyButton } from "@/components/ui/copyButton";
@@ -22,27 +22,39 @@ import {
   RotateCcw,
   Check,
   Zap,
+  HelpCircle,
+  ChevronDown,
+  AlertTriangle,
 } from "lucide-react";
 
 interface SynthesisEngineProps {
   onStageChange?: (stage: StageKey) => void;
   onRecordCommand?: (command: string, explanation: string) => void;
   onUnlockBadge?: (badgeId: string) => void;
+  onConfetti?: () => void;
+  onActiveCommandChange?: (command: string) => void;
 }
 
 export function SynthesisEngine({
   onStageChange,
   onRecordCommand,
   onUnlockBadge,
+  onConfetti,
+  onActiveCommandChange,
 }: SynthesisEngineProps) {
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>("featureBranch");
   const [formValues, setFormValues] = useState<Record<string, string>>({});
   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
   const [simulatedExecutionIdx, setSimulatedExecutionIdx] = useState<number | null>(null);
+  const [whyOpenId, setWhyOpenId] = useState<string | null>(null);
 
   const activeScenario: GitScenario = useMemo(() => {
     return gitScenarios.find((s) => s.id === selectedScenarioId) || gitScenarios[0];
   }, [selectedScenarioId]);
+
+  const allInputsEmpty = useMemo(() => {
+    return activeScenario.inputs.every((input) => !formValues[input.id]?.trim());
+  }, [activeScenario, formValues]);
 
   // Initialize form default values whenever scenario changes
   useEffect(() => {
@@ -53,11 +65,24 @@ export function SynthesisEngine({
     setFormValues(defaults);
     setActiveStepIndex(0);
     setSimulatedExecutionIdx(null);
+    setWhyOpenId(null);
 
     if (onStageChange && activeScenario.steps[0]) {
       onStageChange(activeScenario.steps[0].fromStage);
     }
   }, [activeScenario, onStageChange]);
+
+  // Notify parent of active command for keyboard shortcut C
+  useEffect(() => {
+    const step = activeScenario.steps[activeStepIndex];
+    if (step && onActiveCommandChange) {
+      let result = step.commandTemplate;
+      Object.entries(formValues).forEach(([key, val]) => {
+        result = result.replace(new RegExp(`{{${key}}}`, "g"), val || "...");
+      });
+      onActiveCommandChange(result);
+    }
+  }, [activeStepIndex, formValues, activeScenario, onActiveCommandChange]);
 
   const handleInputChange = (inputId: string, rawVal: string, inputType: string) => {
     let cleaned = rawVal;
@@ -99,6 +124,9 @@ export function SynthesisEngine({
     e.stopPropagation();
     sounds.playSuccess();
     setSimulatedExecutionIdx(index);
+    if (onConfetti) {
+      onConfetti();
+    }
     if (onRecordCommand) {
       onRecordCommand(cmd, explanation);
     }
@@ -111,6 +139,9 @@ export function SynthesisEngine({
   };
 
   const handleCommandCopied = (command: string, explanation: string, badgeId?: string) => {
+    if (onConfetti) {
+      onConfetti();
+    }
     if (onRecordCommand) {
       onRecordCommand(command, explanation);
     }
@@ -243,6 +274,22 @@ export function SynthesisEngine({
               ))}
             </form>
 
+            {allInputsEmpty && (
+              <div className="mt-4 p-3 rounded-lg border border-amber-500/30 bg-amber-500/10 text-xs text-amber-300 flex items-start justify-between gap-3">
+                <div>
+                  <span className="font-mono font-bold block mb-1">// BLANK CANVAS DETECTED</span>
+                  <span className="text-amber-200/80">Parameters wiped. Even Octocat needs branch names to push.</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResetDefaults}
+                  className="shrink-0 px-2.5 py-1 rounded bg-amber-400 text-black font-mono font-bold text-[10px] hover:bg-amber-300 transition-colors uppercase"
+                >
+                  Load Example
+                </button>
+              </div>
+            )}
+
             {/* Steps Progress Overview */}
             <div className="mt-6 pt-5 border-t border-[#182030]">
               <h4 className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest mb-2.5">
@@ -357,6 +404,61 @@ export function SynthesisEngine({
                       <span>{step.explanation}</span>
                     </div>
                   </div>
+
+                  {/* Why this command — expandable flag breakdown */}
+                  {step.flagsBreakdown && step.flagsBreakdown.length > 0 && (
+                    <div className="mt-3">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setWhyOpenId(whyOpenId === step.id ? null : step.id);
+                        }}
+                        className="flex items-center gap-1.5 text-[11px] font-mono text-cyan-400/70 hover:text-cyan-400 transition-colors focus:outline-none"
+                      >
+                        <HelpCircle className="w-3.5 h-3.5" />
+                        <span>Why this command?</span>
+                        <ChevronDown
+                          className={`w-3 h-3 transition-transform duration-200 ${whyOpenId === step.id ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                      <AnimatePresence>
+                        {whyOpenId === step.id && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-2 space-y-2 pt-2 border-t border-[#182030]">
+                              {step.flagsBreakdown.map((item) => (
+                                <div key={item.flag} className="rounded-lg bg-[#020306] border border-[#182030] p-3">
+                                  <div className="flex items-center gap-2 mb-1.5">
+                                    <code className="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-[11px] font-mono font-bold">
+                                      {item.flag}
+                                    </code>
+                                    {item.caution && (
+                                      <span className="flex items-center gap-1 text-[9px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 px-1.5 py-0.5 rounded uppercase tracking-wider">
+                                        <AlertTriangle className="w-2.5 h-2.5" />
+                                        Caution
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-[11px] text-neutral-300 leading-relaxed">{item.meaning}</p>
+                                  {item.caution && (
+                                    <p className="mt-1.5 text-[11px] text-amber-400/80 leading-relaxed border-l-2 border-amber-500/40 pl-2">
+                                      {item.caution}
+                                    </p>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
                 </div>
               );
             })}

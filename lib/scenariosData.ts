@@ -96,24 +96,24 @@ export const gitScenarios: GitScenario[] = [
       {
         id: "branchName",
         label: "Feature Branch Name",
-        placeholder: "feature/user-auth",
-        defaultValue: "feature/user-profile-modal",
+        placeholder: "feature/login-page",
+        defaultValue: "feature/login-page",
         helpText: "Use kebab-case with a descriptive prefix like feature/",
         inputType: "branch",
       },
       {
         id: "filePath",
         label: "Modified Files",
-        placeholder: "src/components/profile.tsx",
-        defaultValue: "src/components/userProfile.tsx",
+        placeholder: "src/auth/LoginForm.tsx",
+        defaultValue: "src/auth/LoginForm.tsx",
         helpText: "Specific files to stage or use dot (.) for all",
         inputType: "text",
       },
       {
         id: "commitMessage",
         label: "Commit Message",
-        placeholder: "feat: add user profile modal",
-        defaultValue: "feat: add responsive user profile modal and stats",
+        placeholder: "feat: add login page with OAuth",
+        defaultValue: "feat: add login page with OAuth and form validation",
         helpText: "Use conventional commit format (feat, fix, docs, refactor)",
         inputType: "message",
       },
@@ -127,6 +127,16 @@ export const gitScenarios: GitScenario[] = [
         fromStage: "working",
         toStage: "working",
         badgeToUnlock: "firstBranch",
+        flagsBreakdown: [
+          {
+            flag: "-b",
+            meaning: "Creates the branch AND checks it out in one atomic step. Without -b, 'git checkout' only switches to an existing branch. This is the most common way to start new work.",
+          },
+          {
+            flag: "{{branchName}}",
+            meaning: "The name of the new branch. Convention: use feature/ for features, fix/ for bug fixes, hotfix/ for production patches, docs/ for documentation.",
+          },
+        ],
       },
       {
         id: "stepStageFiles",
@@ -135,6 +145,12 @@ export const gitScenarios: GitScenario[] = [
           "Moves specified changed files from your working directory into the staging area index.",
         fromStage: "working",
         toStage: "staging",
+        flagsBreakdown: [
+          {
+            flag: "{{filePath}}",
+            meaning: "A specific file path (e.g. src/auth/LoginForm.tsx) to stage only that file, or use '.' to stage everything. You can also use glob patterns like 'src/**/*.tsx'.",
+          },
+        ],
       },
       {
         id: "stepCommitFeature",
@@ -144,6 +160,12 @@ export const gitScenarios: GitScenario[] = [
         fromStage: "staging",
         toStage: "local",
         badgeToUnlock: "firstCommit",
+        flagsBreakdown: [
+          {
+            flag: "-m",
+            meaning: "Passes the commit message inline without opening a text editor. For a multi-line message, omit -m so Git opens your editor — the first line is the subject and lines after a blank line are the body.",
+          },
+        ],
       },
       {
         id: "stepPushFeature",
@@ -153,6 +175,12 @@ export const gitScenarios: GitScenario[] = [
         fromStage: "local",
         toStage: "remote",
         badgeToUnlock: "firstPush",
+        flagsBreakdown: [
+          {
+            flag: "-u",
+            meaning: "Short for --set-upstream. Links your local branch to the remote branch permanently. After running this once, 'git push' and 'git pull' on this branch need no extra arguments.",
+          },
+        ],
       },
     ],
   },
@@ -188,6 +216,16 @@ export const gitScenarios: GitScenario[] = [
           "Shelves your uncommitted edits so your working tree is clean to switch branches.",
         fromStage: "working",
         toStage: "working",
+        flagsBreakdown: [
+          {
+            flag: "save",
+            meaning: "Saves the stash with a label. Modern Git prefers 'git stash push -m \"message\"' but 'save' is still widely used and understood.",
+          },
+          {
+            flag: '"wip: ..."',
+            meaning: "A human-readable label so 'git stash list' shows a clear description rather than an auto-generated hash fragment. Always label your stashes.",
+          },
+        ],
       },
       {
         id: "stepSwitchMain",
@@ -196,6 +234,7 @@ export const gitScenarios: GitScenario[] = [
           "Switches back to the production main branch to ensure your hotfix builds on clean code.",
         fromStage: "working",
         toStage: "local",
+        flagsBreakdown: [],
       },
       {
         id: "stepPullLatest",
@@ -204,6 +243,13 @@ export const gitScenarios: GitScenario[] = [
           "Fetches and integrates the latest production code so your hotfix is current.",
         fromStage: "remote",
         toStage: "local",
+        flagsBreakdown: [
+          {
+            flag: "pull",
+            meaning: "A shortcut for 'git fetch' then 'git merge'. Downloads remote changes and merges them into your current branch.",
+            caution: "Consider 'git pull --rebase' to keep a linear history without creating a merge commit node.",
+          },
+        ],
       },
       {
         id: "stepCreateHotfix",
@@ -212,6 +258,12 @@ export const gitScenarios: GitScenario[] = [
           "Spawns the hotfix branch directly from the updated production baseline.",
         fromStage: "local",
         toStage: "working",
+        flagsBreakdown: [
+          {
+            flag: "-b",
+            meaning: "Creates the new branch from your current HEAD (now at the latest production commit after the pull) and checks it out immediately in one step.",
+          },
+        ],
       },
       {
         id: "stepCommitHotfix",
@@ -221,6 +273,17 @@ export const gitScenarios: GitScenario[] = [
         fromStage: "working",
         toStage: "local",
         badgeToUnlock: "firstCommit",
+        flagsBreakdown: [
+          {
+            flag: "-a",
+            meaning: "Auto-stages all modified TRACKED files before committing. Skips a separate 'git add' step. Warning: does not stage brand new untracked files.",
+            caution: "If you created new files as part of this fix, you must run 'git add <newfile>' first. -a only stages modifications to files Git is already tracking.",
+          },
+          {
+            flag: "-m",
+            meaning: "Passes the commit message inline, combined with -a as the shorthand flag -am.",
+          },
+        ],
       },
       {
         id: "stepPushHotfix",
@@ -230,6 +293,12 @@ export const gitScenarios: GitScenario[] = [
         fromStage: "local",
         toStage: "remote",
         badgeToUnlock: "firstPush",
+        flagsBreakdown: [
+          {
+            flag: "-u",
+            meaning: "Sets the upstream tracking reference so the branch can be fetched and reviewed by teammates without additional configuration.",
+          },
+        ],
       },
     ],
   },
@@ -258,6 +327,21 @@ export const gitScenarios: GitScenario[] = [
         fromStage: "local",
         toStage: "staging",
         badgeToUnlock: "timeTraveler",
+        flagsBreakdown: [
+          {
+            flag: "--soft",
+            meaning: "Moves the branch pointer back one commit but leaves the staging area AND working directory untouched. Your code is safe — just uncommitted.",
+          },
+          {
+            flag: "--hard",
+            meaning: "(Alternative) Resets pointer AND discards all staged and working directory changes. Changes are permanently gone (without reflog recovery).",
+            caution: "Never use --hard on shared commits others have pulled. It rewrites history and causes divergence for your team.",
+          },
+          {
+            flag: "HEAD~1",
+            meaning: "A relative ref meaning 'one commit before HEAD'. HEAD~2 goes back two commits. You can also use the commit SHA directly: 'git reset --soft abc1234'.",
+          },
+        ],
       },
       {
         id: "stepUnstage",
@@ -266,6 +350,12 @@ export const gitScenarios: GitScenario[] = [
           "Unstages files so they move back to the working directory as unstaged edits.",
         fromStage: "staging",
         toStage: "working",
+        flagsBreakdown: [
+          {
+            flag: "--staged",
+            meaning: "Tells 'git restore' to operate on the index (staging area) rather than the working directory. Without this flag, 'git restore .' would discard your working directory changes permanently.",
+          },
+        ],
       },
       {
         id: "stepDiscardSpecific",
@@ -274,6 +364,13 @@ export const gitScenarios: GitScenario[] = [
           "Replaces your working directory file with the clean version from the last commit.",
         fromStage: "working",
         toStage: "working",
+        flagsBreakdown: [
+          {
+            flag: "{{targetFile}}",
+            meaning: "The file path to restore. Git replaces its content with what's in the most recent commit (or staging area if --staged was passed).",
+            caution: "This permanently discards working directory changes for this file. They are NOT moved to trash. Use 'git stash' first if you want to keep them temporarily.",
+          },
+        ],
       },
     ],
   },
@@ -309,6 +406,12 @@ export const gitScenarios: GitScenario[] = [
           "Downloads all commits and branch pointers from GitHub without altering local files.",
         fromStage: "remote",
         toStage: "local",
+        flagsBreakdown: [
+          {
+            flag: "fetch",
+            meaning: "Downloads remote refs and objects but does NOT touch your working directory or merge anything. Safe to run at any time. Use 'git log origin/main' to preview changes before rebasing.",
+          },
+        ],
       },
       {
         id: "stepRebase",
@@ -318,6 +421,17 @@ export const gitScenarios: GitScenario[] = [
         fromStage: "local",
         toStage: "local",
         badgeToUnlock: "conflictCrusher",
+        flagsBreakdown: [
+          {
+            flag: "rebase",
+            meaning: "Takes your branch's commits and replays them one-by-one on top of the target. Result: a clean linear history with no merge commit. Contrast with 'git merge' which creates a dedicated merge commit node.",
+          },
+          {
+            flag: "origin/{{baseBranch}}",
+            meaning: "The remote tracking branch to rebase onto — the exact state of main on GitHub after the fetch. More precise than rebasing onto local main which might be behind.",
+            caution: "If conflicts arise, fix each file, run 'git add <file>', then 'git rebase --continue'. Run 'git rebase --abort' to cancel entirely.",
+          },
+        ],
       },
       {
         id: "stepPushWithLease",
@@ -326,6 +440,13 @@ export const gitScenarios: GitScenario[] = [
           "Safely force-pushes your rebased history, aborting if someone else pushed in the meantime.",
         fromStage: "local",
         toStage: "remote",
+        flagsBreakdown: [
+          {
+            flag: "--force-with-lease",
+            meaning: "A safer alternative to --force. Checks that no one else has pushed to the remote branch since your last fetch. If they have, the push fails instead of overwriting their work.",
+            caution: "Never force-push shared branches like main or develop. Only use this on personal feature branches after a rebase.",
+          },
+        ],
       },
     ],
   },
@@ -353,6 +474,16 @@ export const gitScenarios: GitScenario[] = [
           "Shelves both tracked modifications and untracked new files into your stash stack.",
         fromStage: "working",
         toStage: "working",
+        flagsBreakdown: [
+          {
+            flag: "-u",
+            meaning: "Short for --include-untracked. By default 'git stash' only saves tracked files. Adding -u also stashes new files you haven't run 'git add' on yet.",
+          },
+          {
+            flag: '"{{stashNote}}"',
+            meaning: "A descriptive label for the stash entry. Without this, Git generates an unhelpful name like 'WIP on feature/navbar: abc1234 last commit message'. Always label stashes.",
+          },
+        ],
       },
       {
         id: "stepStashList",
@@ -361,6 +492,12 @@ export const gitScenarios: GitScenario[] = [
           "Prints the indexed list of all stashes currently stored in your repository.",
         fromStage: "working",
         toStage: "working",
+        flagsBreakdown: [
+          {
+            flag: "list",
+            meaning: "Shows all entries in your stash stack. stash@{0} is the newest, stash@{1} is before it, etc. Use 'git stash apply stash@{2}' to restore a specific numbered stash.",
+          },
+        ],
       },
       {
         id: "stepStashPop",
@@ -369,6 +506,13 @@ export const gitScenarios: GitScenario[] = [
           "Re-applies the most recent stashed changes to your working tree and deletes it from the stash stack.",
         fromStage: "working",
         toStage: "working",
+        flagsBreakdown: [
+          {
+            flag: "pop",
+            meaning: "Applies stash@{0} and removes it from the stash list. Use 'git stash apply' instead if you want to keep the stash entry after applying it.",
+            caution: "If applying causes conflicts, Git leaves the stash entry in place — resolve conflicts, then manually drop the stash with 'git stash drop'.",
+          },
+        ],
       },
     ],
   },

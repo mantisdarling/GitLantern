@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { HeroSection } from "@/components/heroSection";
@@ -13,6 +13,9 @@ import { BadgeModal } from "@/components/badgeModal";
 import { AuthModal } from "@/components/authModal";
 import { CommandPalette } from "@/components/commandPalette";
 import { BadgeUnlockToast } from "@/components/ui/toast";
+import { OnboardingTour } from "@/components/onboardingTour";
+import { ShortcutsModal } from "@/components/shortcutsModal";
+import { CyberConfetti } from "@/components/ui/cyberConfetti";
 import { useSessionHistory } from "@/hooks/useSessionHistory";
 import { useBadges } from "@/hooks/useBadges";
 import { StageKey } from "@/lib/types";
@@ -22,6 +25,9 @@ import { ScrollProgressBar } from "@/components/scrollProgressBar";
 import { AnimatedBackground } from "@/components/animatedBackground";
 import { sounds } from "@/lib/soundEffects";
 
+const tourSeenKey = "gitlanternTourSeen";
+const stageKeys: StageKey[] = ["working", "staging", "local", "remote"];
+
 export default function HomePage() {
   const [currentStage, setCurrentStage] = useState<StageKey>("working");
   const [selectedDiagnosticId, setSelectedDiagnosticId] = useState<string | null>(null);
@@ -30,7 +36,12 @@ export default function HomePage() {
   const [isBadgesOpen, setIsBadgesOpen] = useState<boolean>(false);
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const [isPaletteOpen, setIsPaletteOpen] = useState<boolean>(false);
+  const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
+  const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [confettiTrigger, setConfettiTrigger] = useState<boolean>(false);
+  const [isDark, setIsDark] = useState<boolean>(true);
+  const activeCommandRef = useRef<string>("");
 
   const { historyItems, addHistoryItem, clearHistory } = useSessionHistory();
   const { badges, unlockBadge, latestBadge, dismissLatestBadge } = useBadges();
@@ -46,25 +57,88 @@ export default function HomePage() {
     }
   }, []);
 
-  // Global keyboard shortcut for Command Palette (Cmd+K / Ctrl+K)
+  // Auto-open tour on first visit
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const seen = localStorage.getItem(tourSeenKey);
+      if (!seen) {
+        const timer = setTimeout(() => setIsTourOpen(true), 900);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, []);
+
+  // Apply theme class to html element
+  useEffect(() => {
+    const html = document.documentElement;
+    if (isDark) {
+      html.classList.remove("light");
+      html.classList.add("dark");
+    } else {
+      html.classList.remove("dark");
+      html.classList.add("light");
+    }
+  }, [isDark]);
+
+  // Confetti + sound on badge unlock
+  useEffect(() => {
+    if (latestBadge) {
+      sounds.playBadgeUnlock();
+      setConfettiTrigger(true);
+    }
+  }, [latestBadge]);
+
+  // Global keyboard shortcuts
   useEffect(() => {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      const isInput = tag === "INPUT" || tag === "TEXTAREA";
+
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         sounds.playClick();
         setIsPaletteOpen((prev) => !prev);
+        return;
+      }
+
+      if (e.key === "Escape") {
+        setIsPaletteOpen(false);
+        setIsShortcutsOpen(false);
+        setIsTourOpen(false);
+        return;
+      }
+
+      if (isInput) return;
+
+      if (e.key === "?") {
+        e.preventDefault();
+        setIsShortcutsOpen((prev) => !prev);
+        return;
+      }
+
+      if (e.key === "c" || e.key === "C") {
+        if (activeCommandRef.current) {
+          navigator.clipboard.writeText(activeCommandRef.current).catch(() => null);
+          sounds.playSuccess();
+          setConfettiTrigger(true);
+        }
+        return;
+      }
+
+      if (["1", "2", "3", "4"].includes(e.key)) {
+        const idx = parseInt(e.key, 10) - 1;
+        const stage = stageKeys[idx];
+        if (stage) {
+          setCurrentStage(stage);
+          const el = document.getElementById("pipeline");
+          el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
       }
     };
+
     window.addEventListener("keydown", handleGlobalKeyDown);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
   }, []);
-
-  // Sound effect when badge is unlocked
-  useEffect(() => {
-    if (latestBadge) {
-      sounds.playBadgeUnlock();
-    }
-  }, [latestBadge]);
 
   const handleStageChange = useCallback((stage: StageKey) => {
     setCurrentStage(stage);
@@ -97,6 +171,10 @@ export default function HomePage() {
     el?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
+  const handleActiveCommandChange = useCallback((command: string) => {
+    activeCommandRef.current = command;
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#040508] text-[#f0f6fc] selection:bg-cyan-500/20 selection:text-cyan-400 relative">
       {/* Scroll Progress Tracker */}
@@ -104,6 +182,12 @@ export default function HomePage() {
 
       {/* Kinetic Animated Background Canvas */}
       <AnimatedBackground />
+
+      {/* Cyber Confetti Burst on badge unlock / copy */}
+      <CyberConfetti
+        trigger={confettiTrigger}
+        onComplete={() => setConfettiTrigger(false)}
+      />
 
       {/* The Nifty Portal Infinite Kinetic Marquee Ticker */}
       <div className="w-full bg-[#020305] border-b border-[#182030] py-1.5 overflow-hidden select-none z-30 relative font-mono text-[10px] text-cyan-400/85 uppercase tracking-widest">
@@ -147,6 +231,10 @@ export default function HomePage() {
         onOpenBadges={() => setIsBadgesOpen(true)}
         onOpenAuth={() => setIsAuthOpen(true)}
         onOpenPalette={() => setIsPaletteOpen(true)}
+        onOpenTour={() => setIsTourOpen(true)}
+        onOpenShortcuts={() => setIsShortcutsOpen(true)}
+        onToggleTheme={() => setIsDark((prev) => !prev)}
+        isDark={isDark}
         userEmail={userEmail}
       />
 
@@ -166,6 +254,8 @@ export default function HomePage() {
           onStageChange={handleStageChange}
           onRecordCommand={handleRecordCommand}
           onUnlockBadge={unlockBadge}
+          onConfetti={() => setConfettiTrigger(true)}
+          onActiveCommandChange={handleActiveCommandChange}
         />
 
         {/* Cyber Divider 02 */}
@@ -238,7 +328,7 @@ export default function HomePage() {
         }}
       />
 
-      {/* Raycast-style Command Palette (Cmd+K / Ctrl+K) */}
+      {/* Command Palette (Cmd+K) */}
       <CommandPalette
         isOpen={isPaletteOpen}
         onClose={() => setIsPaletteOpen(false)}
@@ -248,6 +338,18 @@ export default function HomePage() {
         onOpenBadges={() => setIsBadgesOpen(true)}
         onDownloadCheatsheet={handleDownloadCheatsheet}
         onOpenWizard={handleOpenWizardFromPalette}
+      />
+
+      {/* First-visit Onboarding Spotlight Tour */}
+      <OnboardingTour
+        isOpen={isTourOpen}
+        onClose={() => setIsTourOpen(false)}
+      />
+
+      {/* Keyboard Shortcuts HUD (press ?) */}
+      <ShortcutsModal
+        isOpen={isShortcutsOpen}
+        onClose={() => setIsShortcutsOpen(false)}
       />
 
       {/* Real-time Badge Unlock Toast */}

@@ -9,6 +9,12 @@ export interface ScenarioInputDefinition {
   inputType: "text" | "branch" | "message";
 }
 
+export interface FlagExplanation {
+  flag: string;
+  meaning: string;
+  caution?: string;
+}
+
 export interface ScenarioStep {
   id: string;
   commandTemplate: string;
@@ -16,6 +22,7 @@ export interface ScenarioStep {
   fromStage: StageKey;
   toStage: StageKey;
   badgeToUnlock?: string;
+  flagsBreakdown?: FlagExplanation[];
 }
 
 export interface GitScenario {

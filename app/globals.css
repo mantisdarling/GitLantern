@@ -25,6 +25,11 @@ html {
   background-color: #040508;
 }
 
+html.light {
+  color-scheme: light;
+  background-color: #f8fafc;
+}
+
 body {
   background-color: #040508;
   color: #f0f6fc;
@@ -33,6 +38,11 @@ body {
   min-height: 100vh;
   position: relative;
   letter-spacing: -0.015em;
+}
+
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
 /* The Nifty Portal Retro Dot-Matrix Pattern */
