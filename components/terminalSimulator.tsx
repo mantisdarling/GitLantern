@@ -209,7 +209,7 @@ export function TerminalSimulator({
         </div>
 
         {/* Real Error Parser Input Box */}
-        <div className="mb-6 p-4 rounded-xl bg-githubDark-card border border-githubDark-border flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-md">
+        <div className="mb-6 p-4 rounded-2xl glassCard flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-xl">
           <div className="flex items-center gap-2.5 text-xs text-githubDark-text shrink-0">
             <ClipboardPaste className="w-4 h-4 text-gitOrange" />
             <span className="font-semibold">Paste Real Git Error:</span>
@@ -242,18 +242,21 @@ export function TerminalSimulator({
           )}
         </div>
 
-        {/* Terminal Chrome Window */}
-        <div className="rounded-2xl border border-githubDark-border bg-githubDark-deep shadow-2xl overflow-hidden font-mono">
-          {/* Titlebar */}
-          <div className="px-4 py-3 border-b border-githubDark-border bg-githubDark-card flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
-              <span className="ml-2 text-xs text-githubDark-muted">
-                bash — ~/gitlantern ({gitState.currentBranch})
-              </span>
-            </div>
+        {/* Terminal Chrome Window with Atmospheric Halo */}
+        <div className="relative">
+          <div className="absolute -inset-1 bg-gradient-to-r from-gitOrange/20 via-orange-500/10 to-gitOrange/20 rounded-3xl blur-xl -z-10 opacity-70 pointer-events-none" />
+
+          <div className="rounded-2xl border border-githubDark-border bg-githubDark-deep shadow-2xl overflow-hidden font-mono ring-1 ring-white/5">
+            {/* Titlebar */}
+            <div className="px-4 py-3 border-b border-githubDark-border bg-githubDark-card/95 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-[#ff5f56] inline-block shadow-sm" />
+                <span className="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block shadow-sm" />
+                <span className="w-3 h-3 rounded-full bg-[#27c93f] inline-block shadow-sm" />
+                <span className="ml-2 text-xs text-githubDark-muted">
+                  bash — ~/gitlantern ({gitState.currentBranch})
+                </span>
+              </div>
 
             <div className="flex items-center gap-3">
               <button
@@ -347,6 +350,7 @@ export function TerminalSimulator({
           </div>
         </div>
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }

@@ -136,10 +136,10 @@ export function DiagnosticFramework({
                 ref={(el) => {
                   cardRefs.current[diag.id] = el;
                 }}
-                className={`rounded-xl border transition-all duration-200 overflow-hidden ${
+                className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                   isExpanded
-                    ? "bg-githubDark-card border-gitOrange/50 shadow-xl shadow-gitOrange/5 ring-1 ring-gitOrange/20"
-                    : "bg-githubDark-card/70 hover:bg-githubDark-card border-githubDark-border"
+                    ? "glassCard border-gitOrange/60 shadow-2xl glowBorder ring-1 ring-gitOrange/30"
+                    : "glassCardInteractive border-githubDark-border/60 hover:border-gitOrange/40"
                 }`}
               >
                 {/* Card Header (Clickable) */}

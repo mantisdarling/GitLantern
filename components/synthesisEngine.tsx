@@ -146,10 +146,12 @@ export function SynthesisEngine({
         {/* Main Grid: Inputs Form & Command Generation View */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Dynamic Inputs Form */}
-          <div className="lg:col-span-5 bg-githubDark-card border border-githubDark-border rounded-xl p-5 shadow-sm">
-            <div className="flex items-center justify-between border-b border-githubDark-borderSubtle pb-3 mb-4">
-              <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-4 h-4 text-gitOrange" />
+          <div className="lg:col-span-5 glassCard rounded-2xl p-6 shadow-xl relative">
+            <div className="flex items-center justify-between border-b border-githubDark-borderSubtle pb-4 mb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-gitOrange/15 border border-gitOrange/30 flex items-center justify-center text-gitOrange">
+                  <SlidersHorizontal className="w-3.5 h-3.5" />
+                </div>
                 <h3 className="text-sm font-semibold text-githubDark-text">
                   Scenario Parameters
                 </h3>

@@ -82,12 +82,15 @@ export function StatePipeline({
         </div>
 
         {/* Interactive Horizontal Pipeline Diagram */}
-        <div className="relative bg-githubDark-card border border-githubDark-border rounded-2xl p-6 sm:p-8 shadow-xl">
+        <div className="relative glassCard rounded-3xl p-6 sm:p-9 shadow-2xl overflow-hidden">
+          {/* Subtle Ambient Background Halo */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-32 bg-gitOrange/5 rounded-full blur-3xl pointer-events-none" />
+
           {/* Track Line connecting the 4 stages */}
-          <div className="hidden md:block absolute top-[72px] left-[10%] right-[10%] h-1 bg-githubDark-borderSubtle z-0">
-            {/* Animated progress bar fill */}
+          <div className="hidden md:block absolute top-[84px] left-[10%] right-[10%] h-1 bg-githubDark-borderSubtle/80 z-0 rounded-full overflow-hidden">
+            {/* Animated glowing laser progress bar */}
             <div
-              className="h-full bg-gradient-to-r from-gitOrange/40 to-gitOrange transition-all duration-500 ease-out"
+              className="h-full bg-gradient-to-r from-gitOrange via-orange-400 to-gitOrange transition-all duration-500 ease-out glowBorder"
               style={{
                 width: `${(Math.max(0, currentStageIndex) / (stageKeys.length - 1)) * 100}%`,
               }}
