@@ -5,15 +5,15 @@ import Link from "next/link";
 import {
   History,
   Award,
-  TerminalSquare,
   User,
   ShieldCheck,
   Search,
-  Command,
-  Sun,
-  Moon,
   HelpCircle,
   Compass,
+  Plus,
+  X,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import { BadgeItem, CommandHistoryItem } from "@/lib/types";
 import { sounds } from "@/lib/soundEffects";
@@ -41,10 +41,9 @@ export function Header({
   onOpenPalette,
   onOpenTour,
   onOpenShortcuts,
-  onToggleTheme,
-  isDark = true,
   userEmail,
 }: HeaderProps) {
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [soundActive, setSoundActive] = useState<boolean>(sounds.isEnabled());
   const unlockedCount = badges.filter((b) => b.isUnlocked).length;
 
@@ -57,99 +56,11 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[#182030] bg-[#040508]/90 backdrop-blur-xl transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        {/* Brand & Technical Coordinates */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="group flex items-center gap-2.5 focus:outline-none focus:ring-1 focus:ring-cyan-400 rounded-md p-1"
-          >
-            <div className="w-8 h-8 rounded bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center group-hover:bg-cyan-500/20 group-hover:border-cyan-400 transition-all duration-200 cyberBoxGlowMedium">
-              <span className="text-cyan-400 font-mono text-sm font-bold">λ</span>
-            </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-cyber font-bold tracking-wider text-white group-hover:text-cyan-400 transition-colors uppercase">
-                  Git Lantern
-                </span>
-              </div>
-            </div>
-          </Link>
-        </div>
-
-        {/* Clean Section Navigation */}
-        <nav className="hidden md:flex items-center gap-7 text-xs font-mono text-neutral-400">
-          <a
-            href="#synthesis"
-            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400"
-          >
-            Synthesis
-          </a>
-          <a
-            href="#pipeline"
-            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400"
-          >
-            State Pipeline
-          </a>
-          <a
-            href="#diagnostics"
-            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400"
-          >
-            Recovery
-          </a>
-          <a
-            href="#terminal"
-            className="hover:text-cyan-400 transition-colors focus:outline-none focus:text-cyan-400"
-          >
-            Terminal
-          </a>
-        </nav>
-
-        {/* Action Controls */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
-          {/* Cyber Audio Equalizer Ticker */}
-          <button
-            type="button"
-            onClick={handleToggleSound}
-            className="flex items-center gap-2 px-2.5 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-white text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
-            title={soundActive ? "Mute ambient audio" : "Enable ambient audio"}
-          >
-            <span className="text-[11px] uppercase tracking-wider">
-              {soundActive ? "Audio" : "Mute"}
-            </span>
-            <span className="flex items-end gap-0.5 h-3.5 w-3.5 pb-0.5" aria-hidden="true">
-              {soundActive ? (
-                <>
-                  <span className="w-0.5 bg-cyan-400 rounded-full animateEqOne" />
-                  <span className="w-0.5 bg-[#f05032] rounded-full animateEqTwo" />
-                  <span className="w-0.5 bg-cyan-400 rounded-full animateEqThree" />
-                </>
-              ) : (
-                <>
-                  <span className="w-0.5 h-1 bg-neutral-600 rounded-full" />
-                  <span className="w-0.5 h-1 bg-neutral-600 rounded-full" />
-                  <span className="w-0.5 h-1 bg-neutral-600 rounded-full" />
-                </>
-              )}
-            </span>
-          </button>
-
-          {/* Command Palette Trigger */}
-          <button
-            type="button"
-            onClick={onOpenPalette}
-            className="hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-white text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
-            title="Open Command Palette (Ctrl+K or Cmd+K)"
-          >
-            <Search className="w-3.5 h-3.5 text-cyan-400" />
-            <kbd className="inline-flex items-center text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#0d1017] border border-[#182030] text-neutral-400">
-              <Command className="w-2.5 h-2.5 mr-0.5" />K
-            </kbd>
-          </button>
-
-          {/* Tour Replay Trigger */}
-          {onOpenTour && (
+    <>
+      <header className="fixed top-0 left-0 right-0 z-40 pointer-events-none px-4 sm:px-8 pt-4 sm:pt-5">
+        <div className="mx-auto max-w-[1400px] flex items-center justify-between gap-3">
+          {/* Top-left architectural menu & quick badge button */}
+          <div className="flex items-center gap-2 pointer-events-auto">
             <button
               type="button"
               onClick={onOpenTour}
