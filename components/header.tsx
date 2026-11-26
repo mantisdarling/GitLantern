@@ -89,78 +89,194 @@ export function Header({
                 {unlockedCount}/{badges.length}
               </span>
             </button>
-          )}
 
-          {/* Theme Toggle Trigger */}
-          {onToggleTheme && (
             <button
               type="button"
-              onClick={onToggleTheme}
-              className="flex items-center justify-center w-8 h-8 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-cyan-400 text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
-              title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              aria-label="Toggle theme"
+              onClick={onOpenPalette}
+              aria-label="Open command search"
+              title="Command Palette (Ctrl+K)"
+              className="hidden sm:flex h-10 px-3 rounded-[4px] bg-white border border-[#E4E4E7] hover:border-[#0A0A0A] text-[#0A0A0A] items-center gap-2 text-[11px] font-mono transition-colors focus:outline-none"
             >
-              {isDark ? (
-                <Sun className="w-3.5 h-3.5 text-cyan-400" />
-              ) : (
-                <Moon className="w-3.5 h-3.5 text-amber-400" />
-              )}
+              <Search className="w-3.5 h-3.5" />
+              <span className="text-[#71717A]">CMD+K</span>
             </button>
-          )}
+          </div>
 
-          {/* Badges Button */}
-          <button
-            type="button"
-            onClick={onOpenBadges}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-white text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
-            aria-label="View achievements and badges"
-          >
-            <Award className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="text-[11px] font-bold text-cyan-400">
-              {unlockedCount}/{badges.length}
-            </span>
-          </button>
-
-          {/* History Drawer Trigger */}
-          <button
-            type="button"
-            onClick={onOpenHistory}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-white text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
-            aria-label="View session command history"
-          >
-            <History className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Log</span>
-            {historyItems.length > 0 && (
-              <span className="px-1 text-cyan-400 text-[10px] font-mono">
-                ({historyItems.length})
-              </span>
-            )}
-          </button>
-
-          {/* User Profile / Auth Modal Trigger */}
-          <button
-            type="button"
-            onClick={onOpenAuth}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-[#f0f6fc] text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
-          >
-            {userEmail ? (
-              <>
-                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="max-w-[90px] truncate text-[11px]">
-                  {userEmail}
-                </span>
-              </>
-            ) : (
-              <>
-                <User className="w-3.5 h-3.5 text-neutral-400" />
-                <span className="text-[11px] text-neutral-400 hover:text-white">
-                  PASS
-                </span>
-              </>
-            )}
-          </button>
+          {/* Top-right architectural CTA bar */}
+          <div className="flex items-center gap-2 pointer-events-auto">
+            <a
+              href="#synthesis"
+              className="h-9 sm:h-10 px-4 sm:px-5 rounded-[4px] bg-[#0A0A0A] hover:bg-[#27272A] text-white text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.12em] flex items-center gap-2.5 sm:gap-4 transition-colors"
+            >
+              <span>CHOOSE A COMMAND</span>
+              <Plus className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Architectural Navigation Drawer */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/30"
+          onClick={() => setMenuOpen(false)}
+        >
+          <div
+            className="w-full max-w-xs h-full bg-white border-r border-[#E4E4E7] p-6 flex flex-col justify-between overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div>
+              <div className="flex items-center justify-between pb-6 border-b border-[#E4E4E7]">
+                <Link
+                  href="/"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2.5"
+                >
+                  <div className="w-7 h-7 rounded-[4px] bg-[#0A0A0A] text-white flex items-center justify-center font-mono text-xs font-bold">
+                    λ
+                  </div>
+                  <span className="text-sm font-semibold tracking-tight text-[#0A0A0A] uppercase">
+                    Git Lantern
+                  </span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Close navigation"
+                  className="p-1.5 rounded-[4px] hover:bg-[#F4F4F5] text-[#0A0A0A]"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <nav className="mt-6 space-y-1">
+                {[
+                  { label: "01 / Command Generator", href: "#synthesis" },
+                  { label: "02 / Where Your Files Live", href: "#pipeline" },
+                  { label: "03 / Repository Topology Map", href: "#topology" },
+                  { label: "04 / Fix Common Mistakes", href: "#diagnostics" },
+                  { label: "05 / Terminal Sandbox", href: "#terminal" },
+                ].map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="block px-3 py-3 text-xs font-mono uppercase tracking-wider text-[#0A0A0A] hover:bg-[#F4F4F5] rounded-[4px] transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+
+              <div className="mt-6 pt-6 border-t border-[#E4E4E7] space-y-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    onOpenPalette();
+                  }}
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-[4px] border border-[#E4E4E7] hover:border-[#0A0A0A] text-xs font-mono text-[#0A0A0A] transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <Search className="w-3.5 h-3.5" />
+                    Command Palette
+                  </span>
+                  <span className="text-[10px] text-[#71717A]">Ctrl+K</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    onOpenHistory();
+                  }}
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-[4px] border border-[#E4E4E7] hover:border-[#0A0A0A] text-xs font-mono text-[#0A0A0A] transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <History className="w-3.5 h-3.5" />
+                    Session Log
+                  </span>
+                  <span className="text-[10px] font-semibold">
+                    {historyItems.length}
+                  </span>
+                </button>
+
+                {onOpenTour && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onOpenTour();
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2.5 rounded-[4px] border border-[#E4E4E7] hover:border-[#0A0A0A] text-xs font-mono text-[#0A0A0A] transition-colors"
+                  >
+                    <Compass className="w-3.5 h-3.5" />
+                    Quick Tour
+                  </button>
+                )}
+
+                {onOpenShortcuts && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onOpenShortcuts();
+                    }}
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-[4px] border border-[#E4E4E7] hover:border-[#0A0A0A] text-xs font-mono text-[#0A0A0A] transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <HelpCircle className="w-3.5 h-3.5" />
+                      Keyboard Shortcuts
+                    </span>
+                    <span className="text-[10px] text-[#71717A]">?</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handleToggleSound}
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-[4px] border border-[#E4E4E7] hover:border-[#0A0A0A] text-xs font-mono text-[#0A0A0A] transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    {soundActive ? (
+                      <Volume2 className="w-3.5 h-3.5" />
+                    ) : (
+                      <VolumeX className="w-3.5 h-3.5" />
+                    )}
+                    Sound Effects
+                  </span>
+                  <span className="text-[10px] text-[#71717A]">
+                    {soundActive ? "ON" : "OFF"}
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-[#E4E4E7]">
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  onOpenAuth();
+                }}
+                className="w-full h-10 rounded-[4px] bg-[#0A0A0A] hover:bg-[#27272A] text-white text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+              >
+                {userEmail ? (
+                  <>
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span className="truncate max-w-[180px]">{userEmail}</span>
+                  </>
+                ) : (
+                  <>
+                    <User className="w-3.5 h-3.5" />
+                    <span>Sign In</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
