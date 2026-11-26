@@ -19,13 +19,13 @@ export const initialSimulatedState: SimulatedGitState = {
     {
       hash: "8f42e1a",
       message: "feat: initialize git lantern core architecture",
-      author: "Junior Dev <dev@firstcommit.org>",
+      author: "Junior Dev <dev@gitlantern.dev>",
       time: "2 hours ago",
     },
     {
       hash: "3b91c0d",
-      message: "docs: add hackathon documentation",
-      author: "Junior Dev <dev@firstcommit.org>",
+      message: "docs: update project documentation",
+      author: "Junior Dev <dev@gitlantern.dev>",
       time: "1 day ago",
     },
   ],
@@ -149,7 +149,7 @@ export function executeSimulatedCommand(
     const newCommit = {
       hash: randomHex,
       message,
-      author: "Junior Dev <dev@firstcommit.org>",
+      author: "Junior Dev <dev@gitlantern.dev>",
       time: "just now",
     };
     const count = state.stagedFiles.length;
