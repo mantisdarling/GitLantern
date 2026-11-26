@@ -51,7 +51,7 @@ export function TerminalSimulator({
       id: "entry-init",
       command: "welcome",
       output:
-        "Git Lantern Terminal Simulator v1.0 [FirstCommit Hackathon Edition]\nType Git commands (e.g. 'git status', 'git add .', 'git log') or paste a real error message.\nPro-tip: Press TAB for autocompletion and UP/DOWN arrows for command history.",
+        "Git Lantern Terminal Simulator v1.0\nType Git commands (e.g. 'git status', 'git add .', 'git log') or paste a real error message.\nPro-tip: Press TAB for autocompletion and UP/DOWN arrows for command history.",
       type: "system",
       timestamp: "09:00",
     },
@@ -64,7 +64,9 @@ export function TerminalSimulator({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (entries.length > 1) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [entries]);
 
   const handleCommandSubmit = (cmdToRun: string) => {
@@ -183,27 +185,22 @@ export function TerminalSimulator({
   ];
 
   return (
-    <section id="terminal" className="py-16 scroll-mt-20 border-t border-[#182030]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="terminal" className="commonPadding scroll-mt-16 bg-white border-t border-slate-200/70">
+      <div className="screenMaxWidth">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-2 uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
-              <span>04 • TERMINAL PLAYGROUND</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-cyber text-white tracking-tight uppercase">
+            <h2 className="sectionHeading">
               Terminal Sandbox
             </h2>
-            <p className="text-sm text-neutral-400 mt-2 max-w-2xl leading-relaxed">
-              Practice Git commands in a safe, interactive simulator with autocompletion and branch status, or paste terminal errors to auto-match solutions.
+            <p className="sectionSubheading mt-4">
+              Test Git commands safely in the browser with tab autocomplete, or paste an error message from your terminal to jump to the matching fix.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 text-xs font-mono text-neutral-400">
-            <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#07090e] border border-[#182030]">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block animate-pulse" />
-              <span className="text-cyan-400">HEAD: ({gitState.currentBranch})</span>
+          <div className="flex items-center gap-3 text-xs font-mono text-[#64748B]">
+            <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80">
+              <span className="text-[#2563EB] font-semibold">HEAD: {gitState.currentBranch}</span>
             </span>
           </div>
         </div>
