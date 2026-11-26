@@ -206,10 +206,10 @@ export function TerminalSimulator({
         </div>
 
         {/* Real Error Parser Input Box */}
-        <div className="mb-6 p-4 rounded-lg border border-[#182030] bg-[#07090e] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-xl cornerReticle">
-          <div className="flex items-center gap-2.5 text-xs text-white shrink-0 font-mono">
-            <ClipboardPaste className="w-4 h-4 text-cyan-400" />
-            <span className="font-bold uppercase tracking-wider font-cyber">Paste Real Git Error:</span>
+        <div className="mb-8 p-5 rounded-md archSubCard flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 text-xs text-[#0B1221] shrink-0 font-mono">
+            <ClipboardPaste className="w-4 h-4 text-[#2563EB]" />
+            <span className="font-semibold">Paste Real Git Error:</span>
           </div>
           <div className="flex-1 flex gap-2">
             <input
@@ -222,36 +222,34 @@ export function TerminalSimulator({
                 }
               }}
               placeholder="e.g. fatal: refusing to merge unrelated histories or error: failed to push some refs"
-              className="flex-1 px-3 py-1.5 text-xs font-mono rounded-lg bg-[#020306] border border-[#182030] text-white placeholder:text-neutral-600 focus:outline-none focus:border-cyan-400"
+              className="flex-1 px-3.5 py-2 text-xs font-mono rounded-xl bg-[#F8FAFC] border border-slate-200 text-[#0B1221] placeholder:text-slate-400 focus:outline-none focus:border-[#2563EB]"
             />
             <button
               type="button"
               onClick={handlePastedErrorParse}
-              className="px-4 py-1.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-black font-cyber text-xs font-bold transition-colors focus:outline-none shrink-0 cyberBoxGlowMedium"
+              className="px-5 py-2 rounded-full archBtnPrimary text-xs font-semibold transition-colors focus:outline-none shrink-0"
             >
               Analyze
             </button>
           </div>
           {pasteMatchMessage && (
-            <div className="text-xs font-mono text-cyan-400 animate-in fade-in">
+            <div className="text-xs font-mono text-[#2563EB] animate-in fade-in">
               {pasteMatchMessage}
             </div>
           )}
         </div>
 
-        {/* Terminal Chrome Window with Atmospheric Halo */}
+        {/* Terminal Window */}
         <div className="relative">
-          <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/10 via-purple-500/5 to-cyan-500/10 rounded-2xl blur-xl -z-10 opacity-70 pointer-events-none" />
-
-          <div className="rounded-lg border border-[#182030] bg-[#040508] shadow-2xl overflow-hidden font-mono ring-1 ring-cyan-500/10 cornerReticle">
+          <div className="rounded-md overflow-hidden font-mono archCard">
             {/* Titlebar */}
-            <div className="px-4 py-3 border-b border-[#182030] bg-[#07090e] flex items-center justify-between">
+            <div className="px-5 py-3.5 border-b border-slate-200/80 bg-slate-50/80 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] inline-block shadow-sm" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] inline-block shadow-sm" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] inline-block shadow-sm" />
-                <span className="ml-2 text-xs text-neutral-400">
-                  cyber-sh — ~/gitlantern ({gitState.currentBranch})
+                <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] inline-block" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] inline-block" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] inline-block" />
+                <span className="ml-2 text-xs text-[#64748B]">
+                  sh ~/gitlantern ({gitState.currentBranch})
                 </span>
               </div>
 
