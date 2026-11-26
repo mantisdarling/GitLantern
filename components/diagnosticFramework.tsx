@@ -66,19 +66,19 @@ export function DiagnosticFramework({
     switch (severity) {
       case "critical":
         return (
-          <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded bg-red-950/60 border border-red-500/40 text-red-400">
+          <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded-full bg-rose-50 border border-rose-200 text-rose-700 font-semibold">
             Critical
           </span>
         );
       case "warning":
         return (
-          <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded bg-amber-950/60 border border-amber-500/40 text-amber-400">
+          <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded-full bg-amber-50 border border-amber-200 text-amber-700 font-semibold">
             Warning
           </span>
         );
       case "info":
         return (
-          <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded bg-cyan-500/10 border border-cyan-400/40 text-cyan-400">
+          <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded-full bg-blue-50 border border-blue-200 text-[#2563EB] font-semibold">
             Recovery
           </span>
         );
@@ -86,20 +86,16 @@ export function DiagnosticFramework({
   };
 
   return (
-    <section id="diagnostics" className="py-16 scroll-mt-20 border-t border-[#182030]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="diagnostics" className="commonPadding scroll-mt-16 bg-[#F8FAFC] border-t border-slate-200/70">
+      <div className="screenMaxWidth">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-2 uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
-              <span>03 • TROUBLESHOOTING & RECOVERY</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-cyber text-white tracking-tight uppercase">
-              Common Issues & Recovery
+            <h2 className="sectionHeading">
+              Fix Common Mistakes
             </h2>
-            <p className="text-sm text-neutral-400 mt-2 max-w-2xl leading-relaxed">
-              Encountered an error or accidental change? Inspect root causes and run step-by-step commands to get your repository back to safety.
+            <p className="sectionSubheading mt-4">
+              Stuck with a merge conflict, detached HEAD, or commit on the wrong branch? Open a guide below for the exact recovery commands.
             </p>
           </div>
 
@@ -107,7 +103,7 @@ export function DiagnosticFramework({
           <button
             type="button"
             onClick={() => setShowWizard((prev) => !prev)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 hover:bg-[#0c1018] text-cyan-400 text-xs font-mono uppercase tracking-wider transition-all duration-150 focus:outline-none focus:ring-1 focus:ring-cyan-400 shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full archBtnPrimary text-xs font-medium transition-all duration-150 focus:outline-none shrink-0"
           >
             <Wand2 className="w-3.5 h-3.5" />
             <span>{showWizard ? "Close Recovery Wizard" : "Launch Guided Wizard"}</span>
@@ -135,37 +131,37 @@ export function DiagnosticFramework({
                 ref={(el) => {
                   cardRefs.current[diag.id] = el;
                 }}
-                className={`rounded-lg border transition-all duration-200 overflow-hidden ${
+                className={`rounded-md border transition-all duration-200 overflow-hidden ${
                   isExpanded
-                    ? "bg-[#0a0d14] border-cyan-400/60 ring-1 ring-cyan-400/25 cyberBoxGlowMedium"
-                    : "bg-[#07090e] hover:bg-[#0a0d14] border-[#182030] hover:border-cyan-400/40"
+                    ? "bg-white border-blue-300 shadow-[0_14px_34px_rgba(37,99,235,0.08)] ring-1 ring-[#2563EB]/15"
+                    : "bg-white/85 hover:bg-white border-slate-200/90 shadow-sm hover:border-blue-200"
                 }`}
               >
-                {/* Card Header (Clickable) */}
+                {/* Card Header */}
                 <button
                   type="button"
                   onClick={() => toggleCard(diag.id)}
-                  className="w-full px-5 py-4 flex items-center justify-between gap-4 text-left focus:outline-none focus:bg-[#0c1018]"
+                  className="w-full px-6 py-4.5 py-5 flex items-center justify-between gap-4 text-left focus:outline-none"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#040508] border border-[#182030] flex items-center justify-center text-cyan-400 shrink-0 cyberBoxGlowSmall">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200/80 flex items-center justify-center text-[#2563EB] shrink-0">
                       <AlertTriangle className="w-4 h-4" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2.5">
-                        <h3 className="text-sm font-semibold text-white font-cyber">
+                        <h3 className="text-sm font-semibold text-[#0B1221]">
                           {diag.title}
                         </h3>
                         {getSeverityBadge(diag.severity)}
                       </div>
-                      <p className="text-xs text-neutral-400 mt-0.5 line-clamp-1 font-mono">
+                      <p className="text-xs text-[#64748B] mt-0.5 line-clamp-1 font-mono">
                         {diag.summary}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="hidden sm:inline text-xs font-mono text-neutral-500">
+                    <span className="hidden sm:inline text-xs font-mono text-[#64748B]">
                       {isExpanded ? "Collapse" : "Expand Fix"}
                     </span>
                     {isExpanded ? (
