@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layers, SlidersHorizontal, GitBranch, Terminal, X } from "lucide-react";
 
@@ -14,38 +14,38 @@ const tourSeenKey = "gitlanternTourSeen";
 const tourSteps = [
   {
     id: "scenarioPicker",
-    title: "Choose Your Scenario",
+    title: "Pick a task",
     description:
-      "Start by picking a real-world Git workflow from the Scenario Matrix — from pushing your first repo to hotfixing production. Each scenario is pre-filled with realistic paths like feature/login-page, ready to go immediately.",
+      "Start by selecting a Git task at the top, such as starting a new branch, undoing a commit, or fixing a hotfix. Each one loads with realistic example paths.",
     icon: <Layers className="w-6 h-6" />,
-    targetHint: "Scenario selector chips at the top of the Synthesis Engine",
+    targetHint: "Task tabs at the top of Command Generator",
     step: 1,
   },
   {
     id: "parameterDeck",
-    title: "Customize Your Parameters",
+    title: "Edit branch and file names",
     description:
-      "The Parameter Deck on the left pre-fills with realistic values like feature/login-page and src/auth/LoginForm.tsx. Edit any field and every command updates live — no template guessing or placeholder hunting.",
+      "Change the branch name, file path, or commit message on the left and watch every command update right away.",
     icon: <SlidersHorizontal className="w-6 h-6" />,
-    targetHint: "Left form panel inside the Synthesis Engine section",
+    targetHint: "Scenario Parameters panel on the left",
     step: 2,
   },
   {
     id: "dagMachine",
-    title: "Track File State in Real-Time",
+    title: "See where files live",
     description:
-      "The DAG State Machine shows exactly where your files live across four stages: Working Directory → Staging Index → Local Repository → Remote Upstream. Click any stage to inspect available commands at that layer.",
+      "The pipeline tracks files across four places: your working folder, the staging area, your local repo, and the remote server. Click any stage to see how to move forward or undo.",
     icon: <GitBranch className="w-6 h-6" />,
-    targetHint: "DAG State Pipeline section below the Synthesis Engine",
+    targetHint: "Where Your Files Live section below",
     step: 3,
   },
   {
     id: "commandDeck",
-    title: "Copy Commands & Learn Why",
+    title: "Copy and check flags",
     description:
-      "Every generated command has a one-click Copy button and a 'Why this command?' toggle that explains each flag in plain English. No more guessing what -b or --force-with-lease mean. Press C to copy the active command anytime.",
+      "Click Copy on any command or press C on your keyboard. Open 'Why this command?' below a card to read what each flag does.",
     icon: <Terminal className="w-6 h-6" />,
-    targetHint: "Command cards on the right side of the Synthesis Engine",
+    targetHint: "Command cards on the right",
     step: 4,
   },
 ];
@@ -80,27 +80,27 @@ export function OnboardingTour({ isOpen, onClose }: OnboardingTourProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-4 bg-slate-900/25 backdrop-blur-sm">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="relative w-full max-w-lg bg-[#040508] border border-[#182030] rounded-xl shadow-2xl cornerReticle cyberBoxGlowMedium overflow-hidden"
+            className="relative w-full max-w-lg glossyCard rounded-[24px] overflow-hidden"
           >
             {/* Top bar */}
-            <div className="bg-[#07090e] border-b border-[#182030] px-5 py-3 flex items-center justify-between">
-              <span className="font-pixel text-[10px] text-cyan-400 uppercase tracking-widest">
-                PORTAL ONBOARDING // SPEC 2200
+            <div className="bg-slate-50/90 border-b border-slate-200/80 px-5 py-3.5 flex items-center justify-between">
+              <span className="font-mono text-[11px] text-[#2563EB] uppercase tracking-wider font-semibold">
+                Quick Tour
               </span>
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-neutral-500">
+                <span className="font-mono text-[11px] text-[#64748B]">
                   {currentStep + 1} of {tourSteps.length}
                 </span>
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="text-neutral-500 hover:text-neutral-300 transition-colors focus:outline-none"
+                  className="text-[#64748B] hover:text-[#0B1221] transition-colors focus:outline-none"
                   aria-label="Close tour"
                 >
                   <X className="w-4 h-4" />
@@ -109,9 +109,9 @@ export function OnboardingTour({ isOpen, onClose }: OnboardingTourProps) {
             </div>
 
             {/* Progress bar */}
-            <div className="h-0.5 bg-[#182030]">
+            <div className="h-1 bg-slate-100">
               <motion.div
-                className="h-full bg-cyan-400"
+                className="h-full bg-[#2563EB]"
                 initial={{ width: 0 }}
                 animate={{ width: `${progressPercent}%` }}
                 transition={{ duration: 0.3 }}
@@ -129,20 +129,20 @@ export function OnboardingTour({ isOpen, onClose }: OnboardingTourProps) {
                 className="px-6 py-6"
               >
                 {/* Step icon */}
-                <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 cyberBoxGlowSmall mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-[#2563EB] mb-4">
                   {step.icon}
                 </div>
 
-                <h2 className="font-cyber text-xl font-bold text-white tracking-wide mb-2">
+                <h2 className="text-xl font-bold text-[#0B1221] tracking-tight mb-2">
                   {step.title}
                 </h2>
-                <p className="text-sm text-neutral-300 leading-relaxed font-tech mb-4">
+                <p className="text-sm text-[#475569] leading-relaxed mb-4">
                   {step.description}
                 </p>
 
                 {/* Target hint */}
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-cyan-500/5 border border-cyan-400/20 text-xs font-mono text-cyan-400/80">
-                  <span className="shrink-0 text-cyan-400/50">[TARGET]</span>
+                <div className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] border border-slate-200 text-xs font-mono text-[#2563EB]">
+                  <span className="shrink-0 text-[#64748B]">Location:</span>
                   <span>{step.targetHint}</span>
                 </div>
               </motion.div>
@@ -153,7 +153,7 @@ export function OnboardingTour({ isOpen, onClose }: OnboardingTourProps) {
               <button
                 type="button"
                 onClick={handleClose}
-                className="text-xs font-mono text-neutral-500 hover:text-neutral-300 transition-colors focus:outline-none"
+                className="text-xs font-mono text-[#64748B] hover:text-[#0B1221] transition-colors focus:outline-none"
               >
                 Skip Tour
               </button>
@@ -163,7 +163,7 @@ export function OnboardingTour({ isOpen, onClose }: OnboardingTourProps) {
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="px-4 py-2 rounded-lg border border-[#182030] bg-[#07090e] text-neutral-300 hover:border-cyan-400/50 text-xs font-mono transition-all focus:outline-none"
+                    className="px-4 py-2 rounded-full glossyButtonLight text-xs font-medium transition-all focus:outline-none"
                   >
                     Back
                   </button>
@@ -171,9 +171,9 @@ export function OnboardingTour({ isOpen, onClose }: OnboardingTourProps) {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="px-5 py-2 rounded-lg bg-cyan-400 text-black font-cyber font-bold text-xs uppercase tracking-wider cyberBoxGlowSmall hover:bg-cyan-300 transition-all focus:outline-none"
+                  className="px-5 py-2 rounded-full glossyButtonDark font-semibold text-xs transition-all focus:outline-none"
                 >
-                  {currentStep < tourSteps.length - 1 ? "Next" : "Launch Portal"}
+                  {currentStep < tourSteps.length - 1 ? "Next" : "Get Started"}
                 </button>
               </div>
             </div>
