@@ -253,99 +253,99 @@ export function TerminalSimulator({
                 </span>
               </div>
 
-            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    sounds.playClick();
+                    setEntries([]);
+                  }}
+                  className="text-[#64748B] hover:text-[#0B1221] text-xs flex items-center gap-1 transition-colors"
+                  title="Clear screen"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Clear</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Terminal Body */}
+            <div className="p-5 min-h-[320px] max-h-[460px] overflow-y-auto space-y-4 text-xs bg-white/90">
+              {entries.map((item) => (
+                <div key={item.id} className="space-y-1">
+                  {item.command !== "welcome" && (
+                    <div className="flex items-center gap-2 text-[#64748B] font-mono">
+                      <span className="text-[#2563EB] font-bold">gitlantern:</span>
+                      <span className="text-[#2563EB]/80">({gitState.currentBranch})</span>
+                      <span className="text-[#0B1221] font-semibold">$ {item.command}</span>
+                    </div>
+                  )}
+                  {item.output && (
+                    <div
+                      className={`whitespace-pre-wrap leading-relaxed pl-3 border-l-2 font-mono ${
+                        item.type === "error"
+                          ? "text-rose-600 border-rose-300"
+                          : item.type === "system"
+                          ? "text-[#1D4ED8] border-blue-300"
+                          : "text-[#334155] border-slate-200"
+                      }`}
+                    >
+                      {item.output}
+                    </div>
+                  )}
+                </div>
+              ))}
+              <div ref={bottomRef} />
+            </div>
+
+            {/* Interactive Command Input Line */}
+            <div className="p-3.5 bg-slate-50/90 border-t border-slate-200/80 flex items-center gap-2">
+              <span className="text-[#2563EB] font-bold select-none pl-2">$</span>
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputCommand}
+                onChange={(e) => setInputCommand(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Type Git command (TAB autocomplete, UP/DOWN history, e.g. git status)..."
+                className="flex-1 bg-transparent text-xs text-[#0B1221] placeholder:text-slate-400 focus:outline-none font-mono"
+              />
               <button
                 type="button"
-                onClick={() => {
-                  sounds.playClick();
-                  setEntries([]);
-                }}
-                className="text-githubDark-muted hover:text-githubDark-text text-xs flex items-center gap-1 transition-colors"
-                title="Clear screen"
+                onClick={() => handleCommandSubmit(inputCommand)}
+                className="p-2 rounded-full archBtnPrimary transition-colors"
+                aria-label="Send command"
               >
-                <Trash2 className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Clear</span>
+                <Send className="w-3.5 h-3.5" />
               </button>
             </div>
-          </div>
 
-          {/* Terminal Body with Subtle CRT Scanline Effect */}
-          <div className="p-5 min-h-[320px] max-h-[460px] overflow-y-auto space-y-4 text-xs bg-[#020306] crtScanlines">
-            {entries.map((item) => (
-              <div key={item.id} className="space-y-1">
-                {item.command !== "welcome" && (
-                  <div className="flex items-center gap-2 text-neutral-400 font-mono">
-                    <span className="text-cyan-400 font-bold">gitlantern:</span>
-                    <span className="text-cyan-400/80">({gitState.currentBranch})</span>
-                    <span className="text-white font-semibold">$ {item.command}</span>
-                  </div>
-                )}
-                {item.output && (
-                  <div
-                    className={`whitespace-pre-wrap leading-relaxed pl-2 border-l-2 font-mono ${
-                      item.type === "error"
-                        ? "text-red-400 border-red-500/40"
-                        : item.type === "system"
-                        ? "text-cyan-400 border-cyan-400/40"
-                        : "text-neutral-300 border-[#182030]"
-                    }`}
+            {/* Quick Presets Bar */}
+            <div className="px-4 py-3 bg-[#F8FAFC] border-t border-slate-200/80 flex items-center justify-between gap-2 overflow-x-auto text-[11px] text-[#64748B]">
+              <div className="flex items-center gap-2">
+                <span className="shrink-0 text-[#64748B] font-mono">Try:</span>
+                {quickPresets.map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    onClick={() => handleCommandSubmit(preset)}
+                    className="px-3 py-1 rounded-full bg-white hover:bg-blue-50 text-[#334155] hover:text-[#2563EB] border border-slate-200 hover:border-blue-200 shrink-0 transition-colors flex items-center gap-1 font-mono shadow-sm"
                   >
-                    {item.output}
-                  </div>
-                )}
+                    <span>{preset}</span>
+                    <ArrowUpRight className="w-3 h-3 text-[#2563EB]" />
+                  </button>
+                ))}
               </div>
-            ))}
-            <div ref={bottomRef} />
-          </div>
-
-          {/* Interactive Command Input Line */}
-          <div className="p-3 bg-[#07090e] border-t border-[#182030] flex items-center gap-2">
-            <span className="text-cyan-400 font-bold select-none pl-2">$</span>
-            <input
-              ref={inputRef}
-              type="text"
-              value={inputCommand}
-              onChange={(e) => setInputCommand(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type Git command (TAB autocomplete, UP/DOWN history, e.g. git status)..."
-              className="flex-1 bg-transparent text-xs text-white placeholder:text-neutral-600 focus:outline-none font-mono"
-            />
-            <button
-              type="button"
-              onClick={() => handleCommandSubmit(inputCommand)}
-              className="p-1.5 rounded-md bg-cyan-400 text-black hover:bg-cyan-300 transition-colors cyberBoxGlowSmall"
-              aria-label="Send command"
-            >
-              <Send className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {/* Quick Presets Bar */}
-          <div className="px-4 py-2.5 bg-[#040508] border-t border-[#182030] flex items-center justify-between gap-2 overflow-x-auto text-[11px] text-neutral-400">
-            <div className="flex items-center gap-2">
-              <span className="shrink-0 text-neutral-500 font-mono">Try:</span>
-              {quickPresets.map((preset) => (
-                <button
-                  key={preset}
-                  type="button"
-                  onClick={() => handleCommandSubmit(preset)}
-                  className="px-2 py-0.5 rounded bg-[#07090e] hover:bg-[#0c1018] text-neutral-300 hover:text-cyan-400 border border-[#182030] hover:border-cyan-400/40 shrink-0 transition-colors flex items-center gap-1 font-mono"
-                >
-                  <span>{preset}</span>
-                  <ArrowUpRight className="w-3 h-3 text-cyan-400" />
-                </button>
-              ))}
-            </div>
-            <div className="hidden md:flex items-center gap-2 text-[10px] text-neutral-500 shrink-0 font-mono">
-              <kbd className="px-1.5 py-0.2 rounded bg-[#07090e] border border-[#182030]">TAB</kbd>
-              <span>autocomplete</span>
-              <kbd className="px-1.5 py-0.2 rounded bg-[#07090e] border border-[#182030]">↑↓</kbd>
-              <span>history</span>
+              <div className="hidden md:flex items-center gap-2 text-[10px] text-[#64748B] shrink-0 font-mono">
+                <kbd className="px-1.5 py-0.5 rounded bg-white border border-slate-200">TAB</kbd>
+                <span>autocomplete</span>
+                <kbd className="px-1.5 py-0.5 rounded bg-white border border-slate-200">↑↓</kbd>
+                <span>history</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
 }
