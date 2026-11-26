@@ -339,16 +339,16 @@ export function SynthesisEngine({
                       <span
                         className={`w-5 h-5 rounded-md text-[10px] font-mono font-bold flex items-center justify-center ${
                           isSelectedStep
-                            ? "bg-cyan-400 text-black cyberBoxGlowSmall"
-                            : "bg-[#0f131f] text-neutral-400 border border-[#182030]"
+                            ? "bg-[#2563EB] text-white"
+                            : "bg-slate-100 text-[#64748B] border border-slate-200"
                         }`}
                       >
                         {idx + 1}
                       </span>
-                      <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
-                        <span className={isSelectedStep ? "text-neutral-300" : "text-neutral-500"}>{step.fromStage}</span>
-                        <span className="text-neutral-600 mx-1">→</span>
-                        <span className={isSelectedStep ? "text-cyan-400 font-bold" : "text-neutral-400"}>{step.toStage}</span>
+                      <span className="text-[10px] font-mono text-[#64748B] uppercase tracking-wider">
+                        <span className={isSelectedStep ? "text-[#334155]" : "text-[#64748B]"}>{step.fromStage}</span>
+                        <span className="text-slate-300 mx-1">→</span>
+                        <span className={isSelectedStep ? "text-[#2563EB] font-bold" : "text-[#475569]"}>{step.toStage}</span>
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -356,16 +356,16 @@ export function SynthesisEngine({
                         <button
                           type="button"
                           onClick={(e) => handleSimulateRun(e, idx, commandString, step.explanation, step.badgeToUnlock)}
-                          className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-mono uppercase border transition-all duration-150 ${
+                          className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-mono uppercase border transition-all duration-150 ${
                             isSimulating
-                              ? "bg-green-500/20 border-green-500/50 text-green-400 cyberGreenBoxGlow"
-                              : "bg-[#0c1018] border-[#182030] text-neutral-300 hover:text-white hover:border-cyan-400/50"
+                              ? "bg-emerald-50 border-emerald-300 text-emerald-700"
+                              : "bg-slate-50 border-slate-200 text-[#475569] hover:text-[#0B1221] hover:border-blue-300"
                           }`}
                         >
                           {isSimulating ? (
                             <><Check className="w-3 h-3" /> Executed</>
                           ) : (
-                            <><Play className="w-3 h-3 text-cyan-400" /> Run</>
+                            <><Play className="w-3 h-3 text-[#2563EB]" /> Run</>
                           )}
                         </button>
                       )}
@@ -379,31 +379,28 @@ export function SynthesisEngine({
                   </div>
 
                   {/* Terminal Command Box */}
-                  <div className="bg-[#020306] rounded-md p-3 border border-[#182030] flex items-center justify-between gap-3 font-mono text-sm overflow-x-auto">
+                  <div className="bg-[#F8FAFC] rounded-xl p-3.5 border border-slate-200/90 flex items-center justify-between gap-3 font-mono text-sm overflow-x-auto shadow-inner">
                     <div className="flex items-center gap-2.5">
-                      <span className="text-cyan-400 select-none font-bold">$</span>
-                      <span className="text-white font-medium select-all">
+                      <span className="text-[#2563EB] select-none font-bold">$</span>
+                      <span className="text-[#0B1221] font-medium select-all">
                         {commandString}
                       </span>
                     </div>
                     {step.badgeToUnlock && (
-                      <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-400/30 px-2 py-0.5 rounded shrink-0">
-                        <Sparkles className="w-3 h-3 text-cyan-400" />
+                      <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-[#2563EB] bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full shrink-0">
+                        <Sparkles className="w-3 h-3 text-[#2563EB]" />
                         Unlocks badge
                       </span>
                     )}
                   </div>
 
-                  {/* Mental Model Explanation */}
-                  <div className="mt-3 flex items-start gap-2 text-xs text-neutral-400 leading-relaxed">
-                    <Zap className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-white font-mono text-[10px] uppercase tracking-wider mr-1.5">Mental Model:</strong>
-                      <span>{step.explanation}</span>
-                    </div>
+                  {/* Explanation */}
+                  <div className="mt-3 flex items-start gap-2 text-xs text-[#475569] leading-relaxed">
+                    <Zap className="w-3.5 h-3.5 text-[#2563EB] shrink-0 mt-0.5" />
+                    <span>{step.explanation}</span>
                   </div>
 
-                  {/* Why this command — expandable flag breakdown */}
+                  {/* Expandable flag breakdown */}
                   {step.flagsBreakdown && step.flagsBreakdown.length > 0 && (
                     <div className="mt-3">
                       <button
@@ -412,7 +409,7 @@ export function SynthesisEngine({
                           e.stopPropagation();
                           setWhyOpenId(whyOpenId === step.id ? null : step.id);
                         }}
-                        className="flex items-center gap-1.5 text-[11px] font-mono text-cyan-400/70 hover:text-cyan-400 transition-colors focus:outline-none"
+                        className="flex items-center gap-1.5 text-[11px] font-mono text-[#2563EB] hover:text-[#1D4ED8] transition-colors focus:outline-none"
                       >
                         <HelpCircle className="w-3.5 h-3.5" />
                         <span>Why this command?</span>
@@ -429,23 +426,23 @@ export function SynthesisEngine({
                             transition={{ duration: 0.2 }}
                             className="overflow-hidden"
                           >
-                            <div className="mt-2 space-y-2 pt-2 border-t border-[#182030]">
+                            <div className="mt-2 space-y-2 pt-2 border-t border-slate-200/80">
                               {step.flagsBreakdown.map((item) => (
-                                <div key={item.flag} className="rounded-lg bg-[#020306] border border-[#182030] p-3">
+                                <div key={item.flag} className="rounded-xl bg-[#F8FAFC] border border-slate-200 p-3">
                                   <div className="flex items-center gap-2 mb-1.5">
-                                    <code className="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-[11px] font-mono font-bold">
+                                    <code className="px-2 py-0.5 rounded bg-blue-50 border border-blue-200 text-[#1D4ED8] text-[11px] font-mono font-bold">
                                       {item.flag}
                                     </code>
                                     {item.caution && (
-                                      <span className="flex items-center gap-1 text-[9px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 px-1.5 py-0.5 rounded uppercase tracking-wider">
+                                      <span className="flex items-center gap-1 text-[9px] font-mono text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded uppercase tracking-wider">
                                         <AlertTriangle className="w-2.5 h-2.5" />
                                         Caution
                                       </span>
                                     )}
                                   </div>
-                                  <p className="text-[11px] text-neutral-300 leading-relaxed">{item.meaning}</p>
+                                  <p className="text-[11px] text-[#475569] leading-relaxed">{item.meaning}</p>
                                   {item.caution && (
-                                    <p className="mt-1.5 text-[11px] text-amber-400/80 leading-relaxed border-l-2 border-amber-500/40 pl-2">
+                                    <p className="mt-1.5 text-[11px] text-amber-800 leading-relaxed border-l-2 border-amber-400 pl-2">
                                       {item.caution}
                                     </p>
                                   )}
