@@ -41,8 +41,8 @@ export default function PrivacyPage() {
             </div>
             <p>
               Git Lantern is designed from the ground up to be fully functional without logging in.
-              Every single feature—including the command synthesis engine, state mapping pipeline,
-              diagnostic framework, and interactive terminal simulator—operates locally in your browser
+              Every single feature, including the command synthesis engine, state mapping pipeline,
+              diagnostic framework, and interactive terminal simulator, operates locally in your browser
               session via localStorage.
             </p>
           </div>
