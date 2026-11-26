@@ -113,43 +113,39 @@ export function StatePipeline({
                         isCurrent
                           ? "bg-[#2563EB] text-white"
                           : isPassed
-                          ? "bg-cyan-500/15 text-cyan-400 border border-cyan-400/40"
-                          : "bg-[#0b0e16] text-neutral-500 border border-[#182030]"
+                          ? "bg-blue-50 text-[#2563EB] border border-blue-200"
+                          : "bg-white text-[#64748B] border border-slate-200"
                       }`}
                     >
                       {getStageIcon(stage.iconName)}
                     </div>
 
-                    {/* Glowing Animated Dot indicating active file — powered by Framer Motion */}
+                    {/* Animated Dot indicating active file */}
                     {isCurrent && (
                       <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4">
                         <motion.span
                           animate={{ scale: [1, 1.8, 1], opacity: [0.8, 0, 0.8] }}
                           transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-                          className="absolute inline-flex h-full w-full rounded-full bg-cyan-400"
+                          className="absolute inline-flex h-full w-full rounded-full bg-[#2563EB]"
                         />
-                        <motion.span
-                          animate={{ boxShadow: ["0 0 0 0 rgba(0,240,255,0.6)", "0 0 12px 4px rgba(0,240,255,0)", "0 0 0 0 rgba(0,240,255,0.6)"] }}
-                          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-                          className="relative inline-flex rounded-full h-4 w-4 bg-cyan-400 border-2 border-[#040508]"
-                        />
+                        <span className="relative inline-flex rounded-full h-4 w-4 bg-[#2563EB] border-2 border-white" />
                       </span>
                     )}
                   </div>
 
-                  <span className="text-[11px] font-mono text-cyan-400 uppercase tracking-wider font-semibold">
+                  <span className="text-[11px] font-mono text-[#2563EB] uppercase tracking-wider font-semibold">
                     Stage 0{index + 1}
                   </span>
-                  <h3 className="text-sm font-semibold text-white mt-0.5 font-cyber">
+                  <h3 className="text-sm font-semibold text-[#0B1221] mt-0.5">
                     {stage.label}
                   </h3>
-                  <p className="text-[11px] text-neutral-400 mt-1 line-clamp-2">
+                  <p className="text-[11px] text-[#64748B] mt-1 line-clamp-2">
                     {stage.headline}
                   </p>
 
-                  <div className="mt-3 flex items-center gap-1 text-[11px] text-cyan-400 font-mono">
+                  <div className="mt-3 flex items-center gap-1 text-[11px] text-[#2563EB] font-mono">
                     <span>Inspect</span>
-                    <ArrowRight className="w-3 h-3 text-cyan-400" />
+                    <ArrowRight className="w-3 h-3 text-[#2563EB]" />
                   </div>
                 </button>
               );
@@ -157,15 +153,15 @@ export function StatePipeline({
           </div>
 
           {/* Inspected Stage Inspector Panel */}
-          <div className="mt-8 pt-6 border-t border-[#182030] bg-[#040508]/80 rounded-lg p-5 border border-[#182030]">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#182030]">
+          <div className="mt-8 bg-[#F8FAFC] rounded-2xl p-6 border border-slate-200/90">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 cyberBoxGlowSmall">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-[#2563EB]">
                   {getStageIcon(inspectedStageInfo.iconName)}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="text-base font-bold text-white font-cyber tracking-wide">
+                    <h4 className="text-base font-bold text-[#0B1221]">
                       {inspectedStageInfo.label}
                     </h4>
                     <span className="text-[10px] font-mono text-cyan-400 px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-400/30 uppercase tracking-wider">
