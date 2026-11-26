@@ -163,7 +163,7 @@ export const gitScenarios: GitScenario[] = [
         flagsBreakdown: [
           {
             flag: "-m",
-            meaning: "Passes the commit message inline without opening a text editor. For a multi-line message, omit -m so Git opens your editor — the first line is the subject and lines after a blank line are the body.",
+            meaning: "Passes the commit message inline without opening a text editor. For a multi line message, omit -m so Git opens your editor, where the first line is the subject and lines after a blank line are the body.",
           },
         ],
       },
@@ -330,7 +330,7 @@ export const gitScenarios: GitScenario[] = [
         flagsBreakdown: [
           {
             flag: "--soft",
-            meaning: "Moves the branch pointer back one commit but leaves the staging area AND working directory untouched. Your code is safe — just uncommitted.",
+            meaning: "Moves the branch pointer back one commit but leaves the staging area AND working directory untouched. Your code is safe, just uncommitted.",
           },
           {
             flag: "--hard",
@@ -428,7 +428,7 @@ export const gitScenarios: GitScenario[] = [
           },
           {
             flag: "origin/{{baseBranch}}",
-            meaning: "The remote tracking branch to rebase onto — the exact state of main on GitHub after the fetch. More precise than rebasing onto local main which might be behind.",
+            meaning: "The remote tracking branch to rebase onto, representing the exact state of main on GitHub after the fetch. More precise than rebasing onto local main which might be behind.",
             caution: "If conflicts arise, fix each file, run 'git add <file>', then 'git rebase --continue'. Run 'git rebase --abort' to cancel entirely.",
           },
         ],
@@ -510,7 +510,7 @@ export const gitScenarios: GitScenario[] = [
           {
             flag: "pop",
             meaning: "Applies stash@{0} and removes it from the stash list. Use 'git stash apply' instead if you want to keep the stash entry after applying it.",
-            caution: "If applying causes conflicts, Git leaves the stash entry in place — resolve conflicts, then manually drop the stash with 'git stash drop'.",
+            caution: "If applying causes conflicts, Git leaves the stash entry in place. Resolve conflicts, then manually drop the stash with 'git stash drop'.",
           },
         ],
       },
