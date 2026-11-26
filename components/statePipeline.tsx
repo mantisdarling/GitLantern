@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { pipelineStages } from "@/lib/diagnosticsData";
 import { StageKey, StageInfo } from "@/lib/types";
 import { CopyButton } from "@/components/ui/copyButton";
-import { CommitGraph } from "@/components/commitGraph";
 import {
   FolderGit2,
   Layers,
@@ -64,32 +63,25 @@ export function StatePipeline({
   };
 
   return (
-    <section id="pipeline" className="py-16 scroll-mt-20 border-t border-githubDark-border/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="pipeline" className="commonPadding scroll-mt-16 bg-white border-t border-slate-200/70">
+      <div className="screenMaxWidth">
         {/* Section Header */}
-        <div className="mb-8 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 mb-2 uppercase tracking-widest">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
-            <span>02 • GIT STATE PIPELINE</span>
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-cyber text-white tracking-tight uppercase">
-            File Lifecycle Pipeline
+        <div className="mb-12 max-w-3xl">
+          <h2 className="sectionHeading">
+            Where Your Files Live
           </h2>
-          <p className="text-sm text-neutral-400 mt-2 leading-relaxed font-normal">
-            Track where your files live across Git&apos;s 4 core storage domains. Click any stage to inspect how files move forward and backward.
+          <p className="sectionSubheading mt-4">
+            Git moves changes across four places: your working folder, the staging area, your local repo, and the remote server. Click any stage to see how to move forward or undo.
           </p>
         </div>
 
         {/* Interactive Horizontal Pipeline Diagram */}
-        <div className="relative cyberPanel cornerReticle rounded-lg p-6 sm:p-9 border border-[#182030] bg-[#07090e] overflow-hidden">
-          {/* Subtle Ambient Background Halo */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-32 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-
+        <div className="relative archCard rounded-md p-6 sm:p-10 overflow-hidden">
           {/* Track Line connecting the 4 stages */}
-          <div className="hidden md:block absolute top-[84px] left-[10%] right-[10%] h-1 bg-[#182030] z-0 rounded-full overflow-hidden">
-            {/* Animated glowing laser progress bar */}
+          <div className="hidden md:block absolute top-[88px] left-[10%] right-[10%] h-1.5 bg-slate-200/80 z-0 rounded-full overflow-hidden">
+            {/* Animated progress bar */}
             <div
-              className="h-full bg-gradient-to-r from-cyan-400 via-sky-400 to-[#f05032] transition-all duration-500 ease-out glowBorder"
+              className="h-full bg-[#2563EB] transition-all duration-500 ease-out"
               style={{
                 width: `${(Math.max(0, currentStageIndex) / (stageKeys.length - 1)) * 100}%`,
               }}
@@ -97,7 +89,7 @@ export function StatePipeline({
           </div>
 
           {/* 4 Stage Nodes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 relative z-10">
             {pipelineStages.map((stage, index) => {
               const isCurrent = stage.id === currentStage;
               const isInspected = stage.id === inspectedStageId;
@@ -108,18 +100,18 @@ export function StatePipeline({
                   key={stage.id}
                   type="button"
                   onClick={() => handleStageClick(stage.id)}
-                  className={`flex flex-col items-center text-center p-4 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-cyan-400 ${
+                  className={`flex flex-col items-center text-center p-5 rounded-2xl border transition-all duration-200 focus:outline-none ${
                     isInspected
-                      ? "bg-[#0a0e18] border-cyan-400 cyberBoxGlowMedium ring-1 ring-cyan-400/40"
-                      : "bg-[#040508] hover:bg-[#0b0e16] border-[#182030]"
+                      ? "bg-white border-blue-300 shadow-[0_12px_30px_rgba(37,99,235,0.08)] ring-1 ring-[#2563EB]/20"
+                      : "bg-slate-50/70 hover:bg-white border-slate-200/80 shadow-sm"
                   }`}
                 >
                   {/* Stage Icon Node with File Dot */}
                   <div className="relative mb-3">
                     <div
-                      className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-200 ${
+                      className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-200 shadow-sm ${
                         isCurrent
-                          ? "bg-cyan-400 text-black cyberBoxGlowMedium"
+                          ? "bg-[#2563EB] text-white"
                           : isPassed
                           ? "bg-cyan-500/15 text-cyan-400 border border-cyan-400/40"
                           : "bg-[#0b0e16] text-neutral-500 border border-[#182030]"
