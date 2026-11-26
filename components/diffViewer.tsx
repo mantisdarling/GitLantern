@@ -33,22 +33,22 @@ export function DiffViewer({
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   return (
-    <div className="rounded-xl border border-githubDark-border bg-githubDark-deep/80 overflow-hidden font-mono text-xs">
+    <div className="rounded-2xl border border-slate-200/90 bg-white overflow-hidden font-mono text-xs shadow-sm">
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
-        className="w-full px-4 py-2.5 bg-githubDark-card border-b border-githubDark-border flex items-center justify-between hover:bg-githubDark-surface transition-colors text-left"
+        className="w-full px-4 py-3 bg-slate-50/80 border-b border-slate-200/80 flex items-center justify-between hover:bg-slate-100/80 transition-colors text-left"
       >
-        <div className="flex items-center gap-2 text-githubDark-text">
-          <FileCode className="w-4 h-4 text-gitOrange" />
+        <div className="flex items-center gap-2 text-[#0B1221]">
+          <FileCode className="w-4 h-4 text-[#2563EB]" />
           <span className="font-semibold">{fileName}</span>
-          <span className="text-[10px] text-githubDark-muted font-sans">(git diff preview)</span>
+          <span className="text-[10px] text-[#64748B] font-sans">(git diff preview)</span>
         </div>
 
-        <div className="flex items-center gap-1.5 text-githubDark-muted text-xs font-sans">
+        <div className="flex items-center gap-1.5 text-[#64748B] text-xs font-sans">
           <span>{isExpanded ? "Hide diff" : "Inspect diff"}</span>
           {isExpanded ? (
-            <ChevronUp className="w-3.5 h-3.5 text-gitOrange" />
+            <ChevronUp className="w-3.5 h-3.5 text-[#2563EB]" />
           ) : (
             <ChevronDown className="w-3.5 h-3.5" />
           )}
@@ -56,7 +56,7 @@ export function DiffViewer({
       </button>
 
       {isExpanded && (
-        <div className="divide-y divide-githubDark-borderSubtle overflow-x-auto">
+        <div className="divide-y divide-slate-100 overflow-x-auto">
           {diffLines.map((line, index) => {
             const isAdd = line.type === "add";
             const isDel = line.type === "del";
@@ -67,16 +67,16 @@ export function DiffViewer({
                 key={index}
                 className={`flex items-stretch font-mono text-[11px] leading-relaxed ${
                   isAdd
-                    ? "bg-emerald-950/25 text-emerald-300"
+                    ? "bg-emerald-50 text-emerald-800"
                     : isDel
-                    ? "bg-rose-950/25 text-rose-300"
+                    ? "bg-rose-50 text-rose-800"
                     : isHeader
-                    ? "bg-githubDark-surface/60 text-gitOrange/90"
-                    : "text-githubDark-muted"
+                    ? "bg-blue-50/60 text-[#2563EB]"
+                    : "text-[#475569]"
                 }`}
               >
                 {/* Line Numbers */}
-                <div className="w-10 py-0.5 px-2 text-right select-none text-githubDark-faint bg-githubDark-deep border-r border-githubDark-borderSubtle shrink-0">
+                <div className="w-10 py-0.5 px-2 text-right select-none text-slate-400 bg-slate-50 border-r border-slate-200/80 shrink-0">
                   {line.oldLineNumber || ""}
                 </div>
                 <div className="w-10 py-0.5 px-2 text-right select-none text-githubDark-faint bg-githubDark-deep border-r border-githubDark-borderSubtle shrink-0">
