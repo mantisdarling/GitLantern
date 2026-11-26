@@ -7,19 +7,17 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Git Lantern — Visual Git Learning & Synthesis Engine",
+  title: "Git Lantern | Visual Git Learning & Synthesis Engine",
   description:
-    "An award-winning developer tool for junior developers. Transforms everyday scenarios into verified terminal commands, live state visualizations, and recovery diagnostics. Built for FirstCommit Hackathon.",
+    "A visual developer tool for learning Git. Transforms everyday scenarios into verified terminal commands, live state visualizations, and recovery diagnostics.",
   keywords: [
     "Git",
     "Developer Tools",
-    "Junior Developers",
     "Git Commands",
     "Visual State Mapping",
     "Merge Conflict Fixes",
-    "FirstCommit",
   ],
-  authors: [{ name: "Git Lantern Team" }],
+  authors: [{ name: "Git Lantern" }],
 };
 
 export default function RootLayout({
@@ -28,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <body className="bg-githubDark-bg text-githubDark-text selection:bg-gitOrange/30 selection:text-gitOrange antialiased">
+    <html lang="en" className="light" suppressHydrationWarning>
+      <body className="bg-white text-[#0F172A] selection:bg-[#2563EB]/15 selection:text-[#2563EB] antialiased">
         {children}
       </body>
     </html>
