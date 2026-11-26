@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer";
 import { HeroSection } from "@/components/heroSection";
 import { SynthesisEngine } from "@/components/synthesisEngine";
 import { StatePipeline } from "@/components/statePipeline";
+import { ArchitecturalMap } from "@/components/architecturalMap";
 import { DiagnosticFramework } from "@/components/diagnosticFramework";
 import { TerminalSimulator } from "@/components/terminalSimulator";
 import { HistoryDrawer } from "@/components/historyDrawer";
@@ -22,7 +23,6 @@ import { StageKey } from "@/lib/types";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 import { downloadCheatsheet } from "@/lib/exportCheatsheet";
 import { ScrollProgressBar } from "@/components/scrollProgressBar";
-import { AnimatedBackground } from "@/components/animatedBackground";
 import { sounds } from "@/lib/soundEffects";
 
 const tourSeenKey = "gitlanternTourSeen";
@@ -40,7 +40,7 @@ export default function HomePage() {
   const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [confettiTrigger, setConfettiTrigger] = useState<boolean>(false);
-  const [isDark, setIsDark] = useState<boolean>(true);
+  const [isDark, setIsDark] = useState<boolean>(false);
   const activeCommandRef = useRef<string>("");
 
   const { historyItems, addHistoryItem, clearHistory } = useSessionHistory();
@@ -57,13 +57,12 @@ export default function HomePage() {
     }
   }, []);
 
-  // Auto-open tour on first visit
+  // Mark tour key if needed; user can open tour from the header button anytime
   useEffect(() => {
     if (typeof window !== "undefined") {
       const seen = localStorage.getItem(tourSeenKey);
       if (!seen) {
-        const timer = setTimeout(() => setIsTourOpen(true), 900);
-        return () => clearTimeout(timer);
+        localStorage.setItem(tourSeenKey, "true");
       }
     }
   }, []);
@@ -176,52 +175,15 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#040508] text-[#f0f6fc] selection:bg-cyan-500/20 selection:text-cyan-400 relative">
+    <div className="min-h-screen flex flex-col bg-white text-[#0F172A] selection:bg-[#2563EB]/15 selection:text-[#2563EB] relative">
       {/* Scroll Progress Tracker */}
       <ScrollProgressBar />
 
-      {/* Kinetic Animated Background Canvas */}
-      <AnimatedBackground />
-
-      {/* Cyber Confetti Burst on badge unlock / copy */}
+      {/* Confetti Burst on badge unlock or copy */}
       <CyberConfetti
         trigger={confettiTrigger}
         onComplete={() => setConfettiTrigger(false)}
       />
-
-      {/* Clean Ambient Ticker */}
-      <div className="w-full bg-[#040508] border-b border-[#182030] py-2 overflow-hidden select-none z-30 relative font-mono text-[11px] text-neutral-400">
-        <div className="marqueeTrack gap-10 items-center">
-          <div className="flex items-center gap-10 whitespace-nowrap">
-            <span className="flex items-center gap-2 text-cyan-400 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              Git Lantern
-            </span>
-            <span className="text-neutral-600">•</span>
-            <span>Visual Git Workflow & Command Synthesis</span>
-            <span className="text-neutral-600">•</span>
-            <span>4-Stage Lifecycle State Machine</span>
-            <span className="text-neutral-600">•</span>
-            <span>Press <kbd className="px-1.5 py-0.5 rounded bg-[#0a0d14] border border-[#182030] text-cyan-400">?</kbd> for Shortcuts HUD</span>
-            <span className="text-neutral-600">•</span>
-            <span>100% Client-Side & Private</span>
-          </div>
-          <div className="flex items-center gap-10 whitespace-nowrap" aria-hidden="true">
-            <span className="flex items-center gap-2 text-cyan-400 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              Git Lantern
-            </span>
-            <span className="text-neutral-600">•</span>
-            <span>Visual Git Workflow & Command Synthesis</span>
-            <span className="text-neutral-600">•</span>
-            <span>4-Stage Lifecycle State Machine</span>
-            <span className="text-neutral-600">•</span>
-            <span>Press <kbd className="px-1.5 py-0.5 rounded bg-[#0a0d14] border border-[#182030] text-cyan-400">?</kbd> for Shortcuts HUD</span>
-            <span className="text-neutral-600">•</span>
-            <span>100% Client-Side & Private</span>
-          </div>
-        </div>
-      </div>
 
       {/* Top Navigation */}
       <Header
@@ -242,9 +204,6 @@ export default function HomePage() {
       <main className="flex-1">
         <HeroSection />
 
-        {/* Clean Minimal Divider 01 */}
-        <div className="border-t border-[#182030]/60 max-w-7xl mx-auto my-4" />
-
         <SynthesisEngine
           onStageChange={handleStageChange}
           onRecordCommand={handleRecordCommand}
@@ -253,9 +212,6 @@ export default function HomePage() {
           onActiveCommandChange={handleActiveCommandChange}
         />
 
-        {/* Clean Minimal Divider 02 */}
-        <div className="border-t border-[#182030]/60 max-w-7xl mx-auto my-4" />
-
         <StatePipeline
           currentStage={currentStage}
           onSelectStage={handleStageChange}
@@ -263,17 +219,13 @@ export default function HomePage() {
           onUnlockBadge={unlockBadge}
         />
 
-        {/* Clean Minimal Divider 03 */}
-        <div className="border-t border-[#182030]/60 max-w-7xl mx-auto my-4" />
+        <ArchitecturalMap />
 
         <DiagnosticFramework
           externalSelectedId={selectedDiagnosticId}
           onRecordCommand={handleRecordCommand}
           onUnlockBadge={unlockBadge}
         />
-
-        {/* Clean Minimal Divider 04 */}
-        <div className="border-t border-[#182030]/60 max-w-7xl mx-auto my-4" />
 
         <TerminalSimulator
           onMatchedDiagnostic={handleMatchedDiagnostic}
