@@ -63,3 +63,84 @@ export function ArchitecturalSculpture() {
       animationFrameId = window.requestAnimationFrame(draw);
       if (!isVisible || document.hidden || width === 0 || height === 0) return;
 
+      time += 0.014;
+      pointerX += (targetPointerX - pointerX) * 0.05;
+      pointerY += (targetPointerY - pointerY) * 0.05;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const isMobile = width < 640;
+      const finCount = isMobile ? 28 : 40;
+      const baseW = isMobile ? Math.min(width * 0.58, 220) : Math.min(width * 0.26, 340);
+      const baseH = isMobile ? 16 : 22;
+      const centerX = width * 0.44;
+      const startY = -height * 0.06;
+      const totalH = height * 1.12;
+      const stepY = totalH / finCount;
+
+      for (let i = 0; i < finCount; i++) {
+        const t = i / finCount;
+        const wave = Math.sin(t * Math.PI * 2.1 - time) * (isMobile ? 55 : 115);
+        const depth = Math.cos(t * Math.PI * 2.1 - time);
+        const offsetX = wave + pointerX * (24 * (0.4 + t * 0.6));
+        const offsetY = pointerY * 12;
+
+        const finW = baseW * (0.82 + 0.28 * (0.5 + 0.5 * depth));
+        const finH = baseH * (0.85 + 0.25 * (0.5 + 0.5 * depth));
+        const angle =
+          Math.cos(t * Math.PI * 2.1 - time) * 0.34 + pointerX * 0.08;
+
+        const x = centerX + offsetX;
+        const y = startY + i * stepY + offsetY;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+
+        // Soft architectural shadow beneath each white plate
+        ctx.shadowColor = "rgba(0, 0, 0, 0.14)";
+        ctx.shadowBlur = isMobile ? 10 : 16;
+        ctx.shadowOffsetX = -4;
+        ctx.shadowOffsetY = 8;
+
+        // Crisp flat white plate with subtle warm-gray edge shading
+        const shade = Math.round(244 + depth * 11);
+        ctx.fillStyle = `rgb(${shade}, ${shade}, ${shade})`;
+
+        const rx = -finW / 2;
+        const ry = -finH / 2;
+        const r = 4;
+
+        ctx.beginPath();
+        ctx.roundRect(rx, ry, finW, finH, r);
+        ctx.fill();
+
+        // Crisp architectural rim line
+        ctx.shadowColor = "transparent";
+        ctx.strokeStyle = "rgba(210, 210, 215, 0.7)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    };
+
+    animationFrameId = window.requestAnimationFrame(draw);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className="absolute inset-0 w-full h-full pointer-events-none select-none"
+    />
+  );
+}
