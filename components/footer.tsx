@@ -2,71 +2,99 @@
 
 import React from "react";
 import Link from "next/link";
-import { Flame, Github, Shield, Heart } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="w-full border-t border-[#182030] bg-[#040508] mt-24 py-12 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Brand Info */}
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center">
-                <Flame className="w-3.5 h-3.5 text-cyan-400" />
-              </div>
-              <span className="text-sm font-cyber font-bold uppercase tracking-wider text-white">
-                Git Lantern
-              </span>
-              <span className="text-xs font-mono text-neutral-400">
-                // PORTAL SPEC 2200
-              </span>
+    <footer className="w-full bg-[#0A0A0A] text-white border-t border-[#27272A]">
+      <div className="screenMaxWidth py-16 sm:py-20">
+        {/* Top Architectural Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-14 border-b border-[#27272A]">
+          {/* Brand & Tagline */}
+          <div className="md:col-span-6 space-y-4">
+            <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#71717A]">
+              THE ARCHITECTURE OF GIT WORKFLOWS
             </div>
-            <p className="text-xs text-neutral-400 max-w-md text-center md:text-left leading-relaxed">
-              Transforming plain English developer scenarios into exact, copy-paste ready
-              Git commands with real-time state visualization.
+            <h2 className="text-3xl sm:text-5xl font-normal tracking-tight text-white">
+              GIT LANTERN
+            </h2>
+            <p className="text-sm text-[#A1A1AA] max-w-md leading-relaxed">
+              Turn Git tasks into ready to run commands, inspect where your files live at every stage, and recover broken repository states.
             </p>
           </div>
 
-          {/* Navigation & Links */}
-          <div className="flex items-center gap-6 text-xs font-mono text-neutral-400">
-            <Link
-              href="/privacy"
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1.5"
-            >
-              <Shield className="w-3.5 h-3.5 text-cyan-400" />
-              Privacy Policy
-            </Link>
-            <Link
-              href="/profile"
-              className="hover:text-cyan-400 transition-colors"
-            >
-              Portal Pass
-            </Link>
-            <a
-              href="https://github.com/mantisdarling/GitLantern"
-              target="blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition-colors flex items-center gap-1.5 text-cyan-400"
-            >
-              <Github className="w-3.5 h-3.5" />
-              GitHub
-            </a>
+          {/* Navigation Column */}
+          <div className="md:col-span-3 space-y-3">
+            <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#71717A]">
+              SECTIONS
+            </div>
+            <ul className="space-y-2.5 text-sm text-[#E4E4E7]">
+              <li>
+                <a href="#synthesis" className="hover:text-white transition-colors">
+                  Command Generator
+                </a>
+              </li>
+              <li>
+                <a href="#pipeline" className="hover:text-white transition-colors">
+                  Where Your Files Live
+                </a>
+              </li>
+              <li>
+                <a href="#topology" className="hover:text-white transition-colors">
+                  Topology Map
+                </a>
+              </li>
+              <li>
+                <a href="#diagnostics" className="hover:text-white transition-colors">
+                  Fix Common Mistakes
+                </a>
+              </li>
+              <li>
+                <a href="#terminal" className="hover:text-white transition-colors">
+                  Terminal Sandbox
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Resources Column */}
+          <div className="md:col-span-3 space-y-3">
+            <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#71717A]">
+              RESOURCES
+            </div>
+            <ul className="space-y-2.5 text-sm text-[#E4E4E7]">
+              <li>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/profile" className="hover:text-white transition-colors">
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/mantisdarling/GitLantern"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-white transition-colors"
+                >
+                  <span>GitHub Repository</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-[#182030] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400 font-mono">
-          <p>© {new Date().getFullYear()} Git Lantern. Open source under MIT License.</p>
-          <div className="flex items-center gap-3 text-[10px] uppercase tracking-widest text-neutral-400 font-mono">
-            <span>SYS REG: 64.1355° N, 21.8954° W</span>
-            <span className="text-cyan-400">•</span>
-            <span>FREQ: 142.8 MHz</span>
-            <span className="text-cyan-400">•</span>
-            <span>PASS: GRANTED</span>
+        {/* Bottom Legal Bar */}
+        <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[11px] font-mono uppercase tracking-[0.12em] text-[#71717A]">
+          <p>© {new Date().getFullYear()} GIT LANTERN</p>
+          <div className="flex flex-wrap items-center gap-6">
+            <span>MIT LICENSE</span>
+            <span>BUILT FOR DEVELOPERS</span>
           </div>
-          <p className="flex items-center gap-1 font-mono text-neutral-400 text-[11px]">
-            Crafted with <Heart className="w-3 h-3 text-[#f05032] inline" /> for developers everywhere
-          </p>
         </div>
       </div>
     </footer>
