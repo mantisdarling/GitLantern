@@ -164,11 +164,11 @@ export function StatePipeline({
                     <h4 className="text-base font-bold text-[#0B1221]">
                       {inspectedStageInfo.label}
                     </h4>
-                    <span className="text-[10px] font-mono text-cyan-400 px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-400/30 uppercase tracking-wider">
-                      Active Telemetry
+                    <span className="text-[10px] font-mono text-[#2563EB] px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200">
+                      Active Stage
                     </span>
                   </div>
-                  <p className="text-xs text-neutral-400 mt-0.5">
+                  <p className="text-xs text-[#64748B] mt-0.5">
                     {inspectedStageInfo.description}
                   </p>
                 </div>
@@ -179,7 +179,7 @@ export function StatePipeline({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
               {/* Forward Commands */}
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-xs font-mono font-semibold text-cyan-400 uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#2563EB] uppercase tracking-wider">
                   <ArrowRight className="w-3.5 h-3.5" />
                   <span>Advance Forward From Here</span>
                 </div>
@@ -187,15 +187,15 @@ export function StatePipeline({
                   {inspectedStageInfo.forwardCommands.map((item, i) => (
                     <div
                       key={i}
-                      className="p-3 rounded-lg bg-[#07090e] border border-[#182030] hover:border-cyan-400/40 transition-colors flex items-center justify-between gap-3"
+                      className="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-blue-300 shadow-sm transition-colors flex items-center justify-between gap-3"
                     >
                       <div className="space-y-0.5">
-                        <div className="font-mono text-xs font-semibold text-white">
+                        <div className="font-mono text-xs font-semibold text-[#0B1221]">
                           {item.command}
                         </div>
-                        <div className="text-[11px] text-neutral-400">
+                        <div className="text-[11px] text-[#64748B]">
                           {item.description} →{" "}
-                          <span className="text-cyan-400 font-mono font-semibold">{item.destination}</span>
+                          <span className="text-[#2563EB] font-mono font-semibold">{item.destination}</span>
                         </div>
                       </div>
                       <CopyButton
@@ -213,7 +213,7 @@ export function StatePipeline({
 
               {/* Backward Commands */}
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-xs font-mono font-semibold text-neutral-400 uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#64748B] uppercase tracking-wider">
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Rewind or Rollback From Here</span>
                 </div>
@@ -221,15 +221,15 @@ export function StatePipeline({
                   {inspectedStageInfo.backwardCommands.map((item, i) => (
                     <div
                       key={i}
-                      className="p-3 rounded-lg bg-[#07090e] border border-[#182030] hover:border-[#f05032]/40 transition-colors flex items-center justify-between gap-3"
+                      className="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-rose-300 shadow-sm transition-colors flex items-center justify-between gap-3"
                     >
                       <div className="space-y-0.5">
-                        <div className="font-mono text-xs font-semibold text-white">
+                        <div className="font-mono text-xs font-semibold text-[#0B1221]">
                           {item.command}
                         </div>
-                        <div className="text-[11px] text-neutral-400">
+                        <div className="text-[11px] text-[#64748B]">
                           {item.description} →{" "}
-                          <span className="text-[#f05032] font-mono font-semibold">{item.destination}</span>
+                          <span className="text-rose-600 font-mono font-semibold">{item.destination}</span>
                         </div>
                       </div>
                       <CopyButton
@@ -246,9 +246,6 @@ export function StatePipeline({
               </div>
             </div>
           </div>
-
-          {/* Interactive Commit Graph & Branch Tree */}
-          <CommitGraph />
         </div>
       </div>
     </section>
