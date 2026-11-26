@@ -63,27 +63,31 @@ export function Header({
           <div className="flex items-center gap-2 pointer-events-auto">
             <button
               type="button"
-              onClick={onOpenTour}
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-white text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
-              title="Replay Interactive Spotlight Tour"
-              aria-label="Replay tour"
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              className="h-9 sm:h-10 px-3.5 sm:px-4 rounded-[4px] bg-[#0A0A0A] hover:bg-[#27272A] text-white flex items-center justify-center transition-colors focus:outline-none"
             >
-              <Compass className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="hidden lg:inline">Tour</span>
+              {menuOpen ? (
+                <X className="w-4 h-4" />
+              ) : (
+                <span className="flex flex-col gap-1 w-4" aria-hidden="true">
+                  <span className="h-[1.5px] w-full bg-white block" />
+                  <span className="h-[1.5px] w-3 bg-white block" />
+                </span>
+              )}
             </button>
-          )}
 
-          {/* Shortcuts HUD Trigger */}
-          {onOpenShortcuts && (
             <button
               type="button"
-              onClick={onOpenShortcuts}
-              className="flex items-center gap-1 px-2 py-1.5 rounded-md border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 text-neutral-300 hover:text-white text-xs font-mono transition-all focus:outline-none focus:ring-1 focus:ring-cyan-400"
-              title="Keyboard Shortcuts (?)"
-              aria-label="View keyboard shortcuts"
+              onClick={onOpenBadges}
+              aria-label="View achievements"
+              title={`Achievements (${unlockedCount}/${badges.length})`}
+              className="h-9 sm:h-10 px-2.5 rounded-[4px] bg-white border border-[#E4E4E7] hover:border-[#0A0A0A] text-[#0A0A0A] flex items-center gap-1.5 text-[11px] font-mono transition-colors focus:outline-none"
             >
-              <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="text-[10px] text-neutral-400 font-mono">?</span>
+              <Award className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline font-semibold">
+                {unlockedCount}/{badges.length}
+              </span>
             </button>
           )}
 
