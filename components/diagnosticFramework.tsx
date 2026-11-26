@@ -165,22 +165,22 @@ export function DiagnosticFramework({
                       {isExpanded ? "Collapse" : "Expand Fix"}
                     </span>
                     {isExpanded ? (
-                      <ChevronUp className="w-4 h-4 text-cyan-400" />
+                      <ChevronUp className="w-4 h-4 text-[#2563EB]" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-neutral-500" />
+                      <ChevronDown className="w-4 h-4 text-[#64748B]" />
                     )}
                   </div>
                 </button>
 
                 {/* Expanded Details Body */}
                 {isExpanded && (
-                  <div className="px-5 pb-6 pt-2 border-t border-[#182030] space-y-5 animate-in fade-in duration-200">
-                    {/* What Happened (Plain English) */}
+                  <div className="px-6 pb-6 pt-3 border-t border-slate-200/80 space-y-5 animate-in fade-in duration-200">
+                    {/* Root Cause */}
                     <div className="space-y-1">
-                      <h4 className="text-xs font-mono font-semibold text-cyan-400 uppercase tracking-wider">
-                        // Root Cause Signature
+                      <h4 className="text-xs font-mono font-semibold text-[#2563EB] uppercase tracking-wider">
+                        Root Cause
                       </h4>
-                      <p className="text-xs text-neutral-300 leading-relaxed">
+                      <p className="text-xs text-[#334155] leading-relaxed">
                         {diag.rootCause}
                       </p>
                     </div>
@@ -188,43 +188,43 @@ export function DiagnosticFramework({
                     {/* Realistic Terminal Output Preview */}
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono text-neutral-400">
+                        <span className="text-xs font-mono text-[#64748B]">
                           Realistic Terminal Output
                         </span>
-                        <span className="text-[11px] font-mono text-neutral-600">
-                          bash/zsh stderr
+                        <span className="text-[11px] font-mono text-[#64748B]">
+                          bash stderr
                         </span>
                       </div>
-                      <div className="bg-[#020306] p-3.5 rounded-lg border border-[#182030] font-mono text-xs text-neutral-300 overflow-x-auto whitespace-pre-wrap leading-relaxed">
+                      <div className="bg-[#F8FAFC] p-3.5 rounded-xl border border-slate-200/90 font-mono text-xs text-[#334155] overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner">
                         {diag.realisticOutput}
                       </div>
                     </div>
 
-                    {/* Step-by-Step Fix Commands */}
+                    {/* Step by Step Fix Commands */}
                     <div className="space-y-2.5">
-                      <h4 className="text-xs font-mono font-semibold text-cyan-400 uppercase tracking-wider">
-                        // Step-by-Step Recovery Protocol
+                      <h4 className="text-xs font-mono font-semibold text-[#2563EB] uppercase tracking-wider">
+                        Step by Step Recovery
                       </h4>
                       <div className="space-y-2">
                         {diag.recoverySteps.map((step) => (
                           <div
                             key={step.stepNumber}
-                            className="bg-[#07090e] rounded-lg p-3 border border-[#182030] flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-cyan-400/30 transition-colors"
+                            className="bg-[#F8FAFC] rounded-xl p-3.5 border border-slate-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-blue-300 transition-colors"
                           >
                             <div className="space-y-1">
                               <div className="flex items-center gap-2">
-                                <span className="w-4 h-4 rounded-full bg-cyan-500/15 text-cyan-400 text-[10px] font-mono font-bold flex items-center justify-center border border-cyan-400/30">
+                                <span className="w-5 h-5 rounded-full bg-blue-50 text-[#2563EB] text-[10px] font-mono font-bold flex items-center justify-center border border-blue-200">
                                   {step.stepNumber}
                                 </span>
-                                <code className="text-xs font-mono font-semibold text-white">
+                                <code className="text-xs font-mono font-semibold text-[#0B1221]">
                                   {step.command}
                                 </code>
                               </div>
-                              <p className="text-[11px] text-neutral-400 pl-6">
+                              <p className="text-[11px] text-[#64748B] pl-7">
                                 {step.explanation}
                               </p>
                             </div>
-                            <div className="pl-6 sm:pl-0 shrink-0">
+                            <div className="pl-7 sm:pl-0 shrink-0">
                               <CopyButton
                                 textToCopy={step.command}
                                 onCopied={() => {
@@ -240,10 +240,10 @@ export function DiagnosticFramework({
                     </div>
 
                     {/* Prevention Tip */}
-                    <div className="flex items-start gap-2.5 p-3 rounded-lg bg-cyan-500/5 border border-cyan-400/20 text-xs text-neutral-300">
-                      <Lightbulb className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                    <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-blue-50/60 border border-blue-200/80 text-xs text-[#334155]">
+                      <Lightbulb className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
                       <div>
-                        <strong className="text-white font-mono uppercase tracking-wider text-[10px] mr-1.5">Prevention Protocol:</strong>
+                        <strong className="text-[#0B1221] font-mono uppercase tracking-wider text-[10px] mr-1.5">Prevention Tip:</strong>
                         <span>{diag.preventionTip}</span>
                       </div>
                     </div>
