@@ -1,216 +1,40 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowRight,
-  Terminal,
-  Layers,
-  ShieldCheck,
-  Check,
-  Cpu,
-  CornerDownRight,
-} from "lucide-react";
-
-interface HeroPreviewState {
-  scenarioTitle: string;
-  branchInput: string;
-  commandText: string;
-  explanation: string;
-  currentStage: string;
-  copied: boolean;
-}
-
-const previewCycleSteps: HeroPreviewState[] = [
-  {
-    scenarioTitle: "FEATURE WORKFLOW",
-    branchInput: "feature/payment-gate",
-    commandText: "git checkout -b feature/payment-gate",
-    explanation: "Creates isolated feature branch and re-points HEAD instantly.",
-    currentStage: "STAGE 01 // WORKING TREE",
-    copied: false,
-  },
-  {
-    scenarioTitle: "INDEX PREPARATION",
-    branchInput: "feature/payment-gate",
-    commandText: "git add src/payments/checkout.tsx",
-    explanation: "Curates modified blobs into Git's preparation index.",
-    currentStage: "STAGE 02 // STAGING INDEX",
-    copied: true,
-  },
-  {
-    scenarioTitle: "COMMIT SNAPSHOT",
-    branchInput: "feature/payment-gate",
-    commandText: 'git commit -m "feat: connect stripe checkout webhook"',
-    explanation: "Permanently records verified snapshot into local DAG graph.",
-    currentStage: "STAGE 03 // LOCAL REPO",
-    copied: false,
-  },
-  {
-    scenarioTitle: "REMOTE SYNCHRONIZATION",
-    branchInput: "feature/payment-gate",
-    commandText: "git push -u origin feature/payment-gate",
-    explanation: "Broadcasts branch commits to cloud upstream with tracking.",
-    currentStage: "STAGE 04 // REMOTE ORIGIN",
-    copied: true,
-  },
-];
+import React from "react";
+import { ArrowDown } from "lucide-react";
+import { ArchitecturalSculpture } from "@/components/architecturalSculpture";
 
 export function HeroSection() {
-  const [cycleIndex, setCycleIndex] = useState<number>(0);
-  const [displayedText, setDisplayedText] = useState<string>("");
-  const [isTyping, setIsTyping] = useState<boolean>(true);
-
-  const activeStep = previewCycleSteps[cycleIndex];
-
-  useEffect(() => {
-    let currentPos = 0;
-    const fullText = activeStep.commandText;
-    setDisplayedText("");
-    setIsTyping(true);
-
-    const typewriterInterval = setInterval(() => {
-      if (currentPos < fullText.length) {
-        setDisplayedText(fullText.substring(0, currentPos + 1));
-        currentPos += 1;
-      } else {
-        setIsTyping(false);
-        clearInterval(typewriterInterval);
-      }
-    }, 40);
-
-    const advanceTimer = setTimeout(() => {
-      setCycleIndex((prev) => (prev + 1) % previewCycleSteps.length);
-    }, 4000);
-
-    return () => {
-      clearInterval(typewriterInterval);
-      clearTimeout(advanceTimer);
-    };
-  }, [cycleIndex, activeStep.commandText]);
-
   return (
-    <section className="relative pt-10 pb-16 md:pt-16 md:pb-24 border-b border-[#182030]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Clean Top Status Tag */}
-        <div className="flex items-center justify-between pb-4 border-b border-[#182030]/60 text-xs font-mono text-neutral-400">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse inline-block" />
-            <span className="text-white font-medium">Git Lantern</span>
-            <span className="text-neutral-600">•</span>
-            <span className="text-neutral-400">Visual Git Learning & Synthesis</span>
-          </div>
-          <div className="hidden sm:flex items-center gap-4 text-[11px]">
-            <span className="text-emerald-400 font-medium">● 4 Stages Synced</span>
-            <span className="text-neutral-500">100% Client-Side</span>
-          </div>
-        </div>
+    <section className="relative bg-white min-h-[92vh] sm:min-h-screen w-full overflow-hidden flex flex-col justify-between px-5 sm:px-10 pt-20 pb-8">
+      {/* Lightweight moving white architectural sculpture (mobile & low-end friendly) */}
+      <ArchitecturalSculpture />
 
-        {/* Hero Headline Section */}
-        <div className="pt-10 pb-12 max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mb-4"
-          >
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-xs font-mono">
-              <span>✦</span>
-              <span>Interactive Git Workflow & Command Engine</span>
+      {/* Top-center architectural tagline */}
+      <div className="relative z-10 text-center pt-1 sm:pt-2">
+        <p className="text-xs sm:text-sm md:text-base font-medium uppercase tracking-[0.08em] text-[#0A0A0A] leading-snug">
+          THE ARCHITECTURE
+          <br />
+          OF GIT WORKFLOWS
+        </p>
+      </div>
+
+      {/* Center spread oversized letters over moving white sculpture */}
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto my-auto py-12">
+        <div className="grid grid-cols-3 items-center w-full">
+          {/* Left Letter */}
+          <div className="flex justify-start">
+            <span className="text-6xl sm:text-8xl md:text-[7.5rem] lg:text-[9.5rem] font-normal tracking-tight text-[#0A0A0A] leading-none select-none">
+              G
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-tight font-cyber"
-          >
-            Understand Git <span className="text-cyan-400">Visually.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 text-base sm:text-lg text-neutral-300 max-w-2xl leading-relaxed"
-          >
-            No more dreading merge conflicts or guessing command flags. Choose your scenario,
-            customize your branch and files, and receive verified, copy-ready commands with clear mental models.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-8 flex flex-wrap items-center gap-3 font-mono text-xs"
-          >
-            <a
-              href="#synthesis"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-black font-cyber font-bold transition-all duration-150 cyberBoxGlowSmall active:scale-95 uppercase tracking-wider"
-            >
-              <span>Synthesize Commands</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
-            <a
-              href="#pipeline"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 hover:bg-[#0c1018] text-white font-medium transition-all duration-150 uppercase tracking-wider"
-            >
-              <Layers className="w-4 h-4 text-cyan-400" />
-              <span>State Pipeline</span>
-            </a>
-            <a
-              href="#terminal"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-[#182030] bg-[#07090e] hover:border-cyan-400/50 hover:bg-[#0c1018] text-neutral-300 hover:text-white font-medium transition-all duration-150 uppercase tracking-wider"
-            >
-              <Terminal className="w-4 h-4 text-[#f05032]" />
-              <span>Terminal Sandbox</span>
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Clean Interactive Preview Terminal */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 border border-[#182030] rounded-xl overflow-hidden bg-[#040508] shadow-xl">
-          {/* Left Column: Live Context */}
-          <div className="lg:col-span-4 p-5 border-b lg:border-b-0 lg:border-r border-[#182030] bg-[#07090e] flex flex-col justify-between">
-            <div className="space-y-3 font-mono text-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-[#182030]">
-                <span className="text-neutral-400 font-medium">Scenario Preview</span>
-                <span className="text-cyan-400 flex items-center gap-1.5 font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-                  Live Cycle
-                </span>
-              </div>
-
-              <div>
-                <span className="text-[10px] text-neutral-500 uppercase block">Current Workflow</span>
-                <div className="text-sm font-bold text-white mt-0.5 font-cyber">
-                  {activeStep.scenarioTitle}
-                </div>
-              </div>
-
-              <div>
-                <span className="text-[10px] text-neutral-500 uppercase block">Branch Identifier</span>
-                <div className="text-xs text-cyan-400 mt-0.5 bg-[#0b0e16] px-2.5 py-1.5 rounded border border-[#182030] font-mono">
-                  {activeStep.branchInput}
-                </div>
-              </div>
-
-              <div>
-                <span className="text-[10px] text-neutral-500 uppercase block">Storage Stage</span>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeStep.currentStage}
-                    initial={{ opacity: 0, x: 4 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -4 }}
-                    className="text-xs text-neutral-300 mt-0.5 font-mono"
-                  >
-                    {activeStep.currentStage}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
+          {/* Center Letter */}
+          <div className="flex justify-center">
+            <span className="text-6xl sm:text-8xl md:text-[7.5rem] lg:text-[9.5rem] font-normal tracking-tight text-[#0A0A0A] leading-none select-none">
+              I
+            </span>
+          </div>
 
             <div className="pt-4 border-t border-[#182030] font-mono text-[11px] text-neutral-500 flex items-center justify-between">
               <span>Auto-updating</span>
