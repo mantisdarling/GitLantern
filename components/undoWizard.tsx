@@ -39,48 +39,45 @@ export function UndoWizard({ onSelectDiagnostic, onClose }: UndoWizardProps) {
   };
 
   return (
-    <div className="bg-githubDark-card border border-gitOrange/40 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-      {/* Background Accent */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-gitOrange/5 rounded-full blur-2xl pointer-events-none" />
-
+    <div className="archCard rounded-md p-6 relative overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-githubDark-borderSubtle pb-4 mb-6">
+      <div className="flex items-center justify-between border-b border-slate-200/80 pb-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gitOrange/15 border border-gitOrange/30 flex items-center justify-center text-gitOrange">
+          <div className="w-8 h-8 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-[#2563EB]">
             <HelpCircle className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-githubDark-text">
-              Guided &quot;Undo My Mistake&quot; Wizard
+            <h3 className="text-base font-bold text-[#0B1221]">
+              Guided Recovery Wizard
             </h3>
-            <p className="text-xs text-githubDark-muted">
-              Answer 2 or 3 quick questions — we&apos;ll pinpoint your exact recovery steps
+            <p className="text-xs text-[#64748B]">
+              Answer 2 or 3 quick questions and we&apos;ll pinpoint your exact recovery steps
             </p>
           </div>
         </div>
         <button
           type="button"
           onClick={handleReset}
-          className="flex items-center gap-1.5 text-xs text-githubDark-muted hover:text-gitOrange transition-colors p-1.5 rounded-lg border border-githubDark-border"
+          className="flex items-center gap-1.5 text-xs text-[#475569] hover:text-[#0B1221] transition-colors px-3 py-1.5 rounded-full border border-slate-200 bg-white shadow-sm"
           aria-label="Restart wizard"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
+          <RotateCcw className="w-3.5 h-3.5 text-[#2563EB]" />
           <span>Restart</span>
         </button>
       </div>
 
       {/* Question Card */}
       <div className="py-2 space-y-4">
-        <div className="flex items-center gap-2 text-xs font-mono text-gitOrange">
+        <div className="flex items-center gap-2 text-xs font-mono text-[#2563EB] font-semibold">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Step {historyTrail.length + 1}</span>
         </div>
 
-        <h4 className="text-lg font-semibold text-githubDark-text leading-snug">
+        <h4 className="text-lg font-semibold text-[#0B1221] leading-snug">
           {currentQuestion.prompt}
         </h4>
 
-        <p className="text-xs text-githubDark-muted leading-relaxed">
+        <p className="text-xs text-[#64748B] leading-relaxed">
           {currentQuestion.detail}
         </p>
 
@@ -89,7 +86,7 @@ export function UndoWizard({ onSelectDiagnostic, onClose }: UndoWizardProps) {
           <button
             type="button"
             onClick={() => handleAnswer(true)}
-            className="flex-1 py-3 px-4 rounded-xl bg-gitOrange hover:bg-gitOrange-600 text-white text-sm font-semibold transition-all duration-150 shadow-md shadow-gitOrange/20 active:scale-98 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-gitOrange"
+            className="flex-1 py-3 px-4 rounded-full archBtnPrimary text-sm font-semibold transition-all duration-150 flex items-center justify-center gap-2 focus:outline-none"
           >
             <Check className="w-4 h-4" />
             <span>Yes</span>
@@ -97,7 +94,7 @@ export function UndoWizard({ onSelectDiagnostic, onClose }: UndoWizardProps) {
           <button
             type="button"
             onClick={() => handleAnswer(false)}
-            className="flex-1 py-3 px-4 rounded-xl bg-githubDark-surface hover:bg-githubDark-elevated text-githubDark-text border border-githubDark-border text-sm font-semibold transition-all duration-150 active:scale-98 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-gitOrange/50"
+            className="flex-1 py-3 px-4 rounded-full archBtnSecondary text-sm font-semibold transition-all duration-150 flex items-center justify-center gap-2 focus:outline-none"
           >
             <span>No</span>
             <ArrowRight className="w-4 h-4 opacity-70" />
