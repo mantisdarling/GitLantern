@@ -237,7 +237,7 @@ export function SynthesisEngine({
               </span>
             </div>
 
-            <p className="text-xs text-neutral-400 mb-4 leading-relaxed">
+            <p className="text-xs text-[#64748B] mb-4 leading-relaxed">
               {activeScenario.subtitle}
             </p>
 
@@ -247,11 +247,11 @@ export function SynthesisEngine({
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor={input.id}
-                      className="text-xs font-medium text-neutral-300"
+                      className="text-xs font-medium text-[#334155]"
                     >
                       {input.label}
                     </label>
-                    <span className="text-[10px] font-mono text-neutral-500 uppercase">
+                    <span className="text-[10px] font-mono text-[#64748B] uppercase">
                       {input.inputType}
                     </span>
                   </div>
@@ -263,9 +263,9 @@ export function SynthesisEngine({
                       handleInputChange(input.id, e.target.value, input.inputType)
                     }
                     placeholder={input.placeholder}
-                    className="w-full px-3 py-2 text-xs font-mono rounded-lg bg-[#020306] border border-[#182030] text-white placeholder:text-neutral-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all"
+                    className="w-full px-3.5 py-2.5 text-xs font-mono rounded-xl bg-white border border-slate-200 text-[#0B1221] placeholder:text-slate-400 shadow-sm focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/15 transition-all"
                   />
-                  <p className="text-[11px] text-neutral-400">
+                  <p className="text-[11px] text-[#64748B]">
                     {input.helpText}
                   </p>
                 </div>
@@ -273,15 +273,15 @@ export function SynthesisEngine({
             </form>
 
             {allInputsEmpty && (
-              <div className="mt-4 p-3 rounded-lg border border-amber-500/30 bg-amber-500/10 text-xs text-amber-300 flex items-start justify-between gap-3">
+              <div className="mt-4 p-3 rounded-xl border border-amber-300/80 bg-amber-50 text-xs text-amber-900 flex items-start justify-between gap-3">
                 <div>
-                  <span className="font-mono font-bold block mb-1">// BLANK CANVAS DETECTED</span>
-                  <span className="text-amber-200/80">Parameters wiped. Even Octocat needs branch names to push.</span>
+                  <span className="font-mono font-bold block mb-1">Empty fields</span>
+                  <span className="text-amber-800/80">Enter a branch or file name above, or load the default example.</span>
                 </div>
                 <button
                   type="button"
                   onClick={handleResetDefaults}
-                  className="shrink-0 px-2.5 py-1 rounded bg-amber-400 text-black font-mono font-bold text-[10px] hover:bg-amber-300 transition-colors uppercase"
+                  className="shrink-0 px-2.5 py-1 rounded-lg bg-amber-500 text-white font-mono font-bold text-[10px] hover:bg-amber-600 transition-colors uppercase"
                 >
                   Load Example
                 </button>
@@ -289,8 +289,8 @@ export function SynthesisEngine({
             )}
 
             {/* Steps Progress Overview */}
-            <div className="mt-6 pt-5 border-t border-[#182030]">
-              <h4 className="text-xs font-mono text-neutral-400 uppercase tracking-wider mb-2.5">
+            <div className="mt-6 pt-5 border-t border-slate-200/80">
+              <h4 className="text-xs font-mono text-[#64748B] uppercase tracking-wider mb-2.5">
                 Workflow Steps ({activeScenario.steps.length})
               </h4>
               <div className="space-y-1.5">
@@ -299,14 +299,14 @@ export function SynthesisEngine({
                     key={step.id}
                     type="button"
                     onClick={() => handleStepSelect(idx)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono flex items-center justify-between transition-colors border ${
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs font-mono flex items-center justify-between transition-colors border ${
                       idx === activeStepIndex
-                        ? "bg-cyan-500/10 border-cyan-400/40 text-cyan-400 font-semibold cyberBoxGlowSmall"
-                        : "bg-[#0b0e16]/60 hover:bg-[#0b0e16] border-transparent text-neutral-400"
+                        ? "bg-blue-50/90 border-blue-200 text-[#1D4ED8] font-semibold"
+                        : "bg-slate-50/70 hover:bg-slate-100/80 border-transparent text-[#475569]"
                     }`}
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <span className="text-cyan-400 font-bold">{idx + 1}.</span>
+                      <span className="text-[#2563EB] font-bold">{idx + 1}.</span>
                       <span className="truncate">{renderCommand(step.commandTemplate)}</span>
                     </div>
                     <ChevronRight className="w-3.5 h-3.5 shrink-0 opacity-70" />
@@ -317,7 +317,7 @@ export function SynthesisEngine({
           </div>
 
           {/* Right Column: Live Synthesized Output */}
-          <div className="lg:col-span-7 space-y-3">
+          <div className="lg:col-span-7 space-y-3.5">
             {activeScenario.steps.map((step, idx) => {
               const commandString = renderCommand(step.commandTemplate);
               const isSelectedStep = idx === activeStepIndex;
@@ -327,17 +327,17 @@ export function SynthesisEngine({
                 <div
                   key={step.id}
                   onClick={() => handleStepSelect(idx)}
-                  className={`cursor-pointer rounded-lg border p-4 transition-all duration-200 ${
+                  className={`cursor-pointer rounded-md border p-5 transition-all duration-200 ${
                     isSelectedStep
-                      ? "bg-[#0a0d14] border-cyan-400/60 ring-1 ring-cyan-400/25 cyberBoxGlowMedium"
-                      : "bg-[#07090e] hover:bg-[#0a0d14] border-[#182030] opacity-85 hover:opacity-100"
+                      ? "bg-white border-blue-300 shadow-[0_12px_32px_rgba(37,99,235,0.08)] ring-1 ring-[#2563EB]/20"
+                      : "bg-white/75 hover:bg-white border-slate-200/85 shadow-sm"
                   }`}
                 >
                   {/* Step Header */}
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2.5">
                       <span
-                        className={`w-5 h-5 rounded text-[10px] font-mono font-bold flex items-center justify-center ${
+                        className={`w-5 h-5 rounded-md text-[10px] font-mono font-bold flex items-center justify-center ${
                           isSelectedStep
                             ? "bg-cyan-400 text-black cyberBoxGlowSmall"
                             : "bg-[#0f131f] text-neutral-400 border border-[#182030]"
