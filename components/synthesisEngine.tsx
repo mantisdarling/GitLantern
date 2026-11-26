@@ -43,7 +43,14 @@ export function SynthesisEngine({
   onActiveCommandChange,
 }: SynthesisEngineProps) {
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>("featureBranch");
-  const [formValues, setFormValues] = useState<Record<string, string>>({});
+  const [formValues, setFormValues] = useState<Record<string, string>>(() => {
+    const initial = gitScenarios.find((s) => s.id === "featureBranch") || gitScenarios[0];
+    const defaults: Record<string, string> = {};
+    initial.inputs.forEach((input) => {
+      defaults[input.id] = input.defaultValue;
+    });
+    return defaults;
+  });
   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
   const [simulatedExecutionIdx, setSimulatedExecutionIdx] = useState<number | null>(null);
   const [whyOpenId, setWhyOpenId] = useState<string | null>(null);
@@ -160,36 +167,32 @@ export function SynthesisEngine({
   };
 
   return (
-    <section id="synthesis" className="py-16 scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="synthesis" className="commonPadding scroll-mt-16 bg-[#F8FAFC] border-t border-slate-200/70">
+      <div className="screenMaxWidth">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-2 uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
-              <span>01 • COMMAND GENERATOR</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-cyber text-white tracking-tight uppercase">
-              Command Synthesis
+            <h2 className="sectionHeading">
+              Command Generator
             </h2>
-            <p className="text-sm text-neutral-400 mt-2 max-w-2xl leading-relaxed">
-              Select a Git workflow, calibrate your parameters, and receive verified, copy-ready commands with clear mental models.
+            <p className="sectionSubheading mt-4">
+              Pick a Git task, edit the branch or file names, and copy the commands you need.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <button
               type="button"
               onClick={handleResetDefaults}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#0b0e16] border border-[#182030] hover:border-cyan-400/50 text-xs font-mono text-neutral-300 hover:text-white transition-colors uppercase"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium archBtnSecondary transition-colors"
             >
-              <RotateCcw className="w-3.5 h-3.5 text-cyan-400" />
+              <RotateCcw className="w-3.5 h-3.5 text-[#2563EB]" />
               Reset
             </button>
           </div>
         </div>
 
         {/* Scenario Selector Chips */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar">
+        <div className="flex items-center gap-2.5 overflow-x-auto pb-3 mb-8 no-scrollbar">
           {gitScenarios.map((scenario) => {
             const isSelected = scenario.id === activeScenario.id;
             return (
@@ -197,16 +200,16 @@ export function SynthesisEngine({
                 key={scenario.id}
                 type="button"
                 onClick={() => { sounds.playClick(); setSelectedScenarioId(scenario.id); }}
-                className={`px-3 py-2 rounded-lg text-xs font-mono whitespace-nowrap transition-all duration-150 flex items-center gap-2 border focus:outline-none focus:ring-1 focus:ring-cyan-400 ${
+                className={`px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 flex items-center gap-2 focus:outline-none ${
                   isSelected
-                    ? "bg-cyan-400 text-black border-cyan-400 font-bold cyberBoxGlowSmall"
-                    : "bg-[#07090e] text-neutral-400 hover:text-white hover:bg-[#0c1018] border-[#182030]"
+                    ? "archBtnPrimary font-semibold"
+                    : "archBtnSecondary text-[#475569] hover:text-[#0B1221]"
                 }`}
               >
                 <span>{scenario.title}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                    isSelected ? "bg-black/20 text-black font-semibold" : "bg-[#0f131f] text-neutral-500"
+                  className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                    isSelected ? "bg-white/15 text-white font-semibold" : "bg-slate-100 text-[#64748B]"
                   }`}
                 >
                   {scenario.tag}
@@ -216,20 +219,20 @@ export function SynthesisEngine({
           })}
         </div>
 
-        {/* Main Grid: Inputs Form & Command Generation View */}
+        {/* Main Grid: Inputs Form and Command Generation View */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Dynamic Inputs Form */}
-          <div className="lg:col-span-5 cyberPanel cornerReticle rounded-lg p-6 relative border border-[#182030] bg-[#07090e]">
-            <div className="flex items-center justify-between border-b border-[#182030] pb-4 mb-4">
+          <div className="lg:col-span-5 archCard rounded-md p-6 relative">
+            <div className="flex items-center justify-between border-b border-slate-200/80 pb-4 mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-cyan-400">
+                <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200/80 flex items-center justify-center text-[#2563EB]">
                   <SlidersHorizontal className="w-3.5 h-3.5" />
                 </div>
-                <h3 className="text-sm font-semibold text-white font-cyber tracking-wider">
+                <h3 className="text-sm font-semibold text-[#0B1221]">
                   Scenario Parameters
                 </h3>
               </div>
-              <span className="text-[11px] font-mono text-cyan-400">
+              <span className="text-[11px] font-mono text-[#2563EB] font-semibold">
                 {activeScenario.inputs.length} field{activeScenario.inputs.length > 1 ? "s" : ""}
               </span>
             </div>
