@@ -19,7 +19,7 @@ interface Particle {
   rotationSpeed: number;
 }
 
-const confettiColors = ["#00f0ff", "#b026ff", "#f05032", "#00ff66", "#ffffff"];
+const confettiColors = ["#2997FF", "#30d158", "#afafaf", "#ffd60a", "#ffffff"];
 
 export function CyberConfetti({ trigger, onComplete }: CyberConfettiProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
